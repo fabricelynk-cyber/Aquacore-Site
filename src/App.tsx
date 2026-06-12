@@ -134,13 +134,15 @@ export default function App() {
             </div>
 
             <h1>
-              Pilotez fréquentation, fluides, recettes et occupation depuis une seule vue.
+              Pilotez fréquentation, fluides, recettes, ressources humaines, budget et occupation
+              depuis une seule vue.
             </h1>
 
             <p className="hero-text">
               AquaCore aide les réseaux de piscines et centres aquatiques à transformer leurs
               données dispersées en décisions exploitables, avec une approche pensée pour le
-              terrain, les tableaux de bord et les arbitrages de gestion.
+              terrain, les tableaux de bord et les arbitrages sur l'exploitation, les équipes et
+              les budgets.
             </p>
 
             <div className="hero-actions">
