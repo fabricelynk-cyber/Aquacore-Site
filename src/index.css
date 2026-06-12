@@ -434,6 +434,60 @@ img {
   margin-top: 2rem;
 }
 
+.origin-panel {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1.1rem;
+  margin-top: 2rem;
+  padding: 1.4rem;
+  border-radius: 1.8rem;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at top right, rgba(51, 198, 255, 0.14), transparent 34%),
+    rgba(8, 27, 42, 0.74);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+}
+
+.origin-panel-copy {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.origin-panel-copy strong {
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  line-height: 1.18;
+}
+
+.origin-panel-copy p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.origin-panel-points {
+  display: grid;
+  gap: 0.8rem;
+  align-content: start;
+}
+
+.origin-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.95rem 1rem;
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: #dff5ff;
+  line-height: 1.55;
+}
+
+.origin-point svg {
+  color: var(--secondary);
+  flex: none;
+  margin-top: 0.12rem;
+}
+
 .three-cols {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -726,7 +780,8 @@ img {
   .three-cols,
   .two-cols,
   .rollout-grid,
-  .contact-grid {
+  .contact-grid,
+  .origin-panel {
     grid-template-columns: 1fr;
   }
 

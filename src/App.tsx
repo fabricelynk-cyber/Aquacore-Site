@@ -34,7 +34,7 @@ const highlights = [
   {
     icon: ShieldCheck,
     title: "Cadre métier robuste",
-    text: "Imports cadrés, indicateurs cohérents et règles métiers pensées pour la réalité des équipements aquatiques.",
+    text: "Un socle pensé pour la réalité des directions de centres aquatiques, avec des règles cohérentes et des usages personnalisables.",
   },
 ];
 
@@ -140,9 +140,9 @@ export default function App() {
 
             <p className="hero-text">
               AquaCore aide les réseaux de piscines et centres aquatiques à transformer leurs
-              données dispersées en décisions exploitables, avec une approche pensée pour le
-              terrain, les tableaux de bord et les arbitrages sur l'exploitation, les équipes et
-              les budgets.
+              données dispersées en décisions exploitables, avec une approche conçue par et pour
+              les directions de centres aquatiques, à partir de problématiques concrètes issues du
+              terrain, de l'exploitation, des équipes et des arbitrages budgétaires.
             </p>
 
             <div className="hero-actions">
@@ -157,8 +157,9 @@ export default function App() {
 
             <ul className="hero-points" aria-label="Atouts AquaCore">
               <li>Multi-établissements et vision consolidée.</li>
+              <li>Conçu à partir de problématiques réelles rencontrées sur le terrain.</li>
               <li>Lecture métier claire pour direction, exploitation et technique.</li>
-              <li>Conçu pour structurer le suivi, l'exploitation et les arbitrages de gestion.</li>
+              <li>Personnalisable selon vos sites, vos référentiels et vos routines de pilotage.</li>
             </ul>
           </div>
 
@@ -222,12 +223,40 @@ export default function App() {
         <section className="section" id="solution">
           <div className="section-heading">
             <span className="section-kicker">Pourquoi AquaCore</span>
-            <h2>Une application pensée pour les équipements aquatiques, pas un logiciel générique.</h2>
+            <h2>Une application métier conçue par et pour les directions de centres aquatiques.</h2>
             <p>
               Le discours s'appuie ici sur le référentiel du produit existant : gestion
               multi-sites, suivi de fréquentation, cohérence des recettes, pilotage des fluides
               et lecture de l'occupation des espaces.
             </p>
+          </div>
+
+          <div className="origin-panel">
+            <div className="origin-panel-copy">
+              <p className="metric-label">Conçu depuis le terrain</p>
+              <strong>Chaque brique d'AquaCore part d'enjeux réellement vécus en direction de centre aquatique.</strong>
+              <p>
+                L'application a été pensée à partir de problématiques de pilotage rencontrées sur
+                le terrain : consolider des données hétérogènes, arbitrer les budgets, suivre les
+                ressources humaines, comparer plusieurs sites, objectiver l'occupation et garder
+                une lecture claire pour la direction comme pour l'exploitation.
+              </p>
+            </div>
+
+            <div className="origin-panel-points">
+              <div className="origin-point">
+                <CheckCircle2 size={18} />
+                <span>Approche métier ancrée dans les réalités quotidiennes des centres aquatiques.</span>
+              </div>
+              <div className="origin-point">
+                <CheckCircle2 size={18} />
+                <span>Personnalisation possible des référentiels, des postes de suivi et des routines de pilotage.</span>
+              </div>
+              <div className="origin-point">
+                <CheckCircle2 size={18} />
+                <span>Un outil pensé pour décider, pas seulement pour stocker ou afficher des données.</span>
+              </div>
+            </div>
           </div>
 
           <div className="cards-grid three-cols">
