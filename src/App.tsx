@@ -14,17 +14,11 @@ import {
 } from "lucide-react";
 import aquaCoreSymbol from "./assets/aquacore-symbol-web.png";
 
-const keyFigures = [
-  { value: "1 cockpit", label: "pour relier vos données d'exploitation et vos décisions." },
-  { value: "5 modules", label: "fluides, fréquentation, recettes, RH et occupation." },
-  { value: "Multi-sites", label: "pour comparer les équipements d'un même territoire." },
-];
-
 const highlights = [
   {
     icon: Gauge,
-    title: "Pilotage lisible",
-    text: "Une lecture claire des indicateurs utiles, sans multiplier les exports manuels ni les fichiers dispersés.",
+    title: "Lecture budgétaire",
+    text: "Reliez activité, charges et ratios pour suivre les écarts quand ils comptent vraiment.",
   },
   {
     icon: Building2,
@@ -33,8 +27,8 @@ const highlights = [
   },
   {
     icon: ShieldCheck,
-    title: "Cadre métier robuste",
-    text: "Un socle pensé pour la réalité des directions de centres aquatiques, avec des règles cohérentes et des usages personnalisables.",
+    title: "Cadre personnalisable",
+    text: "Référentiels, postes de suivi et routines s'adaptent à votre organisation sans perdre la logique métier.",
   },
 ];
 
@@ -95,10 +89,10 @@ const capabilities = [
 ];
 
 const benefits = [
-  "Mieux visualiser les coûts, les charges et les équilibres réels de l'établissement.",
-  "Mieux comprendre le fonctionnement quotidien du site à partir de données enfin corrélées.",
-  "Prendre des décisions avec une conscience plus fine de leur impact sur l'exploitation, les équipes et le budget.",
-  "Être force de proposition pour le pilotage et l'évolution des équipements aquatiques.",
+  "Visualiser les coûts, les charges et les équilibres réels de l'établissement.",
+  "Comprendre le fonctionnement quotidien du site à partir de données enfin reliées.",
+  "Arbitrer avec une vision plus nette des impacts sur l'exploitation, les équipes et le budget.",
+  "Renforcer la capacité de la direction à proposer, expliquer et piloter.",
 ];
 
 const rolloutSteps = [
@@ -172,11 +166,9 @@ export default function App() {
             </h1>
 
             <p className="hero-text">
-              Dans la réalité d'un centre aquatique, la direction est souvent l'épicentre de
-              données dispersées, non corrélées et difficiles à relier. AquaCore les regroupe dans
-              une seule application métier, conçue par et pour les directions de piscines et de
-              centres aquatiques à partir de problématiques concrètes issues du terrain, de
-              l'exploitation, des équipes et des arbitrages budgétaires.
+              Dans un centre aquatique, la direction jongle souvent avec des données séparées entre
+              exploitation, RH, budget, recettes et occupation. AquaCore les rassemble dans une
+              application métier claire pour relier activité, coûts et décisions.
             </p>
 
             <div className="hero-actions">
@@ -189,12 +181,6 @@ export default function App() {
               </a>
             </div>
 
-            <ul className="hero-points" aria-label="Atouts AquaCore">
-              <li>Multi-établissements et vision consolidée.</li>
-              <li>Conçu à partir de problématiques réelles rencontrées sur le terrain.</li>
-              <li>Lecture métier claire pour direction, exploitation et technique.</li>
-              <li>Personnalisable selon vos sites, vos référentiels et vos routines de pilotage.</li>
-            </ul>
           </div>
 
           <div className="hero-visual" aria-hidden="true">
@@ -236,61 +222,46 @@ export default function App() {
             <div className="hero-panel hero-panel-side">
               <img src={aquaCoreSymbol} alt="" />
               <div>
-                <p className="metric-label">AquaCore est pensé pour</p>
-                <strong>Piscines, centres aquatiques et réseaux territoriaux</strong>
+                <p className="metric-label">Déploiement souple</p>
+                <strong>Site unique, régie, délégataire ou réseau multisite</strong>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section className="section" aria-label="Chiffres clés">
-          <div className="stats-row">
-            {keyFigures.map((item) => (
-              <article className="stat-card" key={item.value}>
-                <strong>{item.value}</strong>
-                <span>{item.label}</span>
-              </article>
-            ))}
           </div>
         </section>
 
         <section className="section" id="solution">
           <div className="section-heading">
             <span className="section-kicker">Pourquoi AquaCore</span>
-            <h2>Une application métier conçue par et pour les directions de centres aquatiques.</h2>
+            <h2>Transformer des données dispersées en pilotage lisible.</h2>
             <p>
-              Le discours s'appuie ici sur le référentiel du produit existant : gestion
-              multi-sites, suivi de fréquentation, cohérence des recettes, pilotage des fluides
-              et lecture de l'occupation des espaces, avec une logique de corrélation entre des
-              données qui vivent trop souvent séparément au quotidien.
+              AquaCore rapproche activité, budget, RH, recettes et occupation dans un même cadre
+              de lecture.
             </p>
           </div>
 
           <div className="origin-panel">
             <div className="origin-panel-copy">
-              <p className="metric-label">Conçu depuis le terrain</p>
-              <strong>Chaque brique d'AquaCore part d'enjeux réellement vécus par des directions de piscines et de centres aquatiques.</strong>
+              <p className="metric-label">Une origine métier</p>
+              <strong>AquaCore est né d'un besoin simple : piloter un équipement avec une lecture plus directe et plus fiable.</strong>
               <p>
-                L'application a été pensée à partir de problématiques de pilotage rencontrées sur
-                le terrain : consolider des données hétérogènes, rapprocher des informations non
-                corrélées, visualiser les coûts, arbitrer les budgets, suivre les ressources
-                humaines, comparer plusieurs sites, objectiver l'occupation et donner à la
-                direction une lecture plus claire de son établissement.
+                Le point de départ n'était pas d'ajouter un outil de reporting de plus, mais de
+                sortir des fichiers parallèles, des exports multiples et des lectures partielles
+                pour retrouver une vision exploitable au quotidien.
               </p>
             </div>
 
             <div className="origin-panel-points">
               <div className="origin-point">
                 <CheckCircle2 size={18} />
-                <span>Approche métier ancrée dans les réalités quotidiennes des directions d'équipements aquatiques.</span>
+                <span>Né des usages réels des directions de centres aquatiques.</span>
               </div>
               <div className="origin-point">
                 <CheckCircle2 size={18} />
-                <span>Personnalisation possible des référentiels, des postes de suivi et des routines de pilotage selon le terrain.</span>
+                <span>Pensé pour objectiver les choix plutôt que produire du reporting de plus.</span>
               </div>
               <div className="origin-point">
                 <CheckCircle2 size={18} />
-                <span>Un outil pensé pour éclairer les décisions et permettre à la direction d'être force de proposition.</span>
+                <span>Construit pour rester lisible, même quand les sources de données se multiplient.</span>
               </div>
             </div>
           </div>
@@ -336,11 +307,10 @@ export default function App() {
         <section className="section" id="fonctionnalites">
           <div className="section-heading">
             <span className="section-kicker">Fonctionnalités Clés</span>
-            <h2>Des fonctions conçues pour remettre de l'ordre dans la donnée et le pilotage.</h2>
+            <h2>Des fonctions pour fiabiliser la donnée et gagner du temps au quotidien.</h2>
             <p>
-              AquaCore ne se contente pas d'afficher des indicateurs. L'application structure la
-              saisie, centralise les flux issus d'outils tiers, conserve l'historique et facilite
-              la restitution pour que la direction garde une lecture claire de l'équipement.
+              L'application structure la saisie, reprend les données de logiciels tiers, conserve
+              l'historique et facilite les restitutions dans un cadre unique.
             </p>
           </div>
 
@@ -361,11 +331,10 @@ export default function App() {
         <section className="section split-section" id="impact">
           <div className="section-heading compact">
             <span className="section-kicker">Impact</span>
-            <h2>Ce que vos équipes gagnent quand les indicateurs cessent de vivre chacun de leur côté.</h2>
+            <h2>Ce que vous gagnez avec une lecture unifiée de l'équipement.</h2>
             <p>
-              Quand les données sont enfin regroupées, la direction ne subit plus des informations
-              éparses : elle comprend mieux son établissement, visualise mieux ses coûts et pilote
-              avec davantage d'impact.
+              La donnée devient plus exploitable dans les revues d'exploitation, les arbitrages et
+              le dialogue avec les équipes.
             </p>
           </div>
 
@@ -382,10 +351,8 @@ export default function App() {
             <div className="quote-card">
               <Layers3 size={30} />
               <p>
-                AquaCore devient le point de rencontre entre exploitation, direction et lecture
-                budgétaire. On ne regarde plus seulement des chiffres isolés : on comprend leur
-                lien, on mesure mieux l'impact des décisions et on renforce sa capacité à orienter
-                le pilotage de l'équipement.
+                Les revues d'exploitation, les échanges avec les équipes et les arbitrages
+                budgétaires s'appuient enfin sur une base commune.
               </p>
             </div>
           </div>
@@ -415,7 +382,7 @@ export default function App() {
           <div className="deploy-banner">
             <div>
               <p className="metric-label">Cap sur l'exploitation</p>
-              <strong>Une application pour suivre, comparer et décider plus vite</strong>
+              <strong>Un cadre de pilotage prêt à s'installer dans vos routines mensuelles</strong>
             </div>
             <a className="button button-primary" href="#hero">
               Revenir au hero
@@ -517,9 +484,8 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <p>AquaCore, application de pilotage pour équipements aquatiques.</p>
+        <p>AquaCore, application métier de pilotage pour équipements aquatiques.</p>
         <p>
-          Pensé pour la fréquentation, les fluides, les recettes, les RH et l'occupation.
           Contact : <a href="mailto:aquacorecontrol@gmail.com">aquacorecontrol@gmail.com</a>
         </p>
       </footer>
