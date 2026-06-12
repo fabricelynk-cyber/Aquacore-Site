@@ -186,14 +186,14 @@ export default function App() {
 
                 <article className="metric-card">
                   <div className="metric-label">Fluides</div>
-                  <strong>3 postes</strong>
-                  <span>Eau, électricité, chaleur</span>
+                  <strong>Gestion multiple</strong>
+                  <span>Postes fluides standards et personnalisés</span>
                 </article>
 
                 <article className="metric-card">
                   <div className="metric-label">Planning</div>
-                  <strong>5 min</strong>
-                  <span>Lecture fine de l'occupation</span>
+                  <strong>Plan d'occupation complet</strong>
+                  <span>Heures et surfaces attribuées quantifiées automatiquement</span>
                 </article>
               </div>
             </div>
