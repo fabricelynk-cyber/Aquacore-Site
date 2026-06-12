@@ -110,12 +110,30 @@ img {
 .brand {
   display: inline-flex;
   align-items: center;
+  gap: 0.9rem;
 }
 
-.brand img {
-  width: clamp(13rem, 22vw, 20rem);
+.brand-mark {
+  width: clamp(4.6rem, 6vw, 5.6rem);
   height: auto;
   object-fit: contain;
+  flex: none;
+}
+
+.brand-wordmark {
+  font-family: "Space Grotesk", "Plus Jakarta Sans", sans-serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: #f4fbff;
+  text-shadow:
+    0 0 0 #2aa8ff,
+    1px 0 0 #2aa8ff,
+    -1px 0 0 #2aa8ff,
+    0 1px 0 #2aa8ff,
+    0 -1px 0 #2aa8ff,
+    0 8px 24px rgba(42, 168, 255, 0.22);
 }
 
 .nav {
@@ -609,8 +627,16 @@ img {
     width: 100%;
   }
 
-  .brand img {
-    width: min(18rem, 78vw);
+  .brand {
+    gap: 0.7rem;
+  }
+
+  .brand-mark {
+    width: min(5rem, 22vw);
+  }
+
+  .brand-wordmark {
+    font-size: min(2.2rem, 10vw);
   }
 
   .hero-actions {

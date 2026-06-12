@@ -12,7 +12,6 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import aquaCoreLogo from "./assets/aquacore-horizontal-white.png";
 import aquaCoreSymbol from "./assets/aquacore-symbol-web.png";
 
 const keyFigures = [
@@ -95,7 +94,10 @@ export default function App() {
 
       <header className="topbar">
         <a className="brand" href="#hero" aria-label="AquaCore">
-          <img src={aquaCoreLogo} alt="Logo AquaCore" />
+          <img className="brand-mark" src={aquaCoreSymbol} alt="Logo AquaCore" />
+          <span className="brand-wordmark" aria-hidden="true">
+            AquaCore
+          </span>
         </a>
 
         <nav className="nav">
