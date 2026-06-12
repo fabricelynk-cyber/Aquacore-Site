@@ -712,6 +712,21 @@ img {
   gap: 1rem;
 }
 
+.contact-hint,
+.contact-error {
+  margin: -0.2rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.contact-hint {
+  color: var(--muted);
+}
+
+.contact-error {
+  color: #ffb7b7;
+}
+
 .contact-form-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -758,6 +773,11 @@ img {
 .contact-field textarea {
   min-height: 9rem;
   resize: vertical;
+}
+
+.contact-input-error {
+  border-color: rgba(255, 123, 123, 0.7) !important;
+  box-shadow: 0 0 0 3px rgba(255, 123, 123, 0.12);
 }
 
 .contact-honey {

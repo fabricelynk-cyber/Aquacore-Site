@@ -12,6 +12,7 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
+import { useState, type FormEvent } from "react";
 import aquaCoreSymbol from "./assets/aquacore-symbol-web.png";
 
 const highlights = [
@@ -113,7 +114,16 @@ const rolloutSteps = [
   },
 ];
 
+function hasContactChannel(form: HTMLFormElement) {
+  const formData = new FormData(form);
+  const email = String(formData.get("email") ?? "").trim();
+  const telephone = String(formData.get("telephone") ?? "").trim();
+
+  return email.length > 0 || telephone.length > 0;
+}
+
 export default function App() {
+  const [contactError, setContactError] = useState("");
   const contactSuccess =
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("contact") === "success";
@@ -125,6 +135,29 @@ export default function App() {
     typeof window !== "undefined"
       ? `${window.location.origin}${window.location.pathname}?contact=success#contact`
       : "https://aquacore-site.vercel.app/?contact=success#contact";
+  const contactFieldDescription = contactError
+    ? "contact-channel-hint contact-channel-error"
+    : "contact-channel-hint";
+
+  const handleContactFormChange = (event: FormEvent<HTMLFormElement>) => {
+    if (!contactError) {
+      return;
+    }
+
+    if (hasContactChannel(event.currentTarget)) {
+      setContactError("");
+    }
+  };
+
+  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
+    if (!hasContactChannel(event.currentTarget)) {
+      event.preventDefault();
+      setContactError("Renseignez au moins une adresse email ou un numéro de téléphone.");
+      return;
+    }
+
+    setContactError("");
+  };
 
   return (
     <div className="site-shell">
@@ -430,6 +463,8 @@ export default function App() {
                 className="contact-form"
                 action="https://formsubmit.co/aquacorecontrol@gmail.com"
                 method="POST"
+                onInput={handleContactFormChange}
+                onSubmit={handleContactSubmit}
               >
                 <input type="hidden" name="_subject" value="Nouveau message depuis le site AquaCore" />
                 <input type="hidden" name="_template" value="table" />
@@ -450,14 +485,38 @@ export default function App() {
 
                   <label className="contact-field">
                     <span>Email</span>
-                    <input type="email" name="email" placeholder="vous@exemple.fr" required />
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="vous@exemple.fr"
+                      aria-describedby={contactFieldDescription}
+                      aria-invalid={contactError ? "true" : undefined}
+                      className={contactError ? "contact-input-error" : undefined}
+                    />
                   </label>
 
                   <label className="contact-field">
                     <span>Téléphone</span>
-                    <input type="tel" name="telephone" placeholder="Optionnel" />
+                    <input
+                      type="tel"
+                      name="telephone"
+                      placeholder="Optionnel"
+                      aria-describedby={contactFieldDescription}
+                      aria-invalid={contactError ? "true" : undefined}
+                      className={contactError ? "contact-input-error" : undefined}
+                    />
                   </label>
                 </div>
+
+                <p className="contact-hint" id="contact-channel-hint">
+                  Au moins un moyen de contact est requis : email ou téléphone.
+                </p>
+
+                {contactError ? (
+                  <p className="contact-error" id="contact-channel-error" role="alert">
+                    {contactError}
+                  </p>
+                ) : null}
 
                 <label className="contact-field">
                   <span>Objet</span>
