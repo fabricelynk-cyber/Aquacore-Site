@@ -135,7 +135,7 @@ export default function App() {
 
             <h1>
               Pilotez fréquentation, fluides, recettes, ressources humaines, budget et occupation
-              depuis une seule vue.
+              depuis une seule application métier.
             </h1>
 
             <p className="hero-text">
