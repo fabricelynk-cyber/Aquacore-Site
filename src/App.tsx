@@ -61,6 +61,39 @@ const modules = [
   },
 ];
 
+const capabilities = [
+  {
+    title: "Saisie & historique",
+    items: [
+      "Saisie simplifiée et ordonnée des données pour sécuriser le suivi au quotidien.",
+      "Sauvegarde mensuelle automatique pour fiabiliser la continuité d'exploitation.",
+      "Consultation des historiques sans limite de période pour garder une mémoire complète de l'établissement.",
+    ],
+  },
+  {
+    title: "Import & centralisation",
+    items: [
+      "Import et export via Excel pour centraliser simplement des données venues de plusieurs sources.",
+      "Reprise facilitée d'informations issues de logiciels tiers comme Elisath ou Horanet.",
+      "Corrélation de ces données avec les coûts globaux de l'équipement pour une lecture enfin unifiée.",
+    ],
+  },
+  {
+    title: "Dashboards & rapports",
+    items: [
+      "Import et export des dashboards pour partager ou répliquer les vues de pilotage.",
+      "Import et export des rapports pour diffuser plus facilement les analyses et les restitutions.",
+    ],
+  },
+  {
+    title: "Plan d'occupation terrain",
+    items: [
+      "Plan d'occupation ergonomique et adapté aux usages terrain des centres aquatiques.",
+      "Quantification automatique des heures et des surfaces attribuées pour objectiver l'occupation réelle.",
+    ],
+  },
+];
+
 const benefits = [
   "Mieux visualiser les coûts, les charges et les équilibres réels de l'établissement.",
   "Mieux comprendre le fonctionnement quotidien du site à partir de données enfin corrélées.",
@@ -295,6 +328,31 @@ export default function App() {
                   <h3>{title}</h3>
                 </div>
                 <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section" id="fonctionnalites">
+          <div className="section-heading">
+            <span className="section-kicker">Fonctionnalités Clés</span>
+            <h2>Des fonctions conçues pour remettre de l'ordre dans la donnée et le pilotage.</h2>
+            <p>
+              AquaCore ne se contente pas d'afficher des indicateurs. L'application structure la
+              saisie, centralise les flux issus d'outils tiers, conserve l'historique et facilite
+              la restitution pour que la direction garde une lecture claire de l'équipement.
+            </p>
+          </div>
+
+          <div className="cards-grid two-cols">
+            {capabilities.map((capability) => (
+              <article className="capability-card" key={capability.title}>
+                <h3>{capability.title}</h3>
+                <ul className="capability-list">
+                  {capability.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
               </article>
             ))}
           </div>
