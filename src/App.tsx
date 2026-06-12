@@ -87,6 +87,18 @@ const rolloutSteps = [
 ];
 
 export default function App() {
+  const contactSuccess =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("contact") === "success";
+  const contactPageUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}${window.location.pathname}`
+      : "https://aquacore-site.vercel.app/";
+  const contactSuccessUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}${window.location.pathname}?contact=success#contact`
+      : "https://aquacore-site.vercel.app/?contact=success#contact";
+
   return (
     <div className="site-shell">
       <div className="ambient ambient-left" />
@@ -105,10 +117,11 @@ export default function App() {
           <a href="#modules">Modules</a>
           <a href="#impact">Impact</a>
           <a href="#mise-en-oeuvre">Mise en oeuvre</a>
+          <a href="#contact">Contact</a>
         </nav>
 
-        <a className="button button-ghost" href="#impact">
-          Voir la démo métier
+        <a className="button button-ghost" href="#contact">
+          Contact
         </a>
       </header>
 
@@ -316,11 +329,105 @@ export default function App() {
             </a>
           </div>
         </section>
+
+        <section className="section" id="contact">
+          <div className="section-heading">
+            <span className="section-kicker">Contact</span>
+            <h2>Parlons de votre équipement, de vos sites et de vos besoins de pilotage.</h2>
+            <p>
+              Laissez un message et nous reviendrons vers vous pour échanger sur vos enjeux de
+              fréquentation, de fluides, de recettes, de RH ou d'occupation.
+            </p>
+          </div>
+
+          <div className="contact-grid">
+            <aside className="contact-card contact-card-info">
+              <p className="metric-label">AquaCore</p>
+              <strong>Un point de contact clair pour vos demandes, démonstrations et questions.</strong>
+              <p>
+                Vous pouvez utiliser le formulaire ci-contre ou écrire directement à l'adresse
+                suivante.
+              </p>
+              <a className="contact-email" href="mailto:aquacorecontrol@gmail.com">
+                aquacorecontrol@gmail.com
+              </a>
+              <div className="contact-note">
+                <CheckCircle2 size={18} />
+                <span>Réponse par email avec reprise du contexte de votre demande.</span>
+              </div>
+            </aside>
+
+            <div className="contact-card">
+              {contactSuccess ? (
+                <div className="contact-success" role="status">
+                  <CheckCircle2 size={18} />
+                  <span>Merci, votre message a bien été envoyé.</span>
+                </div>
+              ) : null}
+
+              <form
+                className="contact-form"
+                action="https://formsubmit.co/aquacorecontrol@gmail.com"
+                method="POST"
+              >
+                <input type="hidden" name="_subject" value="Nouveau message depuis le site AquaCore" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_next" value={contactSuccessUrl} />
+                <input type="hidden" name="_url" value={contactPageUrl} />
+                <input type="text" name="_honey" className="contact-honey" tabIndex={-1} autoComplete="off" />
+
+                <div className="contact-form-grid">
+                  <label className="contact-field">
+                    <span>Nom</span>
+                    <input type="text" name="nom" placeholder="Votre nom" required />
+                  </label>
+
+                  <label className="contact-field">
+                    <span>Structure</span>
+                    <input type="text" name="structure" placeholder="Ville, régie, délégataire..." />
+                  </label>
+
+                  <label className="contact-field">
+                    <span>Email</span>
+                    <input type="email" name="email" placeholder="vous@exemple.fr" required />
+                  </label>
+
+                  <label className="contact-field">
+                    <span>Téléphone</span>
+                    <input type="tel" name="telephone" placeholder="Optionnel" />
+                  </label>
+                </div>
+
+                <label className="contact-field">
+                  <span>Objet</span>
+                  <input type="text" name="objet" placeholder="Motif de votre message" required />
+                </label>
+
+                <label className="contact-field">
+                  <span>Message</span>
+                  <textarea
+                    name="message"
+                    placeholder="Décrivez votre contexte, vos sites ou votre besoin."
+                    rows={6}
+                    required
+                  />
+                </label>
+
+                <button className="button button-primary contact-submit" type="submit">
+                  Envoyer le message
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="footer">
         <p>AquaCore, application de pilotage pour équipements aquatiques.</p>
-        <p>Pensé pour la fréquentation, les fluides, les recettes, les RH et l'occupation.</p>
+        <p>
+          Pensé pour la fréquentation, les fluides, les recettes, les RH et l'occupation.
+          Contact : <a href="mailto:aquacorecontrol@gmail.com">aquacorecontrol@gmail.com</a>
+        </p>
       </footer>
     </div>
   );
