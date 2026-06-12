@@ -12,7 +12,7 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import aquaCoreLogo from "./assets/aquacore-logo-web.png";
+import aquaCoreLogo from "./assets/aquacore-horizontal-white.png";
 import aquaCoreSymbol from "./assets/aquacore-symbol-web.png";
 
 const keyFigures = [
@@ -72,17 +72,17 @@ const benefits = [
 const rolloutSteps = [
   {
     step: "01",
-    title: "Cartographier vos indicateurs",
-    text: "On aligne les définitions utiles pour vos sites, vos équipes et votre rythme de pilotage.",
+    title: "Cadrer le pilotage",
+    text: "On aligne les indicateurs utiles pour vos sites, vos équipes et votre rythme de suivi.",
   },
   {
     step: "02",
-    title: "Connecter vos usages terrain",
+    title: "Reprendre les données utiles",
     text: "Imports, référentiels et habitudes de suivi sont repris dans un cadre plus lisible et plus fiable.",
   },
   {
     step: "03",
-    title: "Décider plus vite",
+    title: "Installer les routines",
     text: "Les tableaux de bord deviennent actionnables pour les revues mensuelles, le budget et l'exploitation.",
   },
 ];
@@ -102,7 +102,7 @@ export default function App() {
           <a href="#solution">Solution</a>
           <a href="#modules">Modules</a>
           <a href="#impact">Impact</a>
-          <a href="#deploiement">Déploiement</a>
+          <a href="#mise-en-oeuvre">Mise en oeuvre</a>
         </nav>
 
         <a className="button button-ghost" href="#impact">
@@ -133,15 +133,15 @@ export default function App() {
                 Explorer les modules
                 <ArrowRight size={18} />
               </a>
-              <a className="button button-secondary" href="#deploiement">
-                Préparer le déploiement
+              <a className="button button-secondary" href="#mise-en-oeuvre">
+                Voir la mise en oeuvre
               </a>
             </div>
 
             <ul className="hero-points" aria-label="Atouts AquaCore">
               <li>Multi-établissements et vision consolidée.</li>
               <li>Lecture métier claire pour direction, exploitation et technique.</li>
-              <li>Base idéale pour un déploiement web, démonstration ou site commercial.</li>
+              <li>Conçu pour structurer le suivi, l'exploitation et les arbitrages de gestion.</li>
             </ul>
           </div>
 
@@ -205,7 +205,7 @@ export default function App() {
         <section className="section" id="solution">
           <div className="section-heading">
             <span className="section-kicker">Pourquoi AquaCore</span>
-            <h2>Un site vitrine qui raconte un vrai produit métier, pas une promesse abstraite.</h2>
+            <h2>Une application pensée pour les équipements aquatiques, pas un logiciel générique.</h2>
             <p>
               Le discours s'appuie ici sur le référentiel du produit existant : gestion
               multi-sites, suivi de fréquentation, cohérence des recettes, pilotage des fluides
@@ -231,8 +231,8 @@ export default function App() {
             <span className="section-kicker">Modules</span>
             <h2>Les briques qui structurent le pilotage d'un équipement aquatique.</h2>
             <p>
-              Chaque module peut nourrir une démonstration commerciale, une page produit dédiée ou
-              un futur parcours de conversion plus complet.
+              Chaque module répond à un usage d'exploitation concret, du suivi quotidien aux
+              revues mensuelles et aux arbitrages de gestion.
             </p>
           </div>
 
@@ -256,8 +256,8 @@ export default function App() {
             <span className="section-kicker">Impact</span>
             <h2>Ce que vos équipes gagnent quand les indicateurs cessent de vivre chacun de leur côté.</h2>
             <p>
-              Le site met volontairement l'accent sur les résultats concrets attendus plutôt que
-              sur un simple inventaire fonctionnel.
+              AquaCore met l'accent sur les résultats concrets attendus, pas sur un simple
+              inventaire fonctionnel.
             </p>
           </div>
 
@@ -282,13 +282,14 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section" id="deploiement">
+        <section className="section" id="mise-en-oeuvre">
           <div className="section-heading">
-            <span className="section-kicker">Déploiement</span>
-            <h2>Une base propre pour aller en ligne rapidement sur Vercel.</h2>
+            <span className="section-kicker">Mise en oeuvre</span>
+            <h2>Une mise en oeuvre progressive, centrée sur les usages terrain.</h2>
             <p>
-              Le projet est volontairement léger, responsive et autonome. Il peut être déployé tel
-              quel ou enrichi ensuite avec un formulaire, une analytics stack ou un CMS.
+              AquaCore s'installe comme un cadre de pilotage partagé : on structure les
+              indicateurs, on reprend les données utiles et on met les équipes au même niveau de
+              lecture.
             </p>
           </div>
 
@@ -304,8 +305,8 @@ export default function App() {
 
           <div className="deploy-banner">
             <div>
-              <p className="metric-label">Prêt pour la mise en ligne</p>
-              <strong>Vite + React + TypeScript + configuration Vercel</strong>
+              <p className="metric-label">Cap sur l'exploitation</p>
+              <strong>Une application pour suivre, comparer et décider plus vite</strong>
             </div>
             <a className="button button-primary" href="#hero">
               Revenir au hero
@@ -316,8 +317,8 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <p>AquaCore, site vitrine orienté produit pour équipements aquatiques.</p>
-        <p>Conçu pour être déployé rapidement, puis enrichi selon vos besoins commerciaux.</p>
+        <p>AquaCore, application de pilotage pour équipements aquatiques.</p>
+        <p>Pensé pour la fréquentation, les fluides, les recettes, les RH et l'occupation.</p>
       </footer>
     </div>
   );

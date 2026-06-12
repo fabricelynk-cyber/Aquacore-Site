@@ -113,8 +113,9 @@ img {
 }
 
 .brand img {
-  width: min(15rem, 40vw);
+  width: clamp(13rem, 22vw, 20rem);
   height: auto;
+  object-fit: contain;
 }
 
 .nav {
@@ -606,6 +607,10 @@ img {
 
   .button {
     width: 100%;
+  }
+
+  .brand img {
+    width: min(18rem, 78vw);
   }
 
   .hero-actions {
