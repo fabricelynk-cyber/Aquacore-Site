@@ -28,7 +28,7 @@ const highlights = [
   },
   {
     icon: Building2,
-    title: "Vision territoire",
+    title: "Vision territoriale",
     text: "Comparez plusieurs établissements, harmonisez les pratiques et consolidez vos décisions à l'échelle du réseau.",
   },
   {
