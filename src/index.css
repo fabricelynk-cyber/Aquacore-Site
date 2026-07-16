@@ -1676,14 +1676,18 @@ img {
   }
 
   .brand {
-    width: 100%;
+    width: max-content;
   }
 
   .brand-capsule {
     gap: 0.7rem;
     padding: 0.34rem 0.5rem 0.38rem 0.26rem;
-    width: 100%;
-    max-width: fit-content;
+    width: auto;
+    max-width: none;
+  }
+
+  .brand-cube-reveal {
+    transform: translate3d(0, -0.48rem, 88px);
   }
 
   .brand-mark-shell {
