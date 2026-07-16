@@ -1672,8 +1672,8 @@ img {
   }
 
   .topbar {
-    row-gap: 1.3rem;
-    padding: 1.15rem 0.7rem 1.45rem;
+    row-gap: 3.2rem;
+    padding: 1.15rem 0.7rem 1.7rem;
   }
 
   .button {
