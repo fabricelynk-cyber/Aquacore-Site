@@ -166,18 +166,9 @@ img {
   padding: 0.4rem 0.7rem 0.45rem 0.35rem;
   border-radius: 999px;
   transform-style: preserve-3d;
-  transform: translateY(-1.15rem);
-  background:
-    radial-gradient(ellipse at 45% 50%, rgba(72, 198, 255, 0.16), transparent 62%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.018));
-  border: 1px solid rgba(140, 219, 255, 0.2);
-  box-shadow:
-    0 22px 54px rgba(1, 11, 20, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition:
-    transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 700ms ease,
-    background 700ms ease;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .brand-cube-reveal {
@@ -196,25 +187,12 @@ img {
 
 
 .brand-capsule::before {
-  content: "";
-  position: absolute;
-  inset: 10% 3.5%;
-  border: 1px solid rgba(116, 214, 255, 0.18);
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(91, 208, 255, 0.11), transparent 68%);
-  opacity: 1;
-  transform: translateZ(-1px);
-  filter: none;
-  pointer-events: none;
-  animation: none;
+  display: none;
 }
 
 .brand:hover .brand-capsule,
 .brand:focus-visible .brand-capsule {
-  transform: translateY(-1.15rem) rotateX(2deg) rotateY(-3deg);
-  box-shadow:
-    0 24px 58px rgba(1, 11, 20, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: none;
 }
 
 .brand-mark-shell {

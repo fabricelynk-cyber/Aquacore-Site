@@ -201,6 +201,20 @@ function BrandCubeReveal() {
       }
 
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      const drawHalo = () => {
+        const glow = context.createRadialGradient(width / 2, height / 2, 8, width / 2, height / 2, width * 0.52);
+        glow.addColorStop(0, "rgba(72, 198, 255, 0.14)");
+        glow.addColorStop(1, "rgba(72, 198, 255, 0)");
+        context.fillStyle = glow;
+        context.beginPath();
+        context.ellipse(width / 2, height / 2, width * 0.49, height * 0.39, 0, 0, Math.PI * 2);
+        context.fill();
+        context.strokeStyle = "rgba(116, 214, 255, 0.24)";
+        context.lineWidth = 1;
+        context.beginPath();
+        context.ellipse(width / 2, height / 2, width * 0.46, height * 0.33, 0, 0, Math.PI * 2);
+        context.stroke();
+      };
       const source = document.createElement("canvas");
       source.width = width;
       source.height = height;
@@ -290,6 +304,7 @@ function BrandCubeReveal() {
         const particleOpacity = rawProgress < 0.86 ? 1 : 1 - (rawProgress - 0.86) / 0.14;
         const logoOpacity = rawProgress < 0.78 ? 0 : Math.min(1, (rawProgress - 0.78) / 0.22);
         context.clearRect(0, 0, width, height);
+        drawHalo();
 
         if (now - startedAt > delay) {
           context.globalAlpha = particleOpacity;
