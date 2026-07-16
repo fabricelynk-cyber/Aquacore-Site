@@ -410,8 +410,8 @@ export default function App() {
           onMouseMove={setInteractivePointer}
           onMouseLeave={clearInteractivePointer}
         >
+          <BrandCubeReveal />
           <span className="brand-capsule" aria-hidden="true">
-            <BrandCubeReveal />
             <span className="brand-mark-shell">
               <span className="brand-mark-aura" />
               <img className="brand-mark" src={aquaCoreSymbol} alt="Logo AquaCore" />
