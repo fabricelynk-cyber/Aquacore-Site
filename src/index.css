@@ -180,6 +180,21 @@ img {
     background 700ms ease;
 }
 
+.brand-cube-reveal {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transform: translateZ(88px);
+}
+
+.brand-capsule > .brand-mark-shell,
+.brand-capsule > .brand-wordmark-stack {
+  opacity: 0;
+}
+
 .brand-capsule::before {
   content: "";
   position: absolute;
@@ -1625,6 +1640,15 @@ img {
   .section-reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .brand-cube-reveal {
+    display: none;
+  }
+
+  .brand-capsule > .brand-mark-shell,
+  .brand-capsule > .brand-wordmark-stack {
+    opacity: 1;
   }
 }
 

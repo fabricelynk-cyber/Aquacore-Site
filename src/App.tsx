@@ -165,7 +165,7 @@ type BrandCube = {
   targetX: number;
   targetY: number;
   size: number;
-  tint: number;
+  sprite: HTMLCanvasElement;
   drift: number;
 };
 
@@ -209,26 +209,61 @@ function BrandCubeReveal() {
         return;
       }
 
-      const markSize = Math.min(height * 0.94, 88);
+      const markInset = Math.max(4, height * 0.05);
+      const markSize = Math.min(height * 0.9, 88);
       const textSize = Math.min(height * 0.48, 46);
-      sourceContext.drawImage(image, 0, (height - markSize) / 2, markSize, markSize);
+      sourceContext.drawImage(image, markInset, (height - markSize) / 2, markSize, markSize);
       sourceContext.font = `400 ${textSize}px Questrial, sans-serif`;
       sourceContext.lineWidth = Math.max(1.5, textSize * 0.04);
-      sourceContext.strokeStyle = "#47c5ff";
-      sourceContext.strokeText("AquaCore", markSize + Math.max(9, width * 0.025), height / 2 + textSize * 0.34);
+      sourceContext.strokeStyle = "#2aa8ff";
+      sourceContext.strokeText("AquaCore", markInset + markSize + Math.max(10, width * 0.03), height / 2 + textSize * 0.34);
 
       const data = sourceContext.getImageData(0, 0, width, height).data;
-      const candidates: Array<{ x: number; y: number }> = [];
-      for (let y = 2; y < height - 2; y += 3) {
-        for (let x = 2; x < width - 2; x += 3) {
-          if (data[(y * width + x) * 4 + 3] > 70) {
-            candidates.push({ x, y });
+      const candidates: Array<{ x: number; y: number; r: number; g: number; b: number }> = [];
+      for (let y = 1; y < height - 1; y += 1) {
+        for (let x = 1; x < width - 1; x += 1) {
+          const offset = (y * width + x) * 4;
+          if (data[offset + 3] > 70) {
+            candidates.push({ x, y, r: data[offset], g: data[offset + 1], b: data[offset + 2] });
           }
         }
       }
 
       const cubes: BrandCube[] = [];
-      const count = Math.min(300, candidates.length);
+      const sprites = new Map<string, HTMLCanvasElement>();
+      const getSprite = (target: { r: number; g: number; b: number }) => {
+        const red = Math.round(target.r / 32) * 32;
+        const green = Math.round(target.g / 32) * 32;
+        const blue = Math.round(target.b / 32) * 32;
+        const key = `${red}-${green}-${blue}`;
+        const existingSprite = sprites.get(key);
+        if (existingSprite) {
+          return existingSprite;
+        }
+
+        const sprite = document.createElement("canvas");
+        sprite.width = 14;
+        sprite.height = 14;
+        const spriteContext = sprite.getContext("2d");
+        if (!spriteContext) {
+          return sprite;
+        }
+
+        spriteContext.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+        spriteContext.fillRect(2, 4, 7, 7);
+        spriteContext.fillStyle = "rgba(230, 250, 255, 0.82)";
+        spriteContext.beginPath();
+        spriteContext.moveTo(2, 4); spriteContext.lineTo(9, 4); spriteContext.lineTo(11, 2); spriteContext.lineTo(4, 2);
+        spriteContext.fill();
+        spriteContext.fillStyle = "rgba(4, 83, 132, 0.58)";
+        spriteContext.beginPath();
+        spriteContext.moveTo(9, 4); spriteContext.lineTo(9, 11); spriteContext.lineTo(11, 9); spriteContext.lineTo(11, 2);
+        spriteContext.fill();
+        sprites.set(key, sprite);
+        return sprite;
+      };
+
+      const count = Math.min(4200, candidates.length);
       for (let index = 0; index < count; index += 1) {
         const candidateIndex = Math.floor(Math.random() * candidates.length);
         const target = candidates.splice(candidateIndex, 1)[0];
@@ -239,55 +274,38 @@ function BrandCubeReveal() {
           targetY: target.y,
           startX: width / 2 + Math.cos(angle) * distance,
           startY: height / 2 + Math.sin(angle) * distance * 0.52,
-          size: 1.9 + Math.random() * 2.1,
-          tint: 180 + Math.random() * 55,
+          size: 0.8 + Math.random() * 1.15,
+          sprite: getSprite(target),
           drift: (Math.random() - 0.5) * 18,
         });
       }
 
-      const delay = 180;
-      const duration = 1950;
+      const delay = 260;
+      const duration = 3400;
       const startedAt = performance.now();
-      const renderCube = (x: number, y: number, size: number, tint: number, alpha: number) => {
-        const half = size / 2;
-        context.fillStyle = `hsla(${tint}, 95%, 67%, ${alpha})`;
-        context.fillRect(x - half, y - half, size, size);
-        context.fillStyle = `hsla(${tint}, 90%, 82%, ${alpha * 0.85})`;
-        context.beginPath();
-        context.moveTo(x - half, y - half);
-        context.lineTo(x + half, y - half);
-        context.lineTo(x + half + size * 0.34, y - half - size * 0.34);
-        context.lineTo(x - half + size * 0.34, y - half - size * 0.34);
-        context.closePath();
-        context.fill();
-        context.fillStyle = `hsla(${tint}, 88%, 42%, ${alpha * 0.72})`;
-        context.beginPath();
-        context.moveTo(x + half, y - half);
-        context.lineTo(x + half, y + half);
-        context.lineTo(x + half + size * 0.34, y + half - size * 0.34);
-        context.lineTo(x + half + size * 0.34, y - half - size * 0.34);
-        context.closePath();
-        context.fill();
-      };
 
       const draw = (now: number) => {
         const rawProgress = Math.min(1, Math.max(0, (now - startedAt - delay) / duration));
-        const progress = rawProgress * rawProgress * (3 - 2 * rawProgress);
-        const fade = rawProgress < 0.72 ? 1 : 1 - (rawProgress - 0.72) / 0.28;
+        const progress = 1 - (1 - rawProgress) ** 4;
+        const particleOpacity = rawProgress < 0.86 ? 1 : 1 - (rawProgress - 0.86) / 0.14;
+        const logoOpacity = rawProgress < 0.78 ? 0 : Math.min(1, (rawProgress - 0.78) / 0.22);
         context.clearRect(0, 0, width, height);
 
         if (now - startedAt > delay) {
+          context.globalAlpha = particleOpacity;
           cubes.forEach((cube) => {
             const x = cube.startX + (cube.targetX - cube.startX) * progress;
             const y = cube.startY + (cube.targetY - cube.startY) * progress + Math.sin(progress * Math.PI) * cube.drift;
-            renderCube(x, y, cube.size * (1.12 - progress * 0.22), cube.tint, fade * (0.74 + progress * 0.26));
+            const cubeSize = cube.size * 2.15;
+            context.drawImage(cube.sprite, x - cubeSize / 2, y - cubeSize / 2, cubeSize, cubeSize);
           });
+          context.globalAlpha = logoOpacity;
+          context.drawImage(source, 0, 0);
+          context.globalAlpha = 1;
         }
 
         if (rawProgress < 1 && isActive) {
           animationFrame = requestAnimationFrame(draw);
-        } else {
-          context.clearRect(0, 0, width, height);
         }
       };
 
@@ -392,6 +410,7 @@ export default function App() {
           onMouseMove={setInteractivePointer}
           onMouseLeave={clearInteractivePointer}
         >
+          <BrandCubeReveal />
           <span className="brand-capsule" aria-hidden="true">
             <span className="brand-mark-shell">
               <span className="brand-mark-aura" />
