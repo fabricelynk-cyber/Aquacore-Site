@@ -12,7 +12,7 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import { useEffect, useState, type CSSProperties, type FormEvent, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type MouseEvent } from "react";
 import aquaCoreSymbol from "./assets/aquacore-symbol-web.png";
 
 const highlights = [
@@ -159,6 +159,155 @@ function clearInteractivePointer(event: MouseEvent<HTMLElement>) {
   event.currentTarget.style.removeProperty("--pointer-y");
 }
 
+type BrandCube = {
+  startX: number;
+  startY: number;
+  targetX: number;
+  targetY: number;
+  size: number;
+  tint: number;
+  drift: number;
+};
+
+function BrandCubeReveal() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    let animationFrame = 0;
+    let isActive = true;
+    const image = new Image();
+    image.src = aquaCoreSymbol;
+
+    const start = () => {
+      if (!isActive) {
+        return;
+      }
+
+      const bounds = canvas.getBoundingClientRect();
+      const width = Math.max(1, Math.round(bounds.width));
+      const height = Math.max(1, Math.round(bounds.height));
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = width * pixelRatio;
+      canvas.height = height * pixelRatio;
+
+      const context = canvas.getContext("2d");
+      if (!context) {
+        return;
+      }
+
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      const source = document.createElement("canvas");
+      source.width = width;
+      source.height = height;
+      const sourceContext = source.getContext("2d", { willReadFrequently: true });
+      if (!sourceContext) {
+        return;
+      }
+
+      const markSize = Math.min(height * 0.94, 88);
+      const textSize = Math.min(height * 0.48, 46);
+      sourceContext.drawImage(image, 0, (height - markSize) / 2, markSize, markSize);
+      sourceContext.font = `400 ${textSize}px Questrial, sans-serif`;
+      sourceContext.lineWidth = Math.max(1.5, textSize * 0.04);
+      sourceContext.strokeStyle = "#47c5ff";
+      sourceContext.strokeText("AquaCore", markSize + Math.max(9, width * 0.025), height / 2 + textSize * 0.34);
+
+      const data = sourceContext.getImageData(0, 0, width, height).data;
+      const candidates: Array<{ x: number; y: number }> = [];
+      for (let y = 2; y < height - 2; y += 3) {
+        for (let x = 2; x < width - 2; x += 3) {
+          if (data[(y * width + x) * 4 + 3] > 70) {
+            candidates.push({ x, y });
+          }
+        }
+      }
+
+      const cubes: BrandCube[] = [];
+      const count = Math.min(300, candidates.length);
+      for (let index = 0; index < count; index += 1) {
+        const candidateIndex = Math.floor(Math.random() * candidates.length);
+        const target = candidates.splice(candidateIndex, 1)[0];
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.max(width, height) * (0.18 + Math.random() * 0.42);
+        cubes.push({
+          targetX: target.x,
+          targetY: target.y,
+          startX: width / 2 + Math.cos(angle) * distance,
+          startY: height / 2 + Math.sin(angle) * distance * 0.52,
+          size: 1.9 + Math.random() * 2.1,
+          tint: 180 + Math.random() * 55,
+          drift: (Math.random() - 0.5) * 18,
+        });
+      }
+
+      const delay = 180;
+      const duration = 1950;
+      const startedAt = performance.now();
+      const renderCube = (x: number, y: number, size: number, tint: number, alpha: number) => {
+        const half = size / 2;
+        context.fillStyle = `hsla(${tint}, 95%, 67%, ${alpha})`;
+        context.fillRect(x - half, y - half, size, size);
+        context.fillStyle = `hsla(${tint}, 90%, 82%, ${alpha * 0.85})`;
+        context.beginPath();
+        context.moveTo(x - half, y - half);
+        context.lineTo(x + half, y - half);
+        context.lineTo(x + half + size * 0.34, y - half - size * 0.34);
+        context.lineTo(x - half + size * 0.34, y - half - size * 0.34);
+        context.closePath();
+        context.fill();
+        context.fillStyle = `hsla(${tint}, 88%, 42%, ${alpha * 0.72})`;
+        context.beginPath();
+        context.moveTo(x + half, y - half);
+        context.lineTo(x + half, y + half);
+        context.lineTo(x + half + size * 0.34, y + half - size * 0.34);
+        context.lineTo(x + half + size * 0.34, y - half - size * 0.34);
+        context.closePath();
+        context.fill();
+      };
+
+      const draw = (now: number) => {
+        const rawProgress = Math.min(1, Math.max(0, (now - startedAt - delay) / duration));
+        const progress = rawProgress * rawProgress * (3 - 2 * rawProgress);
+        const fade = rawProgress < 0.72 ? 1 : 1 - (rawProgress - 0.72) / 0.28;
+        context.clearRect(0, 0, width, height);
+
+        if (now - startedAt > delay) {
+          cubes.forEach((cube) => {
+            const x = cube.startX + (cube.targetX - cube.startX) * progress;
+            const y = cube.startY + (cube.targetY - cube.startY) * progress + Math.sin(progress * Math.PI) * cube.drift;
+            renderCube(x, y, cube.size * (1.12 - progress * 0.22), cube.tint, fade * (0.74 + progress * 0.26));
+          });
+        }
+
+        if (rawProgress < 1 && isActive) {
+          animationFrame = requestAnimationFrame(draw);
+        } else {
+          context.clearRect(0, 0, width, height);
+        }
+      };
+
+      animationFrame = requestAnimationFrame(draw);
+    };
+
+    const fontReady = document.fonts?.ready ?? Promise.resolve();
+    void Promise.all([fontReady, image.decode?.() ?? new Promise<void>((resolve) => {
+      image.addEventListener("load", () => resolve(), { once: true });
+    })]).then(start);
+
+    return () => {
+      isActive = false;
+      cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="brand-cube-reveal" aria-hidden="true" />;
+}
+
 export default function App() {
   const [contactError, setContactError] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
@@ -262,6 +411,7 @@ export default function App() {
           onMouseLeave={clearInteractivePointer}
         >
           <span className="brand-capsule" aria-hidden="true">
+            <BrandCubeReveal />
             <span className="brand-mark-shell">
               <span className="brand-mark-aura" />
               <img className="brand-mark" src={aquaCoreSymbol} alt="Logo AquaCore" />
