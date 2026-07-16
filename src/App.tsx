@@ -12,7 +12,7 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type CSSProperties, type FormEvent, type MouseEvent } from "react";
 import aquaCoreSymbol from "./assets/aquacore-symbol-web.png";
 
 const highlights = [
@@ -122,8 +122,27 @@ function hasContactChannel(form: HTMLFormElement) {
   return email.length > 0 || telephone.length > 0;
 }
 
+function revealStyle(order: number) {
+  return { "--reveal-order": order } as CSSProperties;
+}
+
+function setInteractivePointer(event: MouseEvent<HTMLElement>) {
+  const bounds = event.currentTarget.getBoundingClientRect();
+  const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+  const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+
+  event.currentTarget.style.setProperty("--pointer-x", `${x}%`);
+  event.currentTarget.style.setProperty("--pointer-y", `${y}%`);
+}
+
+function clearInteractivePointer(event: MouseEvent<HTMLElement>) {
+  event.currentTarget.style.removeProperty("--pointer-x");
+  event.currentTarget.style.removeProperty("--pointer-y");
+}
+
 export default function App() {
   const [contactError, setContactError] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
   const contactSuccess =
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("contact") === "success";
@@ -159,12 +178,63 @@ export default function App() {
     setContactError("");
   };
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const syncScrollState = () => {
+      setIsScrolled(window.scrollY > 18);
+    };
+
+    syncScrollState();
+    window.addEventListener("scroll", syncScrollState, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", syncScrollState);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach((element) => element.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.16,
+        rootMargin: "0px 0px -10% 0px",
+      },
+    );
+
+    elements.forEach((element) => observer.observe(element));
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <div className="site-shell">
       <div className="ambient ambient-left" />
       <div className="ambient ambient-right" />
 
-      <header className="topbar">
+      <header className={`topbar${isScrolled ? " topbar-scrolled" : ""}`}>
         <a className="brand" href="#hero" aria-label="AquaCore">
           <img className="brand-mark" src={aquaCoreSymbol} alt="Logo AquaCore" />
           <span className="brand-wordmark" aria-hidden="true">
@@ -180,7 +250,7 @@ export default function App() {
           <a href="#contact">Contact</a>
         </nav>
 
-        <a className="button button-ghost" href="#contact">
+        <a className="button button-ghost button-shimmer" href="#contact">
           Contact
         </a>
       </header>
@@ -205,46 +275,73 @@ export default function App() {
             </p>
 
             <div className="hero-actions">
-              <a className="button button-primary" href="#modules">
+              <a className="button button-primary button-shimmer" href="#modules">
                 Explorer les modules
                 <ArrowRight size={18} />
               </a>
-              <a className="button button-secondary" href="#mise-en-oeuvre">
+              <a className="button button-secondary button-shimmer" href="#mise-en-oeuvre">
                 Voir la mise en oeuvre
               </a>
             </div>
-
           </div>
 
           <div className="hero-visual" aria-hidden="true">
-            <div className="hero-panel hero-panel-main">
+            <div className="hero-orbit hero-orbit-a" />
+            <div className="hero-orbit hero-orbit-b" />
+
+            <div
+              className="hero-panel hero-panel-main interactive-surface hero-surface"
+              onMouseMove={setInteractivePointer}
+              onMouseLeave={clearInteractivePointer}
+            >
               <div className="panel-topline">
                 <span className="panel-chip">Vue consolidée</span>
                 <span className="panel-dot" />
               </div>
 
               <div className="panel-grid">
-                <article className="metric-card metric-card-wide">
+                <article
+                  className="metric-card metric-card-wide interactive-surface"
+                  onMouseMove={setInteractivePointer}
+                  onMouseLeave={clearInteractivePointer}
+                >
                   <div className="metric-label">Cockpit AquaCore</div>
                   <strong>Décider avec des données enfin reliées</strong>
                   <p>
                     Une lecture unifiée des bassins, des publics, des charges et du rendement.
                   </p>
+                  <div className="metric-signal-row" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
                 </article>
 
-                <article className="metric-card metric-accent">
+                <article
+                  className="metric-card metric-accent interactive-surface"
+                  onMouseMove={setInteractivePointer}
+                  onMouseLeave={clearInteractivePointer}
+                >
                   <div className="metric-label">Fréquentation</div>
                   <strong>+18%</strong>
                   <span>Tendance lisible site par site</span>
                 </article>
 
-                <article className="metric-card">
+                <article
+                  className="metric-card interactive-surface"
+                  onMouseMove={setInteractivePointer}
+                  onMouseLeave={clearInteractivePointer}
+                >
                   <div className="metric-label">Fluides</div>
                   <strong>Gestion multiple</strong>
                   <span>Postes fluides standards et personnalisés</span>
                 </article>
 
-                <article className="metric-card">
+                <article
+                  className="metric-card interactive-surface"
+                  onMouseMove={setInteractivePointer}
+                  onMouseLeave={clearInteractivePointer}
+                >
                   <div className="metric-label">Planning</div>
                   <strong>Plan d'occupation complet</strong>
                   <span>Heures et surfaces attribuées quantifiées automatiquement</span>
@@ -252,7 +349,11 @@ export default function App() {
               </div>
             </div>
 
-            <div className="hero-panel hero-panel-side">
+            <div
+              className="hero-panel hero-panel-side interactive-surface hero-surface"
+              onMouseMove={setInteractivePointer}
+              onMouseLeave={clearInteractivePointer}
+            >
               <img src={aquaCoreSymbol} alt="" />
               <div>
                 <p className="metric-label">Déploiement souple</p>
@@ -262,7 +363,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section" id="solution">
+        <section className="section section-reveal" id="solution" data-reveal style={revealStyle(1)}>
           <div className="section-heading">
             <span className="section-kicker">Pourquoi AquaCore</span>
             <h2>Transformer des données dispersées en pilotage lisible.</h2>
@@ -284,15 +385,27 @@ export default function App() {
             </div>
 
             <div className="origin-panel-points">
-              <div className="origin-point">
+              <div
+                className="origin-point interactive-surface"
+                onMouseMove={setInteractivePointer}
+                onMouseLeave={clearInteractivePointer}
+              >
                 <CheckCircle2 size={18} />
                 <span>Né des usages réels des directions de centres aquatiques.</span>
               </div>
-              <div className="origin-point">
+              <div
+                className="origin-point interactive-surface"
+                onMouseMove={setInteractivePointer}
+                onMouseLeave={clearInteractivePointer}
+              >
                 <CheckCircle2 size={18} />
                 <span>Pensé pour objectiver les choix plutôt que produire du reporting de plus.</span>
               </div>
-              <div className="origin-point">
+              <div
+                className="origin-point interactive-surface"
+                onMouseMove={setInteractivePointer}
+                onMouseLeave={clearInteractivePointer}
+              >
                 <CheckCircle2 size={18} />
                 <span>Construit pour rester lisible, même quand les sources de données se multiplient.</span>
               </div>
@@ -301,7 +414,12 @@ export default function App() {
 
           <div className="cards-grid three-cols">
             {highlights.map(({ icon: Icon, title, text }) => (
-              <article className="feature-card" key={title}>
+              <article
+                className="feature-card interactive-surface"
+                key={title}
+                onMouseMove={setInteractivePointer}
+                onMouseLeave={clearInteractivePointer}
+              >
                 <div className="feature-icon">
                   <Icon size={22} />
                 </div>
@@ -312,7 +430,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section" id="modules">
+        <section className="section section-reveal" id="modules" data-reveal style={revealStyle(2)}>
           <div className="section-heading">
             <span className="section-kicker">Modules</span>
             <h2>Les briques qui structurent le pilotage d'un équipement aquatique.</h2>
@@ -324,7 +442,12 @@ export default function App() {
 
           <div className="cards-grid two-cols">
             {modules.map(({ icon: Icon, title, text }) => (
-              <article className="module-card" key={title}>
+              <article
+                className="module-card interactive-surface"
+                key={title}
+                onMouseMove={setInteractivePointer}
+                onMouseLeave={clearInteractivePointer}
+              >
                 <div className="module-head">
                   <div className="feature-icon">
                     <Icon size={22} />
@@ -337,7 +460,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section" id="fonctionnalites">
+        <section className="section section-reveal" id="fonctionnalites" data-reveal style={revealStyle(3)}>
           <div className="section-heading">
             <span className="section-kicker">Fonctionnalités Clés</span>
             <h2>Des fonctions pour fiabiliser la donnée et gagner du temps au quotidien.</h2>
@@ -349,7 +472,12 @@ export default function App() {
 
           <div className="cards-grid two-cols">
             {capabilities.map((capability) => (
-              <article className="capability-card" key={capability.title}>
+              <article
+                className="capability-card interactive-surface"
+                key={capability.title}
+                onMouseMove={setInteractivePointer}
+                onMouseLeave={clearInteractivePointer}
+              >
                 <h3>{capability.title}</h3>
                 <ul className="capability-list">
                   {capability.items.map((item) => (
@@ -361,7 +489,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section split-section" id="impact">
+        <section className="section split-section section-reveal" id="impact" data-reveal style={revealStyle(4)}>
           <div className="section-heading compact">
             <span className="section-kicker">Impact</span>
             <h2>Ce que vous gagnez avec une lecture unifiée de l'équipement.</h2>
@@ -374,14 +502,23 @@ export default function App() {
           <div className="impact-panel">
             <div className="impact-list">
               {benefits.map((item) => (
-                <div className="impact-item" key={item}>
+                <div
+                  className="impact-item interactive-surface"
+                  key={item}
+                  onMouseMove={setInteractivePointer}
+                  onMouseLeave={clearInteractivePointer}
+                >
                   <CheckCircle2 size={18} />
                   <span>{item}</span>
                 </div>
               ))}
             </div>
 
-            <div className="quote-card">
+            <div
+              className="quote-card interactive-surface"
+              onMouseMove={setInteractivePointer}
+              onMouseLeave={clearInteractivePointer}
+            >
               <Layers3 size={30} />
               <p>
                 Les revues d'exploitation, les échanges avec les équipes et les arbitrages
@@ -391,7 +528,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section" id="mise-en-oeuvre">
+        <section className="section section-reveal" id="mise-en-oeuvre" data-reveal style={revealStyle(5)}>
           <div className="section-heading">
             <span className="section-kicker">Mise en oeuvre</span>
             <h2>Une mise en oeuvre progressive, centrée sur les usages terrain.</h2>
@@ -404,7 +541,12 @@ export default function App() {
 
           <div className="rollout-grid">
             {rolloutSteps.map((item) => (
-              <article className="rollout-card" key={item.step}>
+              <article
+                className="rollout-card interactive-surface"
+                key={item.step}
+                onMouseMove={setInteractivePointer}
+                onMouseLeave={clearInteractivePointer}
+              >
                 <span className="rollout-step">{item.step}</span>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
@@ -412,19 +554,23 @@ export default function App() {
             ))}
           </div>
 
-          <div className="deploy-banner">
+          <div
+            className="deploy-banner interactive-surface"
+            onMouseMove={setInteractivePointer}
+            onMouseLeave={clearInteractivePointer}
+          >
             <div>
               <p className="metric-label">Cap sur l'exploitation</p>
               <strong>Un cadre de pilotage prêt à s'installer dans vos routines mensuelles</strong>
             </div>
-            <a className="button button-primary" href="#hero">
+            <a className="button button-primary button-shimmer" href="#hero">
               Revenir au hero
               <Activity size={18} />
             </a>
           </div>
         </section>
 
-        <section className="section" id="contact">
+        <section className="section section-reveal" id="contact" data-reveal style={revealStyle(6)}>
           <div className="section-heading">
             <span className="section-kicker">Contact</span>
             <h2>Parlons de votre équipement, de vos sites et de vos besoins de pilotage.</h2>
@@ -435,7 +581,11 @@ export default function App() {
           </div>
 
           <div className="contact-grid">
-            <aside className="contact-card contact-card-info">
+            <aside
+              className="contact-card contact-card-info interactive-surface"
+              onMouseMove={setInteractivePointer}
+              onMouseLeave={clearInteractivePointer}
+            >
               <p className="metric-label">AquaCore</p>
               <strong>Un point de contact clair pour vos demandes, démonstrations et questions.</strong>
               <p>
@@ -451,7 +601,11 @@ export default function App() {
               </div>
             </aside>
 
-            <div className="contact-card">
+            <div
+              className="contact-card interactive-surface"
+              onMouseMove={setInteractivePointer}
+              onMouseLeave={clearInteractivePointer}
+            >
               {contactSuccess ? (
                 <div className="contact-success" role="status">
                   <CheckCircle2 size={18} />
