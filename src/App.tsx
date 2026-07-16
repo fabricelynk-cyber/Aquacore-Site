@@ -310,7 +310,6 @@ function BrandCubeReveal() {
 
 export default function App() {
   const [contactError, setContactError] = useState("");
-  const [isScrolled, setIsScrolled] = useState(false);
   const contactSuccess =
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("contact") === "success";
@@ -351,23 +350,6 @@ export default function App() {
       return;
     }
 
-    const syncScrollState = () => {
-      setIsScrolled(window.scrollY > 18);
-    };
-
-    syncScrollState();
-    window.addEventListener("scroll", syncScrollState, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", syncScrollState);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
     const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
 
     if (!("IntersectionObserver" in window)) {
@@ -402,7 +384,7 @@ export default function App() {
       <div className="ambient ambient-left" />
       <div className="ambient ambient-right" />
 
-      <header className={`topbar${isScrolled ? " topbar-scrolled" : ""}`}>
+      <header className="topbar">
         <a
           className="brand brand-hero-signature"
           href="#hero"
@@ -410,7 +392,6 @@ export default function App() {
           onMouseMove={setInteractivePointer}
           onMouseLeave={clearInteractivePointer}
         >
-          <BrandCubeReveal />
           <span className="brand-capsule" aria-hidden="true">
             <span className="brand-mark-shell">
               <span className="brand-mark-aura" />
