@@ -15,7 +15,7 @@
   --accent: #fdb53d;
   --accent-soft: #ffd88f;
   --shadow: 0 24px 80px rgba(1, 11, 20, 0.42);
-  --shadow-hover: 0 28px 90px rgba(1, 11, 20, 0.56);
+  --shadow-hover: 0 22px 62px rgba(1, 11, 20, 0.42);
   --max-width: 1180px;
 }
 
@@ -1249,10 +1249,10 @@ img {
   position: relative;
   isolation: isolate;
   transition:
-    transform 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease,
-    background 220ms ease;
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 320ms ease,
+    box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 320ms ease;
 }
 
 .interactive-surface::before {
@@ -1263,12 +1263,12 @@ img {
   pointer-events: none;
   background: radial-gradient(
     circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
-    rgba(51, 198, 255, 0.18),
-    rgba(47, 199, 165, 0.06) 22%,
-    transparent 52%
+    rgba(51, 198, 255, 0.11),
+    rgba(47, 199, 165, 0.035) 24%,
+    transparent 58%
   );
   opacity: 0;
-  transition: opacity 220ms ease;
+  transition: opacity 360ms ease;
   z-index: 0;
 }
 
@@ -1280,16 +1280,16 @@ img {
   pointer-events: none;
   background: linear-gradient(
     125deg,
-    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.05),
     transparent 24%,
     transparent 72%,
-    rgba(51, 198, 255, 0.08)
+    rgba(51, 198, 255, 0.05)
   );
   opacity: 0;
-  transform: translateX(-6%);
+  transform: translateX(-3%);
   transition:
-    opacity 220ms ease,
-    transform 260ms ease;
+    opacity 360ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 0;
 }
 
@@ -1300,18 +1300,21 @@ img {
 
 .interactive-surface:hover,
 .interactive-surface:focus-within {
-  transform: translateY(-0.4rem);
-  border-color: rgba(122, 215, 255, 0.18);
+  transform: translateY(-0.18rem);
+  border-color: rgba(122, 215, 255, 0.12);
   box-shadow:
     var(--shadow-hover),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .interactive-surface:hover::before,
+.interactive-surface:focus-within::before {
+  opacity: 0.78;
+}
+
 .interactive-surface:hover::after,
-.interactive-surface:focus-within::before,
 .interactive-surface:focus-within::after {
-  opacity: 1;
+  opacity: 0.52;
 }
 
 .interactive-surface:hover::after,
@@ -1321,11 +1324,11 @@ img {
 
 .interactive-surface:hover .feature-icon,
 .interactive-surface:focus-within .feature-icon {
-  transform: translateY(-0.12rem) rotate(-7deg) scale(1.04);
+  transform: translateY(-0.05rem) rotate(-3deg) scale(1.02);
   box-shadow:
-    0 18px 36px rgba(51, 198, 255, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.34);
-  filter: saturate(1.05);
+    0 14px 28px rgba(51, 198, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  filter: saturate(1.02);
 }
 
 .footer {
