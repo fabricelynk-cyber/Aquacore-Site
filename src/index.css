@@ -186,11 +186,11 @@ img {
   box-shadow:
     0 22px 54px rgba(1, 11, 20, 0.22),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  animation: brand-stage-arrive 1450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: brand-stage-arrive 1900ms cubic-bezier(0.22, 0.75, 0.2, 1) both;
   transition:
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 420ms ease,
-    background 420ms ease;
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 700ms ease,
+    background 700ms ease;
 }
 
 .brand-capsule::before {
@@ -211,15 +211,15 @@ img {
   filter: blur(1px);
   pointer-events: none;
   animation:
-    brand-capsule-sheen 1800ms 360ms cubic-bezier(0.2, 1, 0.3, 1) both,
-    brand-sheen-idle 8s 3s ease-in-out infinite;
+    brand-capsule-sheen 2400ms 580ms cubic-bezier(0.16, 1, 0.3, 1) both,
+    brand-sheen-idle 12s 4s ease-in-out infinite;
 }
 
 .brand:hover .brand-capsule,
 .brand:focus-visible .brand-capsule {
-  transform: rotateX(7deg) rotateY(-10deg) translateY(-0.08rem);
+  transform: rotateX(2deg) rotateY(-3deg) translateY(-0.03rem);
   box-shadow:
-    0 26px 62px rgba(1, 11, 20, 0.28),
+    0 24px 58px rgba(1, 11, 20, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
@@ -230,7 +230,7 @@ img {
   width: clamp(4.9rem, 6.1vw, 5.9rem);
   height: clamp(4.9rem, 6.1vw, 5.9rem);
   transform-style: preserve-3d;
-  animation: brand-mark-arrive 1500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: brand-mark-arrive 2050ms cubic-bezier(0.22, 0.75, 0.2, 1) both;
 }
 
 .brand-mark-aura {
@@ -259,13 +259,13 @@ img {
     drop-shadow(0 0 14px rgba(51, 198, 255, 0.18));
   transform: translateZ(48px);
   transition:
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 420ms ease;
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 700ms ease;
 }
 
 .brand:hover .brand-mark,
 .brand:focus-visible .brand-mark {
-  transform: translateZ(60px) rotateY(-4deg) rotateX(3deg);
+  transform: translateZ(53px) rotateY(-1deg) rotateX(0.8deg);
   filter:
     drop-shadow(0 18px 28px rgba(2, 17, 31, 0.34))
     drop-shadow(0 0 18px rgba(51, 198, 255, 0.22));
@@ -278,7 +278,7 @@ img {
   transform-style: preserve-3d;
   min-width: max-content;
   padding-right: 0.2rem;
-  animation: brand-wordmark-arrive 1600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: brand-wordmark-arrive 2200ms cubic-bezier(0.22, 0.75, 0.2, 1) both;
 }
 
 .brand-wordmark {
@@ -301,8 +301,8 @@ img {
     0 22px 40px rgba(1, 11, 20, 0.2);
   transform: translateZ(54px);
   transition:
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
-    text-shadow 420ms ease;
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    text-shadow 700ms ease;
 }
 
 .brand-wordmark-back {
@@ -319,7 +319,7 @@ img {
 
 .brand:hover .brand-wordmark-front,
 .brand:focus-visible .brand-wordmark-front {
-  transform: translateZ(68px) rotateX(2deg);
+  transform: translateZ(57px) rotateX(0.6deg);
   text-shadow:
     0 0 16px rgba(42, 168, 255, 0.14),
     0 12px 36px rgba(42, 168, 255, 0.18),
@@ -328,7 +328,7 @@ img {
 
 .brand:hover .brand-wordmark-back,
 .brand:focus-visible .brand-wordmark-back {
-  transform: translate3d(0.34rem, 0.2rem, -26px);
+  transform: translate3d(0.29rem, 0.19rem, -21px);
 }
 
 .nav {
@@ -1507,13 +1507,13 @@ img {
 @keyframes brand-stage-arrive {
   0% {
     opacity: 0;
-    transform: translate3d(-0.4rem, -0.32rem, -80px) rotateX(30deg) rotateY(-28deg) scale(0.92);
-    filter: blur(10px);
+    transform: translate3d(-0.22rem, -0.16rem, -34px) rotateX(8deg) rotateY(-7deg) scale(0.975);
+    filter: blur(5px);
   }
 
-  55% {
+  56% {
     opacity: 1;
-    transform: translate3d(0, 0, 24px) rotateX(-6deg) rotateY(7deg) scale(1.02);
+    transform: translate3d(-0.02rem, 0, 4px) rotateX(0.6deg) rotateY(-0.5deg) scale(1.002);
     filter: blur(0);
   }
 
@@ -1527,13 +1527,13 @@ img {
 @keyframes brand-mark-arrive {
   0% {
     opacity: 0;
-    transform: translate3d(-0.9rem, 0.2rem, -110px) rotateY(-48deg) rotateZ(-10deg) scale(0.78);
-    filter: blur(10px);
+    transform: translate3d(-0.34rem, 0.08rem, -46px) rotateY(-12deg) rotateZ(-2deg) scale(0.94);
+    filter: blur(6px);
   }
 
-  60% {
+  62% {
     opacity: 1;
-    transform: translate3d(0.12rem, -0.08rem, 36px) rotateY(6deg) rotateZ(1deg) scale(1.03);
+    transform: translate3d(0, 0, 5px) rotateY(0.5deg) rotateZ(0) scale(1.003);
     filter: blur(0);
   }
 
@@ -1547,13 +1547,13 @@ img {
 @keyframes brand-wordmark-arrive {
   0% {
     opacity: 0;
-    transform: translate3d(1.1rem, 0.16rem, -90px) rotateX(26deg) rotateY(-20deg) scale(0.96);
-    filter: blur(12px);
+    transform: translate3d(0.38rem, 0.06rem, -38px) rotateX(7deg) rotateY(-5deg) scale(0.98);
+    filter: blur(6px);
   }
 
-  62% {
+  65% {
     opacity: 1;
-    transform: translate3d(-0.06rem, 0, 30px) rotateX(-4deg) rotateY(3deg) scale(1.01);
+    transform: translate3d(0, 0, 4px) rotateX(0.4deg) rotateY(-0.3deg) scale(1.001);
     filter: blur(0);
   }
 
