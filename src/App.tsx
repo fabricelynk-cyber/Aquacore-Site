@@ -264,8 +264,11 @@ export default function App() {
             </div>
 
             <h1>
-              Pilotez fréquentation, fluides, recettes, ressources humaines, budget et occupation
-              depuis une seule application métier.
+              <span>
+                Pilotez fréquentation, fluides, recettes, ressources humaines, budget et
+                occupation
+              </span>
+              <span className="hero-title-accent">depuis une seule application métier.</span>
             </h1>
 
             <p className="hero-text">
