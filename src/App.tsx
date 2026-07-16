@@ -33,6 +33,21 @@ const highlights = [
   },
 ];
 
+const premiumBand = [
+  {
+    label: "Historique continu",
+    text: "Une lecture qui suit les mois, les saisons et les arbitrages sans perdre le fil.",
+  },
+  {
+    label: "Référentiels souples",
+    text: "Postes, routines et postes fluides s'adaptent à votre structure sans dégrader la cohérence.",
+  },
+  {
+    label: "Déploiement maîtrisé",
+    text: "Un même cadre pour un site unique, une régie, un délégataire ou un réseau multisite.",
+  },
+];
+
 const modules = [
   {
     icon: Droplets,
@@ -124,6 +139,10 @@ function hasContactChannel(form: HTMLFormElement) {
 
 function revealStyle(order: number) {
   return { "--reveal-order": order } as CSSProperties;
+}
+
+function indexedCardStyle(index: number) {
+  return { "--card-index": `"${String(index + 1).padStart(2, "0")}"` } as CSSProperties;
 }
 
 function setInteractivePointer(event: MouseEvent<HTMLElement>) {
@@ -286,6 +305,13 @@ export default function App() {
                 Voir la mise en oeuvre
               </a>
             </div>
+
+            <div className="hero-signature">
+              <span className="hero-signature-label">Signature AquaCore</span>
+              <p>
+                Pensé comme un cockpit de direction, et non comme un tableau de bord de plus.
+              </p>
+            </div>
           </div>
 
           <div className="hero-visual" aria-hidden="true">
@@ -366,7 +392,22 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-reveal" id="solution" data-reveal style={revealStyle(1)}>
+        <section className="premium-band section-reveal" data-reveal style={revealStyle(1)}>
+          {premiumBand.map((item, index) => (
+            <article
+              className="premium-band-card interactive-surface"
+              key={item.label}
+              style={indexedCardStyle(index)}
+              onMouseMove={setInteractivePointer}
+              onMouseLeave={clearInteractivePointer}
+            >
+              <span className="premium-band-label">{item.label}</span>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </section>
+
+        <section className="section section-frame section-reveal" id="solution" data-reveal style={revealStyle(2)}>
           <div className="section-heading">
             <span className="section-kicker">Pourquoi AquaCore</span>
             <h2>Transformer des données dispersées en pilotage lisible.</h2>
@@ -416,10 +457,11 @@ export default function App() {
           </div>
 
           <div className="cards-grid three-cols">
-            {highlights.map(({ icon: Icon, title, text }) => (
+            {highlights.map(({ icon: Icon, title, text }, index) => (
               <article
                 className="feature-card interactive-surface"
                 key={title}
+                style={indexedCardStyle(index)}
                 onMouseMove={setInteractivePointer}
                 onMouseLeave={clearInteractivePointer}
               >
@@ -433,7 +475,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-reveal" id="modules" data-reveal style={revealStyle(2)}>
+        <section className="section section-frame section-reveal" id="modules" data-reveal style={revealStyle(3)}>
           <div className="section-heading">
             <span className="section-kicker">Modules</span>
             <h2>Les briques qui structurent le pilotage d'un équipement aquatique.</h2>
@@ -444,10 +486,11 @@ export default function App() {
           </div>
 
           <div className="cards-grid two-cols">
-            {modules.map(({ icon: Icon, title, text }) => (
+            {modules.map(({ icon: Icon, title, text }, index) => (
               <article
                 className="module-card interactive-surface"
                 key={title}
+                style={indexedCardStyle(index)}
                 onMouseMove={setInteractivePointer}
                 onMouseLeave={clearInteractivePointer}
               >
@@ -463,7 +506,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-reveal" id="fonctionnalites" data-reveal style={revealStyle(3)}>
+        <section className="section section-frame section-reveal" id="fonctionnalites" data-reveal style={revealStyle(4)}>
           <div className="section-heading">
             <span className="section-kicker">Fonctionnalités Clés</span>
             <h2>Des fonctions pour fiabiliser la donnée et gagner du temps au quotidien.</h2>
@@ -474,10 +517,11 @@ export default function App() {
           </div>
 
           <div className="cards-grid two-cols">
-            {capabilities.map((capability) => (
+            {capabilities.map((capability, index) => (
               <article
                 className="capability-card interactive-surface"
                 key={capability.title}
+                style={indexedCardStyle(index)}
                 onMouseMove={setInteractivePointer}
                 onMouseLeave={clearInteractivePointer}
               >
@@ -492,7 +536,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section split-section section-reveal" id="impact" data-reveal style={revealStyle(4)}>
+        <section className="section section-frame split-section section-reveal" id="impact" data-reveal style={revealStyle(5)}>
           <div className="section-heading compact">
             <span className="section-kicker">Impact</span>
             <h2>Ce que vous gagnez avec une lecture unifiée de l'équipement.</h2>
@@ -531,7 +575,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-reveal" id="mise-en-oeuvre" data-reveal style={revealStyle(5)}>
+        <section className="section section-frame section-reveal" id="mise-en-oeuvre" data-reveal style={revealStyle(6)}>
           <div className="section-heading">
             <span className="section-kicker">Mise en oeuvre</span>
             <h2>Une mise en oeuvre progressive, centrée sur les usages terrain.</h2>
@@ -573,7 +617,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-reveal" id="contact" data-reveal style={revealStyle(6)}>
+        <section className="section section-frame section-reveal" id="contact" data-reveal style={revealStyle(7)}>
           <div className="section-heading">
             <span className="section-kicker">Contact</span>
             <h2>Parlons de votre équipement, de vos sites et de vos besoins de pilotage.</h2>
