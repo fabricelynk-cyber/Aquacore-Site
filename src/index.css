@@ -1671,6 +1671,11 @@ img {
     width: min(calc(100% - 1.1rem), var(--max-width));
   }
 
+  .topbar {
+    row-gap: 1.3rem;
+    padding: 1.15rem 0.7rem 1.45rem;
+  }
+
   .button {
     width: 100%;
   }
