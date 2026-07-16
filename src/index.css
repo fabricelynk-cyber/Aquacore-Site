@@ -186,7 +186,12 @@ img {
   inset: 0;
   display: block;
   pointer-events: none;
-  transform: translateZ(88px);
+  transform: translate3d(0, -0.16rem, 88px);
+}
+
+.brand-capsule > .brand-mark-shell,
+.brand-capsule > .brand-wordmark-stack {
+  opacity: 0;
 }
 
 
