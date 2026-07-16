@@ -126,8 +126,7 @@ img {
 }
 
 .topbar {
-  position: sticky;
-  top: 1rem;
+  position: relative;
   z-index: 12;
   display: flex;
   align-items: center;
@@ -198,9 +197,7 @@ img {
   transform: translate3d(-26%, 0, 18px);
   filter: blur(1px);
   pointer-events: none;
-  animation:
-    brand-capsule-sheen 2400ms 580ms cubic-bezier(0.16, 1, 0.3, 1) both,
-    brand-sheen-idle 12s 4s ease-in-out infinite;
+  animation: none;
 }
 
 .brand:hover .brand-capsule,
