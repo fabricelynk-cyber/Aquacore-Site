@@ -278,11 +278,14 @@ function BrandCubeReveal() {
       };
 
       const count = Math.min(4200, candidates.length);
+      const isCompactViewport = window.matchMedia("(max-width: 720px)").matches;
       for (let index = 0; index < count; index += 1) {
         const candidateIndex = Math.floor(Math.random() * candidates.length);
         const target = candidates.splice(candidateIndex, 1)[0];
         const angle = Math.random() * Math.PI * 2;
-        const distance = Math.max(width, height) * (0.18 + Math.random() * 0.42);
+        const distance = Math.max(width, height) * (
+          isCompactViewport ? 0.06 + Math.random() * 0.18 : 0.18 + Math.random() * 0.42
+        );
         cubes.push({
           targetX: target.x,
           targetY: target.y,
