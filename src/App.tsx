@@ -254,10 +254,22 @@ export default function App() {
       <div className="ambient ambient-right" />
 
       <header className={`topbar${isScrolled ? " topbar-scrolled" : ""}`}>
-        <a className="brand" href="#hero" aria-label="AquaCore">
-          <img className="brand-mark" src={aquaCoreSymbol} alt="Logo AquaCore" />
-          <span className="brand-wordmark" aria-hidden="true">
-            AquaCore
+        <a
+          className="brand brand-hero-signature"
+          href="#hero"
+          aria-label="AquaCore"
+          onMouseMove={setInteractivePointer}
+          onMouseLeave={clearInteractivePointer}
+        >
+          <span className="brand-capsule" aria-hidden="true">
+            <span className="brand-mark-shell">
+              <span className="brand-mark-aura" />
+              <img className="brand-mark" src={aquaCoreSymbol} alt="Logo AquaCore" />
+            </span>
+            <span className="brand-wordmark-stack">
+              <span className="brand-wordmark brand-wordmark-back">AquaCore</span>
+              <span className="brand-wordmark brand-wordmark-front">AquaCore</span>
+            </span>
           </span>
         </a>
 
