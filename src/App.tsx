@@ -191,6 +191,7 @@ function BrandCubeReveal() {
       const bounds = canvas.getBoundingClientRect();
       const width = Math.max(1, Math.round(bounds.width));
       const height = Math.max(1, Math.round(bounds.height));
+      const isCompactViewport = window.matchMedia("(max-width: 720px)").matches;
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = width * pixelRatio;
       canvas.height = height * pixelRatio;
@@ -223,14 +224,19 @@ function BrandCubeReveal() {
         return;
       }
 
-      const markInset = Math.max(4, height * 0.05);
-      const markSize = Math.min(height * 0.9, 88);
-      const textSize = Math.min(height * 0.48, 46);
-      sourceContext.drawImage(image, markInset, (height - markSize) / 2, markSize, markSize);
+      const contentScale = isCompactViewport ? 0.68 : 1;
+      const markSize = Math.min(height * 0.9, 88) * contentScale;
+      const textSize = Math.min(height * 0.48, 46) * contentScale;
       sourceContext.font = `400 ${textSize}px Questrial, sans-serif`;
       sourceContext.lineWidth = Math.max(1.5, textSize * 0.04);
       sourceContext.strokeStyle = "#2aa8ff";
-      sourceContext.strokeText("AquaCore", markInset + markSize + Math.max(10, width * 0.03), height / 2 + textSize * 0.34);
+      const gap = Math.max(8, width * 0.025) * contentScale;
+      const wordWidth = sourceContext.measureText("AquaCore").width;
+      const markInset = isCompactViewport
+        ? Math.max(2, (width - markSize - gap - wordWidth) / 2)
+        : Math.max(4, height * 0.05);
+      sourceContext.drawImage(image, markInset, (height - markSize) / 2, markSize, markSize);
+      sourceContext.strokeText("AquaCore", markInset + markSize + gap, height / 2 + textSize * 0.34);
 
       const data = sourceContext.getImageData(0, 0, width, height).data;
       const candidates: Array<{ x: number; y: number; r: number; g: number; b: number }> = [];
@@ -278,7 +284,6 @@ function BrandCubeReveal() {
       };
 
       const count = Math.min(4200, candidates.length);
-      const isCompactViewport = window.matchMedia("(max-width: 720px)").matches;
       for (let index = 0; index < count; index += 1) {
         const candidateIndex = Math.floor(Math.random() * candidates.length);
         const target = candidates.splice(candidateIndex, 1)[0];
