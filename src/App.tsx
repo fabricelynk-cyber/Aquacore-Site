@@ -174,7 +174,7 @@ function BrandCubeReveal() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!canvas) {
       return;
     }
 

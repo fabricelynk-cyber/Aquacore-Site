@@ -1637,10 +1637,6 @@ img {
     transform: none;
   }
 
-  .brand-cube-reveal {
-    display: none;
-  }
-
 }
 
 @media (max-width: 1040px) {
