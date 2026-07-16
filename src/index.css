@@ -186,7 +186,7 @@ img {
   inset: 0;
   display: block;
   pointer-events: none;
-  transform: translate3d(0, -0.32rem, 88px);
+  transform: translate3d(0, -0.5rem, 88px);
 }
 
 .brand-capsule > .brand-mark-shell,
