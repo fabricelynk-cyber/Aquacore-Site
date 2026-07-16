@@ -190,10 +190,6 @@ img {
   transform: translateZ(88px);
 }
 
-.brand-capsule > .brand-mark-shell,
-.brand-capsule > .brand-wordmark-stack {
-  opacity: 0;
-}
 
 .brand-capsule::before {
   content: "";
@@ -1646,10 +1642,6 @@ img {
     display: none;
   }
 
-  .brand-capsule > .brand-mark-shell,
-  .brand-capsule > .brand-wordmark-stack {
-    opacity: 1;
-  }
 }
 
 @media (max-width: 1040px) {

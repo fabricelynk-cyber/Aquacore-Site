@@ -312,10 +312,16 @@ function BrandCubeReveal() {
       animationFrame = requestAnimationFrame(draw);
     };
 
-    const fontReady = document.fonts?.ready ?? Promise.resolve();
-    void Promise.all([fontReady, image.decode?.() ?? new Promise<void>((resolve) => {
-      image.addEventListener("load", () => resolve(), { once: true });
-    })]).then(start);
+    const startWhenReady = () => {
+      const fontReady = document.fonts?.ready ?? Promise.resolve();
+      void fontReady.then(() => window.setTimeout(start, 420));
+    };
+
+    if (image.complete && image.naturalWidth > 0) {
+      startWhenReady();
+    } else {
+      image.addEventListener("load", startWhenReady, { once: true });
+    }
 
     return () => {
       isActive = false;
