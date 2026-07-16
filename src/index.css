@@ -164,13 +164,12 @@ img {
   align-items: center;
   gap: 0.9rem;
   padding: 0.4rem 0.7rem 0.45rem 0.35rem;
-  border-radius: 1.7rem;
+  border-radius: 999px;
   transform-style: preserve-3d;
   background:
-    radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(255, 255, 255, 0.12), transparent 42%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)) padding-box,
-    linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(122, 215, 255, 0.16), rgba(255, 216, 143, 0.08)) border-box;
-  border: 1px solid transparent;
+    radial-gradient(ellipse at 45% 50%, rgba(72, 198, 255, 0.16), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.018));
+  border: 1px solid rgba(140, 219, 255, 0.2);
   box-shadow:
     0 22px 54px rgba(1, 11, 20, 0.22),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -186,7 +185,7 @@ img {
   inset: 0;
   display: block;
   pointer-events: none;
-  transform: translate3d(0, -0.9rem, 88px);
+  transform: translate3d(0, -1.15rem, 88px);
 }
 
 .brand-capsule > .brand-mark-shell,
@@ -198,19 +197,13 @@ img {
 .brand-capsule::before {
   content: "";
   position: absolute;
-  inset: -16% -12%;
-  border-radius: 2rem;
-  background:
-    linear-gradient(
-      115deg,
-      transparent 22%,
-      rgba(255, 255, 255, 0.24) 38%,
-      rgba(255, 255, 255, 0.03) 55%,
-      transparent 72%
-    );
-  opacity: 0.72;
-  transform: translate3d(-26%, 0, 18px);
-  filter: blur(1px);
+  inset: 10% 3.5%;
+  border: 1px solid rgba(116, 214, 255, 0.18);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(91, 208, 255, 0.11), transparent 68%);
+  opacity: 1;
+  transform: translateZ(-1px);
+  filter: none;
   pointer-events: none;
   animation: none;
 }
