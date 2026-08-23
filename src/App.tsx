@@ -35,15 +35,15 @@ const highlights = [
 const premiumBand = [
   {
     label: "Historique continu",
-    text: "Une lecture qui suit les mois, les saisons et les arbitrages sans perdre le fil.",
+    text: "Suivez les saisons, les évolutions et les choix passés sans perdre le fil.",
   },
   {
-    label: "Référentiels souples",
-    text: "Postes, routines et postes fluides s'adaptent à votre structure sans dégrader la cohérence.",
+    label: "Paramétrage métier",
+    text: "Adaptez postes de suivi, fluides et référentiels à votre organisation.",
   },
   {
-    label: "Déploiement maîtrisé",
-    text: "Un même cadre pour un site unique, une régie, un délégataire ou un réseau multisite.",
+    label: "Échelle adaptée",
+    text: "Utilisez le même outil pour un site, une régie, un délégataire ou un réseau.",
   },
 ];
 
@@ -104,10 +104,10 @@ const capabilities = [
 ];
 
 const benefits = [
-  "Quantifier le coût réel de chaque espace, créneau et type d'utilisation.",
-  "Mesurer les effets d'une attribution de bassin sur les charges, les recettes et l'organisation.",
-  "Donner aux élus une information objectivée pour éclairer les arbitrages et les priorités d'investissement.",
-  "Renforcer la capacité de la direction à proposer, expliquer et piloter les équilibres de l'équipement.",
+  "Préparer plusieurs scénarios avant d'attribuer ou de modifier un créneau.",
+  "Documenter les arbitrages tarifaires, budgétaires ou d'occupation.",
+  "Suivre les effets d'une décision dans le temps, avec les mêmes repères à chaque revue.",
+  "Partager une base de discussion concrète avec les équipes, les services et les élus.",
 ];
 
 const webAdvantages = [
@@ -120,22 +120,22 @@ const webAdvantages = [
 const audiences = [
   {
     label: "Pour les directions",
-    title: "Piloter l'exploitation avec une vision complète de l'équipement.",
-    text: "AquaCore met en relation les données qui rythment la gestion quotidienne pour préparer les revues, objectiver les écarts et formuler des propositions étayées.",
+    title: "Préparer les revues d'exploitation et porter des propositions étayées.",
+    text: "La direction dispose d'un cadre de suivi quotidien pour passer des constats de terrain à des priorités opérationnelles.",
     points: [
-      "Comprendre les coûts par espace, activité et créneau d'occupation.",
-      "Relier exploitation, budget, ressources humaines, recettes et fréquentation.",
-      "Préparer des arbitrages fondés sur les effets réels des décisions prises.",
+      "Repérer les évolutions qui demandent une action.",
+      "Préparer les données nécessaires aux échanges avec la collectivité.",
+      "Suivre les engagements décidés d'une revue à l'autre.",
     ],
   },
   {
     label: "Pour les élus et services",
-    title: "Arbitrer à partir d'une information lisible et objectivée.",
-    text: "Les décideurs disposent d'une lecture claire des usages, des niveaux de charge et des équilibres de l'équipement, sans se perdre dans des tableaux isolés.",
+    title: "Arbitrer avec des repères clairs sur les usages de l'équipement.",
+    text: "Les élus et services accèdent à une synthèse lisible pour situer les priorités et apprécier les conséquences d'une orientation.",
     points: [
-      "Comparer les usages et mieux mesurer le coût des attributions de créneaux.",
-      "Éclairer les priorités budgétaires, tarifaires et d'investissement.",
-      "Disposer d'éléments concrets pour expliquer les choix de la collectivité.",
+      "Mettre en perspective activité, service rendu et moyens mobilisés.",
+      "Éclairer les choix budgétaires, tarifaires et d'investissement.",
+      "Communiquer des éléments cohérents au sein de la collectivité.",
     ],
   },
 ];
@@ -143,18 +143,18 @@ const audiences = [
 const proofPoints = [
   {
     number: "01",
-    title: "Une donnée structurée",
-    text: "Saisie organisée, sauvegarde mensuelle et historique sans limite de période pour conserver une lecture continue de l'équipement.",
+    title: "Une continuité de suivi",
+    text: "Saisie organisée, sauvegarde mensuelle et historique sans limite de période pour conserver la mémoire de l'équipement.",
   },
   {
     number: "02",
-    title: "Des sources enfin reliées",
-    text: "Imports et exports Excel, reprise de données de logiciels tiers et rapprochement avec les coûts globaux du site.",
+    title: "Des imports maîtrisés",
+    text: "Imports et exports Excel, avec reprise possible de données de logiciels tiers comme Elisath ou Horanet.",
   },
   {
     number: "03",
-    title: "Une occupation objectivée",
-    text: "Le plan d'occupation quantifie automatiquement heures et surfaces attribuées pour rendre les usages comparables.",
+    title: "Un planning quantifié",
+    text: "Le plan d'occupation comptabilise automatiquement les heures et les surfaces attribuées.",
   },
 ];
 
@@ -574,9 +574,9 @@ export default function App() {
                   onMouseLeave={clearInteractivePointer}
                 >
                   <div className="metric-label">Cockpit AquaCore</div>
-                  <strong>Décider avec des données enfin reliées</strong>
+                  <strong>Un suivi global, lisible au fil des mois</strong>
                   <p>
-                    Une lecture unifiée des bassins, des publics, des charges et du rendement.
+                    Bassins, publics, charges et activité réunis dans le même environnement.
                   </p>
                   <div className="metric-signal-row" aria-hidden="true">
                     <span />
@@ -591,8 +591,8 @@ export default function App() {
                   onMouseLeave={clearInteractivePointer}
                 >
                   <div className="metric-label">Fréquentation</div>
-                  <strong>+18%</strong>
-                  <span>Tendance lisible site par site</span>
+                  <strong>Tendances suivies</strong>
+                  <span>Volumes et publics comparables période après période</span>
                 </article>
 
                 <article
@@ -651,21 +651,18 @@ export default function App() {
             <span className="section-kicker">Pourquoi AquaCore</span>
             <h2>Quantifier l'usage réel pour mieux piloter l'équipement public.</h2>
             <p>
-              AquaCore est conçue pour relier toutes les données qui déterminent le coût d'un
-              équipement aquatique : activité, espaces, créneaux, publics, charges, recettes,
-              ressources humaines et budget.
+              AquaCore rapproche l'activité des moyens mobilisés : espaces, créneaux, publics,
+              charges, recettes, ressources humaines et budget.
             </p>
           </div>
 
           <div className="origin-panel">
             <div className="origin-panel-copy">
               <p className="metric-label">Une origine métier</p>
-              <strong>Rendre visibles les coûts de chaque utilisation pour transformer la donnée en décision publique.</strong>
+              <strong>Un outil conçu par et pour les directions de centres aquatiques.</strong>
               <p>
-                Les directions de centres aquatiques sont au carrefour de données nombreuses,
-                souvent dispersées et rarement corrélées. AquaCore les rapproche pour analyser
-                chaque espace, chaque attribution de créneau et chaque public au regard des coûts
-                qu'ils mobilisent.
+                Né de problématiques de terrain, AquaCore rassemble les informations aujourd'hui
+                éparpillées entre l'exploitation, les services supports et les outils tiers.
               </p>
             </div>
 
@@ -676,7 +673,7 @@ export default function App() {
                 onMouseLeave={clearInteractivePointer}
               >
                 <CheckCircle2 size={18} />
-                <span>Un coût d'usage objectivé par bassin, espace, créneau et catégorie d'utilisateur.</span>
+                <span>Une lecture par bassin, espace, créneau et catégorie d'utilisateur.</span>
               </div>
               <div
                 className="origin-point interactive-surface"
@@ -684,7 +681,7 @@ export default function App() {
                 onMouseLeave={clearInteractivePointer}
               >
                 <CheckCircle2 size={18} />
-                <span>Des éléments concrets pour que les élus puissent arbitrer, optimiser et rendre compte.</span>
+                <span>Un cadre personnalisable selon les pratiques de chaque collectivité.</span>
               </div>
               <div
                 className="origin-point interactive-surface"
@@ -692,7 +689,7 @@ export default function App() {
                 onMouseLeave={clearInteractivePointer}
               >
                 <CheckCircle2 size={18} />
-                <span>Une lecture commune des charges, des recettes et de l'utilisation réelle de l'équipement.</span>
+                <span>Un dialogue facilité entre terrain, direction et décision publique.</span>
               </div>
             </div>
           </div>
@@ -718,11 +715,11 @@ export default function App() {
 
         <section className="section section-frame section-reveal" id="pour-vous" data-reveal style={revealStyle(3)}>
           <div className="section-heading">
-            <span className="section-kicker">Un même outil, deux lectures complémentaires</span>
-            <h2>Un pilotage utile à la direction comme à la collectivité.</h2>
+            <span className="section-kicker">Pour vous</span>
+            <h2>Des informations adaptées à chaque niveau de décision.</h2>
             <p>
-              AquaCore transforme les données de fonctionnement en informations immédiatement
-              utilisables, selon le rôle de chacun dans la gestion de l'équipement public.
+              Les mêmes informations servent des usages différents : organiser l'exploitation,
+              préparer les instances et éclairer les choix de la collectivité.
             </p>
           </div>
 
@@ -782,10 +779,10 @@ export default function App() {
         <section className="section section-frame section-reveal" id="fonctionnalites" data-reveal style={revealStyle(5)}>
           <div className="section-heading">
             <span className="section-kicker">Fonctionnalités Clés</span>
-            <h2>Des fonctions pour fiabiliser la donnée et gagner du temps au quotidien.</h2>
+            <h2>Des fonctions qui simplifient le suivi au quotidien.</h2>
             <p>
-              L'application structure la saisie, reprend les données de logiciels tiers, conserve
-              l'historique et facilite les restitutions dans un cadre unique.
+              De la saisie au partage des rapports, l'application sécurise les routines de suivi
+              et évite les ressaisies inutiles.
             </p>
           </div>
 
@@ -821,7 +818,7 @@ export default function App() {
 
           <div className="web-app-panel">
             <p className="metric-label">Les avantages du web</p>
-            <strong>La donnée utile, au même endroit, pour tous les acteurs du pilotage.</strong>
+            <strong>Un environnement commun, disponible sans installation sur chaque poste.</strong>
             <div className="impact-list">
               {webAdvantages.map((item) => (
                 <div
@@ -840,11 +837,11 @@ export default function App() {
 
         <section className="section section-frame section-reveal" id="preuves" data-reveal style={revealStyle(7)}>
           <div className="section-heading">
-            <span className="section-kicker">Des preuves opérationnelles</span>
-            <h2>Des informations fiables pour appuyer les décisions, pas un tableau de bord de plus.</h2>
+            <span className="section-kicker">Repères concrets</span>
+            <h2>Ce qui rend le suivi fiable au fil du temps.</h2>
             <p>
-              AquaCore s'appuie sur une donnée structurée, corrélée et traçable afin de rendre les
-              usages et les coûts de l'équipement réellement lisibles.
+              Les fonctions suivantes assurent la continuité, la reprise et la comparabilité des
+              informations utilisées par l'équipement.
             </p>
           </div>
 
@@ -867,10 +864,10 @@ export default function App() {
         <section className="section section-frame split-section section-reveal" id="impact" data-reveal style={revealStyle(8)}>
           <div className="section-heading compact">
             <span className="section-kicker">Impact</span>
-            <h2>Ce que vous gagnez avec une lecture unifiée de l'équipement.</h2>
+            <h2>Passer du constat à l'action, dans les instances comme sur le terrain.</h2>
             <p>
-              La donnée devient plus exploitable dans les revues d'exploitation, les arbitrages et
-              le dialogue avec les équipes.
+              AquaCore aide à structurer les échanges avant une décision, puis à en suivre les
+              effets dans la durée.
             </p>
           </div>
 
@@ -896,8 +893,7 @@ export default function App() {
             >
               <Layers3 size={30} />
               <p>
-                Les revues d'exploitation, les échanges avec les équipes et les arbitrages
-                budgétaires s'appuient enfin sur une base commune.
+                Une décision mieux préparée est aussi plus simple à partager et à suivre.
               </p>
             </div>
           </div>
