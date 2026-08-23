@@ -7,6 +7,7 @@ import {
   Droplets,
   Gauge,
   Layers3,
+  LogIn,
   ShieldCheck,
   Sparkles,
   Users,
@@ -508,9 +509,15 @@ export default function App() {
           <a href="#contact">Démo</a>
         </nav>
 
-        <a className="button button-ghost button-shimmer" href="#contact">
-          Demander une démo
-        </a>
+        <div className="topbar-actions">
+          <a className="button button-account button-shimmer" href="https://app.aquacorecontrol.fr">
+            <LogIn size={17} />
+            Mon compte
+          </a>
+          <a className="button button-ghost button-shimmer" href="#contact">
+            Demander une démo
+          </a>
+        </div>
       </header>
 
       <main>
@@ -539,6 +546,10 @@ export default function App() {
               <a className="button button-primary button-shimmer" href="#contact">
                 Demander une démonstration
                 <ArrowRight size={18} />
+              </a>
+              <a className="button button-account button-shimmer" href="https://app.aquacorecontrol.fr">
+                <LogIn size={18} />
+                Accéder à mon compte
               </a>
               <a className="button button-secondary button-shimmer" href="#pour-vous">
                 Découvrir les usages

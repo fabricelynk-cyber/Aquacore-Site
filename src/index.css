@@ -338,6 +338,14 @@ img {
   transform: scaleX(1);
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
 .button {
   position: relative;
   overflow: hidden;
@@ -398,6 +406,14 @@ img {
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)) padding-box,
     linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(122, 215, 255, 0.1)) border-box;
   color: var(--text);
+}
+
+.button-account {
+  color: #052033;
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+  box-shadow:
+    0 14px 32px rgba(253, 181, 61, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
 }
 
 .section {
@@ -1735,6 +1751,11 @@ img {
     flex-wrap: wrap;
   }
 
+  .topbar-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
   .hero {
     min-height: auto;
     padding-top: 1rem;
@@ -1779,6 +1800,12 @@ img {
   }
 
   .button {
+    width: 100%;
+  }
+
+  .topbar-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     width: 100%;
   }
 
