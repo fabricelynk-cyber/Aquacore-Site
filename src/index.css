@@ -705,6 +705,8 @@ img {
 .stat-card,
 .feature-card,
 .module-card,
+.audience-card,
+.proof-card,
 .impact-panel,
 .web-app-panel,
 .rollout-card,
@@ -1027,6 +1029,8 @@ img {
 
 .feature-card h3,
 .module-card h3,
+.audience-card h3,
+.proof-card h3,
 .rollout-card h3,
 .capability-card h3 {
   margin: 1rem 0 0.45rem;
@@ -1070,6 +1074,80 @@ img {
   margin-top: 0.42rem;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   box-shadow: 0 0 0 5px rgba(51, 198, 255, 0.08);
+}
+
+.audience-grid,
+.proof-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.audience-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.proof-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.audience-card,
+.proof-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 1.65rem;
+  padding: 1.5rem;
+  background:
+    radial-gradient(circle at top right, rgba(51, 198, 255, 0.1), transparent 38%),
+    linear-gradient(180deg, rgba(10, 29, 45, 0.92), rgba(5, 19, 30, 0.9)) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(122, 215, 255, 0.14), rgba(255, 216, 143, 0.06)) border-box;
+  box-shadow:
+    var(--shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.audience-card::after {
+  content: var(--card-index);
+  position: absolute;
+  top: 1.1rem;
+  right: 1.2rem;
+  color: rgba(255, 255, 255, 0.1);
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 2.35rem;
+  line-height: 1;
+}
+
+.audience-label,
+.proof-number {
+  display: inline-flex;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.audience-card h3,
+.proof-card h3 {
+  max-width: 22ch;
+  margin: 0.85rem 0 0.7rem;
+  color: #f3fbff;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  line-height: 1.22;
+  text-wrap: balance;
+}
+
+.audience-card > p,
+.proof-card > p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.audience-list {
+  margin-top: 1.2rem;
 }
 
 .feature-icon {
@@ -1666,6 +1744,8 @@ img {
   .stats-row,
   .three-cols,
   .two-cols,
+  .audience-grid,
+  .proof-grid,
   .rollout-grid,
   .contact-grid,
   .origin-panel {

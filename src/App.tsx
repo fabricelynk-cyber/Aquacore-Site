@@ -1,5 +1,4 @@
 import {
-  Activity,
   ArrowRight,
   BarChart3,
   Building2,
@@ -116,6 +115,47 @@ const webAdvantages = [
   "Une version unique et partagée pour les directions, les services concernés et les réseaux multisites.",
   "Des évolutions déployées de façon centralisée, sans intervention technique sur chaque ordinateur.",
   "Une interface pensée pour l'usage quotidien sur ordinateur comme sur tablette.",
+];
+
+const audiences = [
+  {
+    label: "Pour les directions",
+    title: "Piloter l'exploitation avec une vision complète de l'équipement.",
+    text: "AquaCore met en relation les données qui rythment la gestion quotidienne pour préparer les revues, objectiver les écarts et formuler des propositions étayées.",
+    points: [
+      "Comprendre les coûts par espace, activité et créneau d'occupation.",
+      "Relier exploitation, budget, ressources humaines, recettes et fréquentation.",
+      "Préparer des arbitrages fondés sur les effets réels des décisions prises.",
+    ],
+  },
+  {
+    label: "Pour les élus et services",
+    title: "Arbitrer à partir d'une information lisible et objectivée.",
+    text: "Les décideurs disposent d'une lecture claire des usages, des niveaux de charge et des équilibres de l'équipement, sans se perdre dans des tableaux isolés.",
+    points: [
+      "Comparer les usages et mieux mesurer le coût des attributions de créneaux.",
+      "Éclairer les priorités budgétaires, tarifaires et d'investissement.",
+      "Disposer d'éléments concrets pour expliquer les choix de la collectivité.",
+    ],
+  },
+];
+
+const proofPoints = [
+  {
+    number: "01",
+    title: "Une donnée structurée",
+    text: "Saisie organisée, sauvegarde mensuelle et historique sans limite de période pour conserver une lecture continue de l'équipement.",
+  },
+  {
+    number: "02",
+    title: "Des sources enfin reliées",
+    text: "Imports et exports Excel, reprise de données de logiciels tiers et rapprochement avec les coûts globaux du site.",
+  },
+  {
+    number: "03",
+    title: "Une occupation objectivée",
+    text: "Le plan d'occupation quantifie automatiquement heures et surfaces attribuées pour rendre les usages comparables.",
+  },
 ];
 
 const rolloutSteps = [
@@ -461,14 +501,15 @@ export default function App() {
 
         <nav className="nav">
           <a href="#solution">Solution</a>
+          <a href="#pour-vous">Pour vous</a>
           <a href="#modules">Modules</a>
           <a href="#impact">Impact</a>
           <a href="#mise-en-oeuvre">Mise en oeuvre</a>
-          <a href="#contact">Contact</a>
+          <a href="#contact">Démo</a>
         </nav>
 
         <a className="button button-ghost button-shimmer" href="#contact">
-          Contact
+          Demander une démo
         </a>
       </header>
 
@@ -495,12 +536,12 @@ export default function App() {
             </p>
 
             <div className="hero-actions">
-              <a className="button button-primary button-shimmer" href="#modules">
-                Explorer les modules
+              <a className="button button-primary button-shimmer" href="#contact">
+                Demander une démonstration
                 <ArrowRight size={18} />
               </a>
-              <a className="button button-secondary button-shimmer" href="#mise-en-oeuvre">
-                Voir la mise en oeuvre
+              <a className="button button-secondary button-shimmer" href="#pour-vous">
+                Découvrir les usages
               </a>
             </div>
 
@@ -675,7 +716,39 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-frame section-reveal" id="modules" data-reveal style={revealStyle(3)}>
+        <section className="section section-frame section-reveal" id="pour-vous" data-reveal style={revealStyle(3)}>
+          <div className="section-heading">
+            <span className="section-kicker">Un même outil, deux lectures complémentaires</span>
+            <h2>Un pilotage utile à la direction comme à la collectivité.</h2>
+            <p>
+              AquaCore transforme les données de fonctionnement en informations immédiatement
+              utilisables, selon le rôle de chacun dans la gestion de l'équipement public.
+            </p>
+          </div>
+
+          <div className="audience-grid">
+            {audiences.map((audience, index) => (
+              <article
+                className="audience-card interactive-surface"
+                key={audience.label}
+                style={indexedCardStyle(index)}
+                onMouseMove={setInteractivePointer}
+                onMouseLeave={clearInteractivePointer}
+              >
+                <span className="audience-label">{audience.label}</span>
+                <h3>{audience.title}</h3>
+                <p>{audience.text}</p>
+                <ul className="capability-list audience-list">
+                  {audience.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section section-frame section-reveal" id="modules" data-reveal style={revealStyle(4)}>
           <div className="section-heading">
             <span className="section-kicker">Modules</span>
             <h2>Les briques qui structurent le pilotage d'un équipement aquatique.</h2>
@@ -706,7 +779,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-frame section-reveal" id="fonctionnalites" data-reveal style={revealStyle(4)}>
+        <section className="section section-frame section-reveal" id="fonctionnalites" data-reveal style={revealStyle(5)}>
           <div className="section-heading">
             <span className="section-kicker">Fonctionnalités Clés</span>
             <h2>Des fonctions pour fiabiliser la donnée et gagner du temps au quotidien.</h2>
@@ -736,7 +809,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-frame split-section section-reveal" id="application-web" data-reveal style={revealStyle(5)}>
+        <section className="section section-frame split-section section-reveal" id="application-web" data-reveal style={revealStyle(6)}>
           <div className="section-heading compact">
             <span className="section-kicker">Application web</span>
             <h2>Un outil métier simple à déployer, facile à partager.</h2>
@@ -765,7 +838,33 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-frame split-section section-reveal" id="impact" data-reveal style={revealStyle(6)}>
+        <section className="section section-frame section-reveal" id="preuves" data-reveal style={revealStyle(7)}>
+          <div className="section-heading">
+            <span className="section-kicker">Des preuves opérationnelles</span>
+            <h2>Des informations fiables pour appuyer les décisions, pas un tableau de bord de plus.</h2>
+            <p>
+              AquaCore s'appuie sur une donnée structurée, corrélée et traçable afin de rendre les
+              usages et les coûts de l'équipement réellement lisibles.
+            </p>
+          </div>
+
+          <div className="proof-grid">
+            {proofPoints.map((proof) => (
+              <article
+                className="proof-card interactive-surface"
+                key={proof.number}
+                onMouseMove={setInteractivePointer}
+                onMouseLeave={clearInteractivePointer}
+              >
+                <span className="proof-number">{proof.number}</span>
+                <h3>{proof.title}</h3>
+                <p>{proof.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section section-frame split-section section-reveal" id="impact" data-reveal style={revealStyle(8)}>
           <div className="section-heading compact">
             <span className="section-kicker">Impact</span>
             <h2>Ce que vous gagnez avec une lecture unifiée de l'équipement.</h2>
@@ -804,7 +903,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-frame section-reveal" id="mise-en-oeuvre" data-reveal style={revealStyle(7)}>
+        <section className="section section-frame section-reveal" id="mise-en-oeuvre" data-reveal style={revealStyle(9)}>
           <div className="section-heading">
             <span className="section-kicker">Mise en oeuvre</span>
             <h2>Une mise en oeuvre progressive, centrée sur les usages terrain.</h2>
@@ -839,20 +938,20 @@ export default function App() {
               <p className="metric-label">Cap sur l'exploitation</p>
               <strong>Un cadre de pilotage prêt à s'installer dans vos routines mensuelles</strong>
             </div>
-            <a className="button button-primary button-shimmer" href="#hero">
-              Revenir au hero
-              <Activity size={18} />
+            <a className="button button-primary button-shimmer" href="#contact">
+              Demander une démonstration
+              <ArrowRight size={18} />
             </a>
           </div>
         </section>
 
-        <section className="section section-frame section-reveal" id="contact" data-reveal style={revealStyle(8)}>
+        <section className="section section-frame section-reveal" id="contact" data-reveal style={revealStyle(10)}>
           <div className="section-heading">
-            <span className="section-kicker">Contact</span>
-            <h2>Parlons de votre équipement, de vos sites et de vos besoins de pilotage.</h2>
+            <span className="section-kicker">Démonstration AquaCore</span>
+            <h2>Voyons ensemble ce qu'AquaCore peut révéler sur votre équipement.</h2>
             <p>
-              Laissez un message et nous reviendrons vers vous pour échanger sur vos enjeux de
-              fréquentation, de fluides, de recettes, de RH ou d'occupation.
+              Présentez votre contexte et vos enjeux. Nous reviendrons vers vous pour organiser
+              une démonstration adaptée à vos sites, à votre organisation et à vos usages.
             </p>
           </div>
 
@@ -863,7 +962,7 @@ export default function App() {
               onMouseLeave={clearInteractivePointer}
             >
               <p className="metric-label">AquaCore</p>
-              <strong>Un point de contact clair pour vos demandes, démonstrations et questions.</strong>
+              <strong>Demandez une démonstration adaptée à votre équipement et à vos enjeux de collectivité.</strong>
               <p>
                 Vous pouvez utiliser le formulaire ci-contre ou écrire directement à l'adresse
                 suivante.
@@ -896,7 +995,7 @@ export default function App() {
                 onInput={handleContactFormChange}
                 onSubmit={handleContactSubmit}
               >
-                <input type="hidden" name="_subject" value="Nouveau message depuis le site AquaCore" />
+                <input type="hidden" name="_subject" value="Demande de démonstration AquaCore" />
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_next" value={contactSuccessUrl} />
                 <input type="hidden" name="_url" value={contactPageUrl} />
@@ -950,7 +1049,7 @@ export default function App() {
 
                 <label className="contact-field">
                   <span>Objet</span>
-                  <input type="text" name="objet" placeholder="Motif de votre message" required />
+                  <input type="text" name="objet" placeholder="Demande de démonstration AquaCore" required />
                 </label>
 
                 <label className="contact-field">
