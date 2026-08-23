@@ -706,6 +706,7 @@ img {
 .feature-card,
 .module-card,
 .impact-panel,
+.web-app-panel,
 .rollout-card,
 .deploy-banner,
 .quote-card,
@@ -1122,6 +1123,27 @@ img {
     radial-gradient(circle at top right, rgba(255, 216, 143, 0.08), transparent 32%),
     linear-gradient(180deg, rgba(8, 27, 42, 0.92), rgba(5, 19, 30, 0.88)) padding-box,
     linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(122, 215, 255, 0.16), rgba(255, 216, 143, 0.08)) border-box;
+}
+
+.web-app-panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.35rem;
+  border-radius: 2rem;
+  background:
+    radial-gradient(circle at top right, rgba(51, 198, 255, 0.14), transparent 34%),
+    radial-gradient(circle at bottom left, rgba(47, 199, 165, 0.1), transparent 28%),
+    linear-gradient(180deg, rgba(8, 27, 42, 0.92), rgba(5, 19, 30, 0.88)) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(122, 215, 255, 0.16), rgba(47, 199, 165, 0.12)) border-box;
+}
+
+.web-app-panel > strong {
+  max-width: 28ch;
+  color: #f3fbff;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: clamp(1.35rem, 2.3vw, 1.7rem);
+  line-height: 1.25;
+  text-wrap: balance;
 }
 
 .impact-list {

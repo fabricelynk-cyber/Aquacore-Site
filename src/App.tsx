@@ -105,10 +105,17 @@ const capabilities = [
 ];
 
 const benefits = [
-  "Visualiser les coûts, les charges et les équilibres réels de l'établissement.",
-  "Comprendre le fonctionnement quotidien du site à partir de données enfin reliées.",
-  "Arbitrer avec une vision plus nette des impacts sur l'exploitation, les équipes et le budget.",
-  "Renforcer la capacité de la direction à proposer, expliquer et piloter.",
+  "Quantifier le coût réel de chaque espace, créneau et type d'utilisation.",
+  "Mesurer les effets d'une attribution de bassin sur les charges, les recettes et l'organisation.",
+  "Donner aux élus une information objectivée pour éclairer les arbitrages et les priorités d'investissement.",
+  "Renforcer la capacité de la direction à proposer, expliquer et piloter les équilibres de l'équipement.",
+];
+
+const webAdvantages = [
+  "Accessible depuis un navigateur, sans installation individuelle sur les postes de la collectivité.",
+  "Une version unique et partagée pour les directions, les services concernés et les réseaux multisites.",
+  "Des évolutions déployées de façon centralisée, sans intervention technique sur chaque ordinateur.",
+  "Une interface pensée pour l'usage quotidien sur ordinateur comme sur tablette.",
 ];
 
 const rolloutSteps = [
@@ -482,9 +489,9 @@ export default function App() {
             </h1>
 
             <p className="hero-text">
-              Dans un centre aquatique, la direction jongle souvent avec des données séparées entre
-              exploitation, RH, budget, recettes et occupation. AquaCore les rassemble dans une
-              application métier claire pour relier activité, coûts et décisions.
+              AquaCore réunit les données d'exploitation, de budget, de ressources humaines, de
+              fréquentation et d'occupation pour mesurer le coût réel des usages et éclairer les
+              décisions de la collectivité.
             </p>
 
             <div className="hero-actions">
@@ -601,21 +608,23 @@ export default function App() {
         <section className="section section-frame section-reveal" id="solution" data-reveal style={revealStyle(2)}>
           <div className="section-heading">
             <span className="section-kicker">Pourquoi AquaCore</span>
-            <h2>Transformer des données dispersées en pilotage lisible.</h2>
+            <h2>Quantifier l'usage réel pour mieux piloter l'équipement public.</h2>
             <p>
-              AquaCore rapproche activité, budget, RH, recettes et occupation dans un même cadre
-              de lecture.
+              AquaCore est conçue pour relier toutes les données qui déterminent le coût d'un
+              équipement aquatique : activité, espaces, créneaux, publics, charges, recettes,
+              ressources humaines et budget.
             </p>
           </div>
 
           <div className="origin-panel">
             <div className="origin-panel-copy">
               <p className="metric-label">Une origine métier</p>
-              <strong>AquaCore est né d'un besoin simple : piloter un équipement avec une lecture plus directe et plus fiable.</strong>
+              <strong>Rendre visibles les coûts de chaque utilisation pour transformer la donnée en décision publique.</strong>
               <p>
-                Le point de départ n'était pas d'ajouter un outil de reporting de plus, mais de
-                sortir des fichiers parallèles, des exports multiples et des lectures partielles
-                pour retrouver une vision exploitable au quotidien.
+                Les directions de centres aquatiques sont au carrefour de données nombreuses,
+                souvent dispersées et rarement corrélées. AquaCore les rapproche pour analyser
+                chaque espace, chaque attribution de créneau et chaque public au regard des coûts
+                qu'ils mobilisent.
               </p>
             </div>
 
@@ -626,7 +635,7 @@ export default function App() {
                 onMouseLeave={clearInteractivePointer}
               >
                 <CheckCircle2 size={18} />
-                <span>Né des usages réels des directions de centres aquatiques.</span>
+                <span>Un coût d'usage objectivé par bassin, espace, créneau et catégorie d'utilisateur.</span>
               </div>
               <div
                 className="origin-point interactive-surface"
@@ -634,7 +643,7 @@ export default function App() {
                 onMouseLeave={clearInteractivePointer}
               >
                 <CheckCircle2 size={18} />
-                <span>Pensé pour objectiver les choix plutôt que produire du reporting de plus.</span>
+                <span>Des éléments concrets pour que les élus puissent arbitrer, optimiser et rendre compte.</span>
               </div>
               <div
                 className="origin-point interactive-surface"
@@ -642,7 +651,7 @@ export default function App() {
                 onMouseLeave={clearInteractivePointer}
               >
                 <CheckCircle2 size={18} />
-                <span>Construit pour rester lisible, même quand les sources de données se multiplient.</span>
+                <span>Une lecture commune des charges, des recettes et de l'utilisation réelle de l'équipement.</span>
               </div>
             </div>
           </div>
@@ -727,7 +736,36 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-frame split-section section-reveal" id="impact" data-reveal style={revealStyle(5)}>
+        <section className="section section-frame split-section section-reveal" id="application-web" data-reveal style={revealStyle(5)}>
+          <div className="section-heading compact">
+            <span className="section-kicker">Application web</span>
+            <h2>Un outil métier simple à déployer, facile à partager.</h2>
+            <p>
+              AquaCore fonctionne dans le navigateur : la collectivité dispose d'un environnement
+              commun, disponible sans alourdir les postes de travail ni multiplier les versions.
+            </p>
+          </div>
+
+          <div className="web-app-panel">
+            <p className="metric-label">Les avantages du web</p>
+            <strong>La donnée utile, au même endroit, pour tous les acteurs du pilotage.</strong>
+            <div className="impact-list">
+              {webAdvantages.map((item) => (
+                <div
+                  className="impact-item interactive-surface"
+                  key={item}
+                  onMouseMove={setInteractivePointer}
+                  onMouseLeave={clearInteractivePointer}
+                >
+                  <CheckCircle2 size={18} />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section section-frame split-section section-reveal" id="impact" data-reveal style={revealStyle(6)}>
           <div className="section-heading compact">
             <span className="section-kicker">Impact</span>
             <h2>Ce que vous gagnez avec une lecture unifiée de l'équipement.</h2>
@@ -766,7 +804,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-frame section-reveal" id="mise-en-oeuvre" data-reveal style={revealStyle(6)}>
+        <section className="section section-frame section-reveal" id="mise-en-oeuvre" data-reveal style={revealStyle(7)}>
           <div className="section-heading">
             <span className="section-kicker">Mise en oeuvre</span>
             <h2>Une mise en oeuvre progressive, centrée sur les usages terrain.</h2>
@@ -808,7 +846,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-frame section-reveal" id="contact" data-reveal style={revealStyle(7)}>
+        <section className="section section-frame section-reveal" id="contact" data-reveal style={revealStyle(8)}>
           <div className="section-heading">
             <span className="section-kicker">Contact</span>
             <h2>Parlons de votre équipement, de vos sites et de vos besoins de pilotage.</h2>
