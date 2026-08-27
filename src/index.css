@@ -128,8 +128,10 @@ img {
 .topbar {
   position: relative;
   z-index: 12;
+  /* Le bandeau a besoin d'un espace propre, indépendant de la largeur des sections. */
+  width: min(calc(100% - 2rem), 1520px);
   display: grid;
-  grid-template-columns: minmax(15rem, 0.85fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(18rem, auto) minmax(0, 1fr) auto;
   align-items: center;
   column-gap: clamp(0.7rem, 1.5vw, 1.35rem);
   row-gap: 0.75rem;
@@ -1784,7 +1786,12 @@ img {
   }
 }
 
-@media (max-width: 1200px) {
+/*
+ * La largeur utile du bandeau est plus faible que la résolution annoncée quand
+ * Windows ou le navigateur applique une mise à l'échelle. On sépare donc la
+ * navigation avant que le logo et les deux actions ne puissent se chevaucher.
+ */
+@media (max-width: 1500px) {
   .topbar {
     grid-template-areas:
       "brand actions"
