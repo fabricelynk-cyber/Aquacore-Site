@@ -185,6 +185,25 @@ function hasContactChannel(form: HTMLFormElement) {
   return email.length > 0 || telephone.length > 0;
 }
 
+function demoRequestEndpoint() {
+  const configuredBaseUrl = import.meta.env.VITE_AQUACORE_API_URL?.trim();
+  const apiBaseUrl = configuredBaseUrl
+    ? configuredBaseUrl
+    : import.meta.env.DEV
+      ? "http://127.0.0.1:3000"
+      : "https://app.aquacorecontrol.fr";
+  return new URL("/api/v1/public/demo-requests", apiBaseUrl).toString();
+}
+
+async function responseError(response: Response) {
+  try {
+    const payload = (await response.json()) as { error?: unknown };
+    return typeof payload.error === "string" ? payload.error : "L’envoi n’a pas abouti.";
+  } catch {
+    return "L’envoi n’a pas abouti. Réessayez dans quelques instants.";
+  }
+}
+
 function revealStyle(order: number) {
   return { "--reveal-order": order } as CSSProperties;
 }
@@ -405,22 +424,14 @@ function BrandCubeReveal() {
 
 export default function App() {
   const [contactError, setContactError] = useState("");
-  const contactSuccess =
-    typeof window !== "undefined" &&
-    new URLSearchParams(window.location.search).get("contact") === "success";
-  const contactPageUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}${window.location.pathname}`
-      : "https://aquacore-site.vercel.app/";
-  const contactSuccessUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}${window.location.pathname}?contact=success#contact`
-      : "https://aquacore-site.vercel.app/?contact=success#contact";
+  const [contactSuccess, setContactSuccess] = useState(false);
+  const [contactSubmitting, setContactSubmitting] = useState(false);
   const contactFieldDescription = contactError
     ? "contact-channel-hint contact-channel-error"
     : "contact-channel-hint";
 
   const handleContactFormChange = (event: FormEvent<HTMLFormElement>) => {
+    if (contactSuccess) setContactSuccess(false);
     if (!contactError) {
       return;
     }
@@ -430,14 +441,37 @@ export default function App() {
     }
   };
 
-  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
-    if (!hasContactChannel(event.currentTarget)) {
-      event.preventDefault();
+  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!hasContactChannel(form)) {
       setContactError("Renseignez au moins une adresse email ou un numéro de téléphone.");
       return;
     }
 
     setContactError("");
+    setContactSuccess(false);
+    setContactSubmitting(true);
+    const data = new FormData(form);
+    const payload = Object.fromEntries(data.entries());
+    try {
+      const response = await fetch(demoRequestEndpoint(), {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+        credentials: "omit",
+      });
+      if (!response.ok) {
+        setContactError(await responseError(response));
+        return;
+      }
+      form.reset();
+      setContactSuccess(true);
+    } catch {
+      setContactError("Le formulaire est momentanément indisponible. Réessayez dans quelques instants.");
+    } finally {
+      setContactSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -971,15 +1005,12 @@ export default function App() {
               <p className="metric-label">AquaCore</p>
               <strong>Demandez une démonstration adaptée à votre équipement et à vos enjeux de collectivité.</strong>
               <p>
-                Vous pouvez utiliser le formulaire ci-contre ou écrire directement à l'adresse
-                suivante.
+                Décrivez votre contexte : la demande est traitée par l’équipe AquaCore via notre
+                messagerie professionnelle.
               </p>
-              <a className="contact-email" href="mailto:aquacorecontrol@gmail.com">
-                aquacorecontrol@gmail.com
-              </a>
               <div className="contact-note">
                 <CheckCircle2 size={18} />
-                <span>Réponse par email avec reprise du contexte de votre demande.</span>
+                <span>Vos informations servent uniquement à répondre à votre demande de démonstration.</span>
               </div>
             </aside>
 
@@ -997,26 +1028,20 @@ export default function App() {
 
               <form
                 className="contact-form"
-                action="https://formsubmit.co/aquacorecontrol@gmail.com"
-                method="POST"
                 onInput={handleContactFormChange}
                 onSubmit={handleContactSubmit}
               >
-                <input type="hidden" name="_subject" value="Demande de démonstration AquaCore" />
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_next" value={contactSuccessUrl} />
-                <input type="hidden" name="_url" value={contactPageUrl} />
-                <input type="text" name="_honey" className="contact-honey" tabIndex={-1} autoComplete="off" />
+                <input type="text" name="website" className="contact-honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
                 <div className="contact-form-grid">
                   <label className="contact-field">
                     <span>Nom</span>
-                    <input type="text" name="nom" placeholder="Votre nom" required />
+                    <input type="text" name="name" placeholder="Votre nom" required maxLength={120} />
                   </label>
 
                   <label className="contact-field">
                     <span>Structure</span>
-                    <input type="text" name="structure" placeholder="Ville, régie, délégataire..." />
+                    <input type="text" name="organisation" placeholder="Ville, régie, délégataire..." maxLength={160} />
                   </label>
 
                   <label className="contact-field">
@@ -1056,7 +1081,7 @@ export default function App() {
 
                 <label className="contact-field">
                   <span>Objet</span>
-                  <input type="text" name="objet" placeholder="Demande de démonstration AquaCore" required />
+                  <input type="text" name="subject" placeholder="Demande de démonstration AquaCore" required maxLength={160} />
                 </label>
 
                 <label className="contact-field">
@@ -1066,11 +1091,12 @@ export default function App() {
                     placeholder="Décrivez votre contexte, vos sites ou votre besoin."
                     rows={6}
                     required
+                    maxLength={4000}
                   />
                 </label>
 
-                <button className="button button-primary contact-submit" type="submit">
-                  Envoyer le message
+                <button className="button button-primary contact-submit" type="submit" disabled={contactSubmitting}>
+                  {contactSubmitting ? "Envoi en cours…" : "Envoyer le message"}
                 </button>
               </form>
             </div>
@@ -1080,9 +1106,7 @@ export default function App() {
 
       <footer className="footer">
         <p>AquaCore, application métier de pilotage pour équipements aquatiques.</p>
-        <p>
-          Contact : <a href="mailto:aquacorecontrol@gmail.com">aquacorecontrol@gmail.com</a>
-        </p>
+        <p>Contact : utilisez le formulaire de démonstration ci-dessus.</p>
       </footer>
     </div>
   );
