@@ -2,6 +2,7 @@ import {
   ArrowRight,
   BarChart3,
   Building2,
+  CalendarDays,
   CalendarRange,
   CheckCircle2,
   Droplets,
@@ -35,8 +36,8 @@ const highlights = [
 
 const premiumBand = [
   {
-    label: "Historique continu",
-    text: "Suivez les saisons, les évolutions et les choix passés sans perdre le fil.",
+    label: "Agenda d'établissement",
+    text: "Gardez les événements, demandes, fermetures et échéances d'exploitation dans le même environnement.",
   },
   {
     label: "Paramétrage métier",
@@ -51,23 +52,33 @@ const premiumBand = [
 const modules = [
   {
     icon: Droplets,
-    title: "Fluides & coûts",
-    text: "Suivez l'eau, l'électricité, la chaleur et les ratios unitaires pour comprendre les dérives dès qu'elles apparaissent.",
+    title: "Fluides & énergies",
+    text: "Suivez l'eau, l'électricité, la chaleur et vos propres énergies avec les unités et ratios utiles.",
   },
   {
     icon: Users,
-    title: "Fréquentation & publics",
-    text: "Croisez les volumes, les types d'usagers et les tendances pour piloter l'activité avec plus de finesse.",
+    title: "Ressources humaines",
+    text: "Suivez les heures, absences et indicateurs RH. Une estimation indicative de coût peut être activée sur les indicateurs pertinents.",
   },
   {
     icon: BarChart3,
-    title: "Recettes & cohérence",
-    text: "Reliez montants, quantités, typologies tarifaires et indicateurs de performance sans perdre le contexte métier.",
+    title: "Fréquentation & recettes",
+    text: "Importez, rapprochez et analysez les entrées, produits, tarifs, quantités et tendances d'activité.",
   },
   {
     icon: CalendarRange,
     title: "Planning & occupation",
     text: "Visualisez l'occupation des bassins, les heures attribuées et les équilibres entre surfaces disponibles et usages réels.",
+  },
+  {
+    icon: CalendarDays,
+    title: "Agenda d'établissement",
+    text: "Planifiez les événements, demandes et fermetures, visualisez les vacances et jours fériés, puis exportez l'agenda dans Excel.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Accès & continuité",
+    text: "Organisez les droits par établissement, gardez une trace des actions et sécurisez les échanges, sauvegardes et reprises.",
   },
 ];
 
@@ -75,24 +86,25 @@ const capabilities = [
   {
     title: "Saisie & historique",
     items: [
-      "Saisie simplifiée et ordonnée des données pour sécuriser le suivi au quotidien.",
-      "Sauvegarde mensuelle automatique pour fiabiliser la continuité d'exploitation.",
-      "Consultation des historiques sans limite de période pour garder une mémoire complète de l'établissement.",
+      "Saisie organisée, modification possible et historique pour sécuriser le suivi au quotidien.",
+      "Sauvegardes serveur chiffrées et sauvegardes portables pour fiabiliser la continuité d'exploitation.",
+      "Consultation des historiques et des données de l'établissement pour garder une mémoire complète de son activité.",
     ],
   },
   {
     title: "Import & centralisation",
     items: [
-      "Import et export via Excel pour centraliser simplement des données venues de plusieurs sources.",
-      "Reprise facilitée d'informations issues de logiciels tiers comme Elisath ou Horanet.",
-      "Corrélation de ces données avec les coûts globaux de l'équipement pour une lecture enfin unifiée.",
+      "Import et export via Excel ou CSV, avec choix du périmètre à échanger.",
+      "Reconnaissance assistée des types de fréquentation, rapprochements et fusion des variantes avant import.",
+      "Reprise d'informations issues de logiciels tiers et de sauvegardes AquaCore Desktop compatibles.",
     ],
   },
   {
     title: "Dashboards & rapports",
     items: [
-      "Import et export des dashboards pour partager ou répliquer les vues de pilotage.",
-      "Import et export des rapports pour diffuser plus facilement les analyses et les restitutions.",
+      "Dashboards par établissement ou consolidés, filtres, graphiques et aide contextuelle.",
+      "Rapport standard avec graphiques et tableaux complets, prêt pour l'impression ou le PDF.",
+      "Dossier de données et prompt préparés pour une IA choisie par l'utilisateur, sans transfert automatique.",
     ],
   },
   {
@@ -100,6 +112,22 @@ const capabilities = [
     items: [
       "Plan d'occupation ergonomique et adapté aux usages terrain des centres aquatiques.",
       "Quantification automatique des heures et des surfaces attribuées pour objectiver l'occupation réelle.",
+    ],
+  },
+  {
+    title: "Agenda opérationnel",
+    items: [
+      "Vues jour, semaine, mois et historique pour suivre la vie de chaque établissement.",
+      "Demandes, validations, fermetures, catégories et couleurs pour rendre les priorités immédiatement visibles.",
+      "Vacances scolaires, jours fériés et week-ends comme repères, avec export Excel mis en forme.",
+    ],
+  },
+  {
+    title: "Pilotage RH indicatif",
+    items: [
+      "Heures, absences et indicateurs RH réunis dans le suivi d'exploitation.",
+      "Estimation de coût facultative par catégorie, mise à jour annuellement depuis des sources officielles.",
+      "Un repère de pilotage clairement distinct du budget, de la paie et du coût employeur réel.",
     ],
   },
 ];
@@ -145,7 +173,7 @@ const proofPoints = [
   {
     number: "01",
     title: "Une continuité de suivi",
-    text: "Saisie organisée, sauvegarde mensuelle et historique sans limite de période pour conserver la mémoire de l'équipement.",
+    text: "Saisie organisée, sauvegardes et historique pour conserver la mémoire de l'équipement.",
   },
   {
     number: "02",
@@ -154,8 +182,8 @@ const proofPoints = [
   },
   {
     number: "03",
-    title: "Un planning quantifié",
-    text: "Le plan d'occupation comptabilise automatiquement les heures et les surfaces attribuées.",
+    title: "Planning et agenda complémentaires",
+    text: "Le plan d'occupation quantifie les usages ; l'agenda conserve les événements qui rythment la vie de l'établissement.",
   },
 ];
 
@@ -564,7 +592,7 @@ export default function App() {
 
             <h1>
               <span>
-                Pilotez fréquentation, fluides, recettes, ressources humaines, budget et
+                Pilotez fréquentation, fluides, recettes, ressources humaines, budget, agenda et
                 occupation
               </span>
               <span className="hero-title-accent">depuis une seule application métier.</span>
@@ -572,8 +600,7 @@ export default function App() {
 
             <p className="hero-text">
               AquaCore réunit les données d'exploitation, de budget, de ressources humaines, de
-              fréquentation et d'occupation pour mesurer le coût réel des usages et éclairer les
-              décisions de la collectivité.
+              fréquentation, d'agenda et d'occupation pour éclairer les décisions de la collectivité.
             </p>
 
             <div className="hero-actions">
