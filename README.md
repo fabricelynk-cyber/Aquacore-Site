@@ -26,3 +26,16 @@ Le build génère le dossier `dist/`.
    - Output directory : `dist`
 
 Le fichier `vercel.json` est déjà présent pour fixer cette configuration.
+
+## Publication du site officiel
+
+Le domaine officiel `https://aquacorecontrol.fr/` est servi depuis le VPS OVHcloud et **n'est pas automatiquement mis à jour par Vercel**.
+
+Après chaque modification validée de la vitrine, lancer `PUBLIER_SITE_OFFICIEL.cmd`. Le raccourci :
+
+1. construit la vitrine ;
+2. transfère une nouvelle release sur le VPS ;
+3. bascule le domaine officiel de façon atomique ;
+4. vérifie que `aquacorecontrol.fr` sert bien le JavaScript de la nouvelle version.
+
+Une publication n'est considérée terminée qu'après cette dernière vérification.
