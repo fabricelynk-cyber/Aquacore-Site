@@ -9,6 +9,7 @@ import {
   Gauge,
   Layers3,
   LogIn,
+  Menu,
   ShieldCheck,
   Sparkles,
   Users,
@@ -46,6 +47,33 @@ const premiumBand = [
   {
     label: "Échelle adaptée",
     text: "Utilisez le même outil pour un site, une régie, un délégataire ou un réseau.",
+  },
+];
+
+const navigationLinks = [
+  { href: "#solution", label: "Solution" },
+  { href: "#pour-vous", label: "Pour vous" },
+  { href: "#modules", label: "Modules" },
+  { href: "#impact", label: "Impact" },
+  { href: "#mise-en-oeuvre", label: "Mise en œuvre" },
+  { href: "#contact", label: "Démo" },
+];
+
+const trustPoints = [
+  {
+    icon: Building2,
+    title: "Infrastructure en France",
+    text: "Une application web exploitée sur une infrastructure française.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Accès maîtrisés",
+    text: "Des profils, droits et périmètres organisés par collectivité et établissement.",
+  },
+  {
+    icon: Layers3,
+    title: "Données réversibles",
+    text: "Imports, exports et sauvegardes pour préserver la continuité de suivi.",
   },
 ];
 
@@ -202,6 +230,29 @@ const rolloutSteps = [
     step: "03",
     title: "Installer les routines",
     text: "Les tableaux de bord deviennent actionnables pour les revues mensuelles, le budget et l'exploitation.",
+  },
+];
+
+const faqItems = [
+  {
+    question: "AquaCore nécessite-t-il une installation sur les postes ?",
+    answer:
+      "Non. AquaCore est une application web : l'accès se fait depuis un navigateur, avec un environnement partagé et des droits adaptés à chaque utilisateur.",
+  },
+  {
+    question: "L'agenda est-il partagé entre tous les établissements ?",
+    answer:
+      "Chaque agenda est rattaché à son établissement. Les profils multi-sites peuvent naviguer entre les agendas autorisés ; un profil de site ne voit que son propre périmètre.",
+  },
+  {
+    question: "Peut-on reprendre ou récupérer ses données ?",
+    answer:
+      "AquaCore propose des imports et exports Excel ou CSV, des sauvegardes portables et une reprise contrôlée des sauvegardes compatibles AquaCore Desktop.",
+  },
+  {
+    question: "Que couvre la démonstration ?",
+    answer:
+      "La démonstration est préparée à partir de votre contexte : établissement unique ou réseau, occupation des espaces, données de suivi, agenda et besoins de restitution.",
   },
 ];
 
@@ -562,14 +613,27 @@ export default function App() {
           </span>
         </a>
 
-        <nav className="nav">
-          <a href="#solution">Solution</a>
-          <a href="#pour-vous">Pour vous</a>
-          <a href="#modules">Modules</a>
-          <a href="#impact">Impact</a>
-          <a href="#mise-en-oeuvre">Mise en oeuvre</a>
-          <a href="#contact">Démo</a>
+        <nav className="nav" aria-label="Navigation principale">
+          {navigationLinks.map((link) => (
+            <a href={link.href} key={link.href}>
+              {link.label}
+            </a>
+          ))}
         </nav>
+
+        <details className="mobile-nav">
+          <summary>
+            <Menu size={17} />
+            Navigation
+          </summary>
+          <nav aria-label="Navigation mobile">
+            {navigationLinks.map((link) => (
+              <a href={link.href} key={link.href}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        </details>
 
         <div className="topbar-actions">
           <a className="button button-account button-shimmer" href="https://app.aquacorecontrol.fr">
@@ -591,21 +655,18 @@ export default function App() {
             </div>
 
             <h1>
-              <span>
-                Pilotez fréquentation, fluides, recettes, ressources humaines, budget, agenda et
-                occupation
-              </span>
-              <span className="hero-title-accent">depuis une seule application métier.</span>
+              <span>Pilotez l'exploitation de vos équipements aquatiques.</span>
+              <span className="hero-title-accent">Des décisions comparables, du terrain à l'arbitrage.</span>
             </h1>
 
             <p className="hero-text">
-              AquaCore réunit les données d'exploitation, de budget, de ressources humaines, de
-              fréquentation, d'agenda et d'occupation pour éclairer les décisions de la collectivité.
+              AquaCore réunit occupation, activité, fluides, recettes, ressources humaines, budget et
+              agenda dans un cadre commun — pour un établissement comme pour un réseau de sites.
             </p>
 
             <div className="hero-actions">
               <a className="button button-primary button-shimmer" href="#contact">
-                Demander une démonstration
+                Voir AquaCore dans votre contexte
                 <ArrowRight size={18} />
               </a>
               <a className="button button-account button-shimmer" href="https://app.aquacorecontrol.fr">
@@ -618,9 +679,9 @@ export default function App() {
             </div>
 
             <div className="hero-signature">
-              <span className="hero-signature-label">Signature AquaCore</span>
+              <span className="hero-signature-label">Un outil de direction</span>
               <p>
-                Pensé comme un cockpit de direction, et non comme un tableau de bord de plus.
+                Un cockpit métier pour relier les équipes, les usages et les décisions.
               </p>
             </div>
           </div>
@@ -714,6 +775,18 @@ export default function App() {
             >
               <span className="premium-band-label">{item.label}</span>
               <p>{item.text}</p>
+            </article>
+          ))}
+        </section>
+
+        <section className="trust-strip section-reveal" data-reveal style={revealStyle(2)} aria-label="Repères de confiance">
+          {trustPoints.map(({ icon: Icon, title, text }) => (
+            <article className="trust-point" key={title}>
+              <Icon size={20} aria-hidden="true" />
+              <div>
+                <strong>{title}</strong>
+                <span>{text}</span>
+              </div>
             </article>
           ))}
         </section>
@@ -845,6 +918,51 @@ export default function App() {
                 <p>{text}</p>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="section section-frame agenda-showcase section-reveal" id="agenda" data-reveal style={revealStyle(5)}>
+          <div className="agenda-showcase-copy">
+            <span className="section-kicker">Agenda d'établissement</span>
+            <h2>La vie du site visible au même endroit que les indicateurs.</h2>
+            <p>
+              Événements, demandes, validations et fermetures ne restent plus à côté du pilotage :
+              ils deviennent un repère opérationnel partagé par l'établissement.
+            </p>
+            <ul className="agenda-benefits">
+              <li><CheckCircle2 size={18} />Une lecture par jour, semaine, mois ou historique.</li>
+              <li><CheckCircle2 size={18} />Des demandes à valider et des fermetures immédiatement identifiables.</li>
+              <li><CheckCircle2 size={18} />Vacances, jours fériés et export Excel mis en forme.</li>
+            </ul>
+            <a className="button button-secondary button-shimmer" href="#contact">
+              Découvrir l'agenda en démonstration
+              <ArrowRight size={18} />
+            </a>
+          </div>
+
+          <div className="agenda-concept" aria-label="Illustration fonctionnelle de l'agenda AquaCore">
+            <div className="agenda-concept-topline">
+              <div>
+                <span className="metric-label">Repère opérationnel</span>
+                <strong>Agenda de l'établissement</strong>
+              </div>
+              <span className="agenda-concept-period">Une semaine type</span>
+            </div>
+            <div className="agenda-concept-grid" aria-hidden="true">
+              <div className="agenda-concept-day agenda-concept-day-muted"><span>Lun</span><i /></div>
+              <div className="agenda-concept-day"><span>Mar</span><i className="agenda-event agenda-event-request" /></div>
+              <div className="agenda-concept-day"><span>Mer</span><i className="agenda-event agenda-event-confirmed" /></div>
+              <div className="agenda-concept-day"><span>Jeu</span><i /></div>
+              <div className="agenda-concept-day"><span>Ven</span><i className="agenda-event agenda-event-closure" /></div>
+              <div className="agenda-concept-day agenda-concept-day-muted"><span>Sam</span><i /></div>
+              <div className="agenda-concept-day agenda-concept-day-muted"><span>Dim</span><i /></div>
+            </div>
+            <div className="agenda-concept-legend">
+              <span><i className="agenda-event agenda-event-request" />Demande reçue</span>
+              <span><i className="agenda-event agenda-event-confirmed" />Événement validé</span>
+              <span><i className="agenda-event agenda-event-closure" />Fermeture</span>
+            </div>
+            <p>Illustration fonctionnelle — aucune donnée client ni capture de l'application n'est affichée sur le site public.</p>
           </div>
         </section>
 
@@ -1013,13 +1131,29 @@ export default function App() {
           </div>
         </section>
 
+        <section className="section section-frame faq-section section-reveal" id="questions" data-reveal style={revealStyle(10)}>
+          <div className="section-heading">
+            <span className="section-kicker">Questions fréquentes</span>
+            <h2>Les repères utiles avant une première démonstration.</h2>
+            <p>Les réponses essentielles pour évaluer simplement l'adéquation d'AquaCore à votre organisation.</p>
+          </div>
+          <div className="faq-list">
+            {faqItems.map((item) => (
+              <details className="faq-item" key={item.question}>
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
         <section className="section section-frame section-reveal" id="contact" data-reveal style={revealStyle(10)}>
           <div className="section-heading">
             <span className="section-kicker">Démonstration AquaCore</span>
-            <h2>Voyons ensemble ce qu'AquaCore peut révéler sur votre équipement.</h2>
+            <h2>Une démonstration préparée pour votre contexte.</h2>
             <p>
-              Présentez votre contexte et vos enjeux. Nous reviendrons vers vous pour organiser
-              une démonstration adaptée à vos sites, à votre organisation et à vos usages.
+              Présentez vos sites et vos enjeux. La démonstration se concentre sur les usages qui
+              comptent pour vous : exploitation, occupation, pilotage, agenda ou restitution.
             </p>
           </div>
 
@@ -1030,14 +1164,14 @@ export default function App() {
               onMouseLeave={clearInteractivePointer}
             >
               <p className="metric-label">AquaCore</p>
-              <strong>Demandez une démonstration adaptée à votre équipement et à vos enjeux de collectivité.</strong>
+              <strong>Un premier échange utile, sans parcours commercial inutile.</strong>
               <p>
-                Décrivez votre contexte : la demande est traitée par l’équipe AquaCore via notre
-                messagerie professionnelle.
+                Indiquez votre contexte. Nous préparons un parcours de démonstration cohérent avec
+                votre organisation, vos établissements et les priorités que vous souhaitez explorer.
               </p>
               <div className="contact-note">
                 <CheckCircle2 size={18} />
-                <span>Vos informations servent uniquement à répondre à votre demande de démonstration.</span>
+                <span>Vos informations servent uniquement à organiser votre demande de démonstration.</span>
               </div>
             </aside>
 
@@ -1133,7 +1267,7 @@ export default function App() {
 
       <footer className="footer">
         <p>AquaCore, application métier de pilotage pour équipements aquatiques.</p>
-        <p>Contact : utilisez le formulaire de démonstration ci-dessus.</p>
+        <p>Une offre, son périmètre et son cadre de sécurité sont présentés avant tout engagement.</p>
       </footer>
     </div>
   );
