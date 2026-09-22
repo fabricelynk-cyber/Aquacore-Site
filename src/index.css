@@ -193,25 +193,95 @@ img {
   width: calc(100% + 28px);
   height: calc(100% + 28px);
   pointer-events: none;
-  transition: opacity 760ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: opacity 1080ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .brand-lockup {
   position: relative;
   z-index: 1;
-  display: block;
+  display: flex;
+  align-items: center;
   width: 18rem;
-  height: auto;
+  height: 4rem;
   opacity: 0;
-  transition: opacity 760ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: opacity 1080ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.brand-symbol {
+  display: block;
+  width: 4.15rem;
+  height: 4.2rem;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.22));
+}
+
+.brand-lockup .brand-wordmark-stack {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  margin-top: 0.56rem;
+  margin-left: -0.74rem;
+  padding: 0;
+  transform: none;
+}
+
+.brand-wordmark-wrap {
+  position: relative;
+  display: block;
+  width: 14.25rem;
+}
+
+.brand-lockup .brand-wordmark {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: initial;
+  font: initial;
+  letter-spacing: normal;
+  transform: none;
+  filter: none;
+}
+
+.brand-lockup .brand-control {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  align-self: center;
+  margin-top: 0.22rem;
+  margin-left: -2.1rem;
+  color: #7fdcff;
+  font-family: "Questrial", "Segoe UI", sans-serif;
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.38em;
+  line-height: 1;
+  text-transform: uppercase;
+  transform: none;
+}
+
+.brand-lockup .brand-trademark {
+  top: -0.28rem;
+  right: -0.78rem;
+  width: 0.76rem;
+  height: 0.76rem;
+  padding: 0.03rem 0 0 0.03rem;
+  border-color: #72d6fa;
+  background: #0a2b40;
+  color: #9fe7ff;
+  font-size: 0.5rem;
+  font-weight: 500;
+  transform: none;
 }
 
 .brand-orbit {
   position: absolute;
   z-index: 0;
-  inset: -0.4rem -0.85rem;
-  width: calc(100% + 1.7rem);
-  height: calc(100% + 0.8rem);
+  inset: -0.38rem -0.7rem;
+  width: calc(100% + 1.4rem);
+  height: calc(100% + 0.76rem);
   overflow: visible;
   fill: none;
   stroke: rgba(114, 214, 250, 0.44);
@@ -2341,7 +2411,36 @@ img {
 
   .brand-lockup {
     width: min(18rem, 82vw);
+    height: 4.2rem;
     opacity: 1;
+  }
+
+  .brand-symbol {
+    width: min(4.1rem, 18vw);
+    height: min(4.2rem, 18.5vw);
+  }
+
+  .brand-wordmark-wrap {
+    width: min(14.1rem, 61vw);
+  }
+
+  .brand-lockup .brand-wordmark-stack {
+    margin-top: 0.5rem;
+    margin-left: -0.65rem;
+  }
+
+  .brand-lockup .brand-control {
+    margin-top: 0.2rem;
+    margin-left: -1.85rem;
+    font-size: min(0.61rem, 2.55vw);
+  }
+
+  .brand-lockup .brand-trademark {
+    top: -0.24rem;
+    right: -0.88rem;
+    width: min(0.76rem, 3.3vw);
+    height: min(0.76rem, 3.3vw);
+    font-size: min(0.5rem, 2.12vw);
   }
 
   .brand-capsule > .brand-mark-shell,

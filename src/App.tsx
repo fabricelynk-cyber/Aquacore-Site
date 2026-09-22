@@ -15,8 +15,8 @@ import {
   Users,
 } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type MouseEvent } from "react";
-import aquaCoreControlLogo from "./assets/aquacorecontrol-logo.png";
 import aquaCoreSymbol from "./assets/aquacore-symbol-web.png";
+import aquaCoreWordmark from "./assets/aquacore-wordmark.png";
 
 const highlights = [
   {
@@ -312,7 +312,7 @@ type BrandCube = {
   targetX: number;
   targetY: number;
   size: number;
-  sprite: HTMLCanvasElement;
+  color: string;
   drift: number;
 };
 
@@ -327,8 +327,10 @@ function BrandCubeReveal() {
 
     let animationFrame = 0;
     let isActive = true;
-    const image = new Image();
-    image.src = aquaCoreControlLogo;
+    const symbolImage = new Image();
+    const wordmarkImage = new Image();
+    symbolImage.src = aquaCoreSymbol;
+    wordmarkImage.src = aquaCoreWordmark;
 
     const start = () => {
       if (!isActive) {
@@ -337,7 +339,11 @@ function BrandCubeReveal() {
 
       const isCompactViewport = window.matchMedia("(max-width: 720px)").matches;
       const brand = canvas.closest<HTMLElement>(".brand");
-      if (isCompactViewport || !brand) {
+      const symbol = brand?.querySelector<HTMLImageElement>(".brand-symbol");
+      const wordmark = brand?.querySelector<HTMLImageElement>(".brand-wordmark");
+      const control = brand?.querySelector<HTMLElement>(".brand-control");
+      const trademark = brand?.querySelector<HTMLElement>(".brand-trademark");
+      if (isCompactViewport || !brand || !symbol || !wordmark) {
         brand?.classList.add("is-revealed");
         return;
       }
@@ -374,7 +380,62 @@ function BrandCubeReveal() {
         return;
       }
 
-      sourceContext.drawImage(image, particlePadding, particlePadding, logoWidth, logoHeight);
+      const relativeBox = (element: Element) => {
+        const box = element.getBoundingClientRect();
+        return {
+          x: box.left - brandBounds.left + particlePadding,
+          y: box.top - brandBounds.top + particlePadding,
+          width: box.width,
+          height: box.height,
+        };
+      };
+
+      const drawImageAtElement = (image: HTMLImageElement, element: HTMLImageElement) => {
+        const box = relativeBox(element);
+        sourceContext.drawImage(image, box.x, box.y, box.width, box.height);
+      };
+
+      drawImageAtElement(symbolImage, symbol);
+      drawImageAtElement(wordmarkImage, wordmark);
+
+      if (control) {
+        const box = relativeBox(control);
+        const style = window.getComputedStyle(control);
+        const characters = control.textContent?.trim().split("") ?? [];
+        const letterSpacing = Number.parseFloat(style.letterSpacing) || 0;
+        sourceContext.save();
+        sourceContext.fillStyle = style.color;
+        sourceContext.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+        sourceContext.textBaseline = "middle";
+        const glyphs = characters.map((character) => ({
+          character,
+          width: sourceContext.measureText(character).width,
+        }));
+        const totalWidth = glyphs.reduce((sum, glyph) => sum + glyph.width, 0) + Math.max(0, glyphs.length - 1) * letterSpacing;
+        let x = box.x + (box.width - totalWidth) / 2;
+        glyphs.forEach((glyph) => {
+          sourceContext.fillText(glyph.character, x, box.y + box.height / 2);
+          x += glyph.width + letterSpacing;
+        });
+        sourceContext.restore();
+      }
+
+      if (trademark) {
+        const box = relativeBox(trademark);
+        const style = window.getComputedStyle(trademark);
+        sourceContext.save();
+        sourceContext.strokeStyle = style.borderColor;
+        sourceContext.lineWidth = 1;
+        sourceContext.beginPath();
+        sourceContext.arc(box.x + box.width / 2, box.y + box.height / 2, Math.max(1, box.width / 2 - 0.7), 0, Math.PI * 2);
+        sourceContext.stroke();
+        sourceContext.fillStyle = style.color;
+        sourceContext.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+        sourceContext.textAlign = "center";
+        sourceContext.textBaseline = "middle";
+        sourceContext.fillText("C", box.x + box.width / 2, box.y + box.height / 2 + 0.25);
+        sourceContext.restore();
+      }
 
       const data = sourceContext.getImageData(0, 0, width, height).data;
       const candidates: Array<{ x: number; y: number; r: number; g: number; b: number }> = [];
@@ -388,57 +449,24 @@ function BrandCubeReveal() {
       }
 
       const cubes: BrandCube[] = [];
-      const sprites = new Map<string, HTMLCanvasElement>();
-      const getSprite = (target: { r: number; g: number; b: number }) => {
-        const red = Math.round(target.r / 32) * 32;
-        const green = Math.round(target.g / 32) * 32;
-        const blue = Math.round(target.b / 32) * 32;
-        const key = `${red}-${green}-${blue}`;
-        const existingSprite = sprites.get(key);
-        if (existingSprite) {
-          return existingSprite;
-        }
-
-        const sprite = document.createElement("canvas");
-        sprite.width = 14;
-        sprite.height = 14;
-        const spriteContext = sprite.getContext("2d");
-        if (!spriteContext) {
-          return sprite;
-        }
-
-        spriteContext.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-        spriteContext.fillRect(2, 4, 7, 7);
-        spriteContext.fillStyle = "rgba(230, 250, 255, 0.82)";
-        spriteContext.beginPath();
-        spriteContext.moveTo(2, 4); spriteContext.lineTo(9, 4); spriteContext.lineTo(11, 2); spriteContext.lineTo(4, 2);
-        spriteContext.fill();
-        spriteContext.fillStyle = "rgba(4, 83, 132, 0.58)";
-        spriteContext.beginPath();
-        spriteContext.moveTo(9, 4); spriteContext.lineTo(9, 11); spriteContext.lineTo(11, 9); spriteContext.lineTo(11, 2);
-        spriteContext.fill();
-        sprites.set(key, sprite);
-        return sprite;
-      };
-
       const count = Math.min(5000, candidates.length);
       for (let index = 0; index < count; index += 1) {
         const candidateIndex = Math.floor(Math.random() * candidates.length);
         const target = candidates.splice(candidateIndex, 1)[0];
         const angle = Math.random() * Math.PI * 2;
-        const distance = Math.max(width, height) * (0.02 + Math.random() * 0.07);
+        const distance = Math.max(width, height) * (0.045 + Math.random() * 0.105);
         cubes.push({
           targetX: target.x,
           targetY: target.y,
           startX: target.x + Math.cos(angle) * distance,
           startY: target.y + Math.sin(angle) * distance * 0.52,
-          size: 0.8 + Math.random() * 1.15,
-          sprite: getSprite(target),
-          drift: (Math.random() - 0.5) * 5,
+          size: 0.65 + Math.random() * 0.85,
+          color: `rgb(${target.r}, ${target.g}, ${target.b})`,
+          drift: (Math.random() - 0.5) * 3.4,
         });
       }
 
-      const delay = 260;
+      const delay = 180;
       const duration = 3400;
       const startedAt = performance.now();
 
@@ -446,7 +474,7 @@ function BrandCubeReveal() {
         const rawProgress = Math.min(1, Math.max(0, (now - startedAt - delay) / duration));
         const progress = 1 - (1 - rawProgress) ** 4;
         const particleOpacity = rawProgress < 0.78 ? 1 : 1 - (rawProgress - 0.78) / 0.22;
-        const logoOpacity = rawProgress < 0.68 ? 0 : Math.min(1, (rawProgress - 0.68) / 0.18);
+        const logoOpacity = rawProgress < 0.58 ? 0 : Math.min(1, (rawProgress - 0.58) / 0.25);
         context.clearRect(0, 0, width, height);
         drawOrbit();
 
@@ -459,8 +487,9 @@ function BrandCubeReveal() {
           cubes.forEach((cube) => {
             const x = cube.startX + (cube.targetX - cube.startX) * progress;
             const y = cube.startY + (cube.targetY - cube.startY) * progress + Math.sin(progress * Math.PI) * cube.drift;
-            const cubeSize = cube.size * 2.15;
-            context.drawImage(cube.sprite, x - cubeSize / 2, y - cubeSize / 2, cubeSize, cubeSize);
+            const particleSize = cube.size * 1.45;
+            context.fillStyle = cube.color;
+            context.fillRect(x - particleSize / 2, y - particleSize / 2, particleSize, particleSize);
           });
           context.globalAlpha = logoOpacity;
           context.drawImage(source, 0, 0);
@@ -480,10 +509,16 @@ function BrandCubeReveal() {
       void fontReady.then(() => window.setTimeout(start, 420));
     };
 
-    if (image.complete && image.naturalWidth > 0) {
+    const pendingImages = [symbolImage, wordmarkImage].filter((image) => !image.complete || image.naturalWidth === 0);
+    if (pendingImages.length === 0) {
       startWhenReady();
     } else {
-      image.addEventListener("load", startWhenReady, { once: true });
+      let loaded = 0;
+      const onAssetLoad = () => {
+        loaded += 1;
+        if (loaded === pendingImages.length) startWhenReady();
+      };
+      pendingImages.forEach((image) => image.addEventListener("load", onAssetLoad, { once: true }));
     }
 
     return () => {
@@ -597,7 +632,16 @@ export default function App() {
           <svg className="brand-orbit" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <ellipse cx="50" cy="50" rx="48" ry="42" />
           </svg>
-          <img className="brand-lockup" src={aquaCoreControlLogo} alt="Logo AquaCoreControl" />
+          <div className="brand-lockup" aria-hidden="true">
+            <img className="brand-symbol" src={aquaCoreSymbol} alt="" />
+            <div className="brand-wordmark-stack">
+              <div className="brand-wordmark-wrap">
+                <img className="brand-wordmark" src={aquaCoreWordmark} alt="" />
+                <span className="brand-trademark">C</span>
+              </div>
+              <span className="brand-control">Control</span>
+            </div>
+          </div>
           <BrandCubeReveal />
         </a>
 
