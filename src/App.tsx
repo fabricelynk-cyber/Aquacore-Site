@@ -338,6 +338,8 @@ function BrandCubeReveal() {
       const width = Math.max(1, Math.round(bounds.width));
       const height = Math.max(1, Math.round(bounds.height));
       const isCompactViewport = window.matchMedia("(max-width: 720px)").matches;
+      const brand = canvas.closest<HTMLElement>(".brand");
+      brand?.classList.remove("is-revealed");
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = width * pixelRatio;
       canvas.height = height * pixelRatio;
@@ -374,13 +376,13 @@ function BrandCubeReveal() {
       // lorsque le navigateur applique une mise à l'échelle importante.
       // La réserve CSS à droite permet aussi de dessiner le C cerclé sans
       // qu'il soit coupé par le canvas de l'animation.
-      const contentScale = isCompactViewport ? 0.68 : 0.78;
+      const contentScale = isCompactViewport ? 0.68 : 1;
       const markSize = Math.min(height * 0.9, 88) * contentScale;
       const textSize = Math.min(height * 0.48, 46) * contentScale;
       sourceContext.font = `400 ${textSize}px Questrial, sans-serif`;
       sourceContext.lineWidth = Math.max(1.5, textSize * 0.04);
       sourceContext.strokeStyle = "#2aa8ff";
-      const gap = Math.max(8, width * 0.025) * contentScale;
+      const gap = Math.max(10, width * 0.038) * contentScale;
       const wordWidth = sourceContext.measureText("AquaCore").width;
       const markInset = isCompactViewport
         ? Math.max(2, (width - markSize - gap - wordWidth) / 2)
@@ -406,8 +408,8 @@ function BrandCubeReveal() {
       }
 
       const trademarkRadius = Math.max(4, controlSize * 0.58);
-      const trademarkX = wordX + wordWidth + trademarkRadius * 1.5;
-      const trademarkY = wordBaseline - textSize * 0.78;
+      const trademarkX = wordX + wordWidth + trademarkRadius * 1.25;
+      const trademarkY = wordBaseline - textSize * 0.56;
       sourceContext.strokeStyle = "#86ddff";
       sourceContext.lineWidth = Math.max(0.8, controlSize * 0.08);
       sourceContext.beginPath();
@@ -496,6 +498,10 @@ function BrandCubeReveal() {
         const logoOpacity = rawProgress < 0.78 ? 0 : Math.min(1, (rawProgress - 0.78) / 0.22);
         context.clearRect(0, 0, width, height);
         drawHalo();
+
+        if (rawProgress >= 0.72) {
+          brand?.classList.add("is-revealed");
+        }
 
         if (now - startedAt > delay) {
           context.globalAlpha = particleOpacity;
