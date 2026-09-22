@@ -301,6 +301,11 @@ img {
   opacity: 1;
 }
 
+.brand.is-particle-running .brand-lockup,
+.brand.is-particle-running .brand-orbit {
+  transition: none;
+}
+
 
 .brand-capsule::before {
   display: none;

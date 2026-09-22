@@ -339,6 +339,8 @@ function BrandCubeReveal() {
 
       const isCompactViewport = window.matchMedia("(max-width: 720px)").matches;
       const brand = canvas.closest<HTMLElement>(".brand");
+      const lockup = brand?.querySelector<HTMLElement>(".brand-lockup");
+      const orbit = brand?.querySelector<SVGElement>(".brand-orbit");
       const symbol = brand?.querySelector<HTMLImageElement>(".brand-symbol");
       const wordmark = brand?.querySelector<HTMLImageElement>(".brand-wordmark");
       const control = brand?.querySelector<HTMLElement>(".brand-control");
@@ -349,6 +351,9 @@ function BrandCubeReveal() {
       }
 
       brand?.classList.remove("is-revealed");
+      brand.classList.add("is-particle-running");
+      if (lockup) lockup.style.opacity = "0";
+      if (orbit) orbit.style.opacity = "0";
       const brandBounds = brand.getBoundingClientRect();
       const particlePadding = 14;
       const logoWidth = Math.max(1, Math.round(brandBounds.width));
@@ -481,18 +486,22 @@ function BrandCubeReveal() {
       const delay = 180;
       const duration = 3400;
       const startedAt = performance.now();
+      const smoothStep = (from: number, to: number, value: number) => {
+        const progress = Math.min(1, Math.max(0, (value - from) / (to - from)));
+        return progress * progress * (3 - 2 * progress);
+      };
 
       const draw = (now: number) => {
         const rawProgress = Math.min(1, Math.max(0, (now - startedAt - delay) / duration));
         const progress = 1 - (1 - rawProgress) ** 4;
-        const particleOpacity = rawProgress < 0.78 ? 1 : 1 - (rawProgress - 0.78) / 0.22;
-        const logoOpacity = rawProgress < 0.58 ? 0 : Math.min(1, (rawProgress - 0.58) / 0.25);
+        const revealOpacity = smoothStep(0.56, 0.92, rawProgress);
+        const particleOpacity = 1 - smoothStep(0.6, 0.96, rawProgress);
+        if (lockup) lockup.style.opacity = String(revealOpacity);
+        if (orbit) orbit.style.opacity = String(revealOpacity);
         context.clearRect(0, 0, width, height);
+        context.globalAlpha = 1 - revealOpacity;
         drawOrbit();
-
-        if (rawProgress >= 0.72) {
-          brand?.classList.add("is-revealed");
-        }
+        context.globalAlpha = 1;
 
         if (now - startedAt > delay) {
           context.globalAlpha = particleOpacity;
@@ -503,13 +512,16 @@ function BrandCubeReveal() {
             context.fillStyle = cube.color;
             context.fillRect(x - particleSize / 2, y - particleSize / 2, particleSize, particleSize);
           });
-          context.globalAlpha = logoOpacity;
-          context.drawImage(source, 0, 0);
           context.globalAlpha = 1;
         }
 
         if (rawProgress < 1 && isActive) {
           animationFrame = requestAnimationFrame(draw);
+        } else {
+          brand.classList.add("is-revealed");
+          brand.classList.remove("is-particle-running");
+          if (lockup) lockup.style.removeProperty("opacity");
+          if (orbit) orbit.style.removeProperty("opacity");
         }
       };
 
