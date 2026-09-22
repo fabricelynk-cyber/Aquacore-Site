@@ -381,8 +381,41 @@ function BrandCubeReveal() {
       const markInset = isCompactViewport
         ? Math.max(2, (width - markSize - gap - wordWidth) / 2)
         : Math.max(4, height * 0.05);
+      const wordX = markInset + markSize + gap;
+      const wordBaseline = height / 2 + textSize * 0.1;
       sourceContext.drawImage(image, markInset, (height - markSize) / 2, markSize, markSize);
-      sourceContext.strokeText("AquaCore", markInset + markSize + gap, height / 2 + textSize * 0.34);
+      sourceContext.strokeText("AquaCore", wordX, wordBaseline);
+
+      const controlLabel = "CONTROL";
+      const controlSize = Math.max(8, textSize * 0.27);
+      const controlTracking = Math.max(1.2, controlSize * 0.23);
+      sourceContext.font = `600 ${controlSize}px Questrial, Arial, sans-serif`;
+      const controlWidth = Array.from(controlLabel).reduce(
+        (total, letter) => total + sourceContext.measureText(letter).width,
+        0,
+      ) + controlTracking * (controlLabel.length - 1);
+      let controlX = wordX + wordWidth - controlWidth;
+      sourceContext.fillStyle = "#70d6ff";
+      for (const letter of controlLabel) {
+        sourceContext.fillText(letter, controlX, wordBaseline + controlSize * 1.32);
+        controlX += sourceContext.measureText(letter).width + controlTracking;
+      }
+
+      const trademarkRadius = Math.max(4, controlSize * 0.58);
+      const trademarkX = wordX + wordWidth + trademarkRadius * 1.5;
+      const trademarkY = wordBaseline - textSize * 0.78;
+      sourceContext.strokeStyle = "#86ddff";
+      sourceContext.lineWidth = Math.max(0.8, controlSize * 0.08);
+      sourceContext.beginPath();
+      sourceContext.arc(trademarkX, trademarkY, trademarkRadius, 0, Math.PI * 2);
+      sourceContext.stroke();
+      sourceContext.font = `600 ${Math.max(6, controlSize * 0.82)}px Arial, sans-serif`;
+      sourceContext.fillStyle = "#b9ecff";
+      sourceContext.textAlign = "center";
+      sourceContext.textBaseline = "middle";
+      sourceContext.fillText("C", trademarkX, trademarkY + 0.15);
+      sourceContext.textAlign = "start";
+      sourceContext.textBaseline = "alphabetic";
 
       const data = sourceContext.getImageData(0, 0, width, height).data;
       const candidates: Array<{ x: number; y: number; r: number; g: number; b: number }> = [];
@@ -596,7 +629,7 @@ export default function App() {
         <a
           className="brand brand-hero-signature"
           href="#hero"
-          aria-label="AquaCore"
+          aria-label="AquaCoreControl"
           onMouseMove={setInteractivePointer}
           onMouseLeave={clearInteractivePointer}
         >
@@ -604,11 +637,13 @@ export default function App() {
           <span className="brand-capsule" aria-hidden="true">
             <span className="brand-mark-shell">
               <span className="brand-mark-aura" />
-              <img className="brand-mark" src={aquaCoreSymbol} alt="Logo AquaCore" />
+              <img className="brand-mark" src={aquaCoreSymbol} alt="Logo AquaCoreControl" />
             </span>
             <span className="brand-wordmark-stack">
               <span className="brand-wordmark brand-wordmark-back">AquaCore</span>
               <span className="brand-wordmark brand-wordmark-front">AquaCore</span>
+              <span className="brand-control">Control</span>
+              <span className="brand-trademark">C</span>
             </span>
           </span>
         </a>
