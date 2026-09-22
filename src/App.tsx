@@ -370,7 +370,11 @@ function BrandCubeReveal() {
         return;
       }
 
-      const contentScale = isCompactViewport ? 0.68 : 1;
+      // La signature reste entièrement contenue dans le bandeau, y compris
+      // lorsque le navigateur applique une mise à l'échelle importante.
+      // La réserve CSS à droite permet aussi de dessiner le C cerclé sans
+      // qu'il soit coupé par le canvas de l'animation.
+      const contentScale = isCompactViewport ? 0.68 : 0.78;
       const markSize = Math.min(height * 0.9, 88) * contentScale;
       const textSize = Math.min(height * 0.48, 46) * contentScale;
       sourceContext.font = `400 ${textSize}px Questrial, sans-serif`;
