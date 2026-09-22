@@ -265,12 +265,12 @@ img {
 
 .brand-lockup .brand-trademark {
   top: -0.28rem;
-  right: -0.12rem;
+  right: 0.25rem;
   width: 0.76rem;
   height: 0.76rem;
   padding: 0.03rem 0 0 0.03rem;
   border-color: #72d6fa;
-  background: #0a2b40;
+  background: transparent;
   color: #9fe7ff;
   font-size: 0.5rem;
   font-weight: 500;
@@ -2438,7 +2438,7 @@ img {
 
   .brand-lockup .brand-trademark {
     top: -0.24rem;
-    right: -0.12rem;
+    right: 0.25rem;
     width: min(0.76rem, 3.3vw);
     height: min(0.76rem, 3.3vw);
     font-size: min(0.5rem, 2.12vw);

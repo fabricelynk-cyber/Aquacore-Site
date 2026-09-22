@@ -396,7 +396,19 @@ function BrandCubeReveal() {
       };
 
       drawImageAtElement(symbolImage, symbol);
-      drawImageAtElement(wordmarkImage, wordmark);
+      const wordmarkBox = relativeBox(wordmark);
+      const visibleWordmarkWidth = 0.952;
+      sourceContext.drawImage(
+        wordmarkImage,
+        0,
+        0,
+        wordmarkImage.naturalWidth * visibleWordmarkWidth,
+        wordmarkImage.naturalHeight,
+        wordmarkBox.x,
+        wordmarkBox.y,
+        wordmarkBox.width * visibleWordmarkWidth,
+        wordmarkBox.height,
+      );
 
       if (control) {
         const box = relativeBox(control);
