@@ -238,6 +238,7 @@ img {
   display: block;
   width: 100%;
   height: auto;
+  clip-path: inset(0 4.8% 0 0);
   color: initial;
   font: initial;
   letter-spacing: normal;
@@ -251,7 +252,7 @@ img {
   bottom: auto;
   align-self: center;
   margin-top: 0.22rem;
-  margin-left: -2.1rem;
+  margin-left: 6.7rem;
   color: #7fdcff;
   font-family: "Questrial", "Segoe UI", sans-serif;
   font-size: 0.63rem;
@@ -264,7 +265,7 @@ img {
 
 .brand-lockup .brand-trademark {
   top: -0.28rem;
-  right: -0.78rem;
+  right: -0.12rem;
   width: 0.76rem;
   height: 0.76rem;
   padding: 0.03rem 0 0 0.03rem;
@@ -2431,13 +2432,13 @@ img {
 
   .brand-lockup .brand-control {
     margin-top: 0.2rem;
-    margin-left: -1.85rem;
+    margin-left: 6.2rem;
     font-size: min(0.61rem, 2.55vw);
   }
 
   .brand-lockup .brand-trademark {
     top: -0.24rem;
-    right: -0.88rem;
+    right: -0.12rem;
     width: min(0.76rem, 3.3vw);
     height: min(0.76rem, 3.3vw);
     font-size: min(0.5rem, 2.12vw);
