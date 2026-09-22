@@ -418,7 +418,9 @@ function BrandCubeReveal() {
       if (control) {
         const box = relativeBox(control);
         const style = window.getComputedStyle(control);
-        const characters = control.textContent?.trim().split("") ?? [];
+        const label = control.textContent?.trim() ?? "";
+        const renderedLabel = style.textTransform === "uppercase" ? label.toLocaleUpperCase("fr-FR") : label;
+        const characters = [...renderedLabel];
         const letterSpacing = Number.parseFloat(style.letterSpacing) || 0;
         sourceContext.save();
         sourceContext.fillStyle = style.color;
@@ -428,7 +430,7 @@ function BrandCubeReveal() {
           character,
           width: sourceContext.measureText(character).width,
         }));
-        const totalWidth = glyphs.reduce((sum, glyph) => sum + glyph.width, 0) + Math.max(0, glyphs.length - 1) * letterSpacing;
+        const totalWidth = glyphs.reduce((sum, glyph) => sum + glyph.width, 0) + glyphs.length * letterSpacing;
         let x = box.x + (box.width - totalWidth) / 2;
         glyphs.forEach((glyph) => {
           sourceContext.fillText(glyph.character, x, box.y + box.height / 2);
