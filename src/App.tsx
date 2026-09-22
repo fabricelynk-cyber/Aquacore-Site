@@ -15,6 +15,7 @@ import {
   Users,
 } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type MouseEvent } from "react";
+import aquaCoreControlLogo from "./assets/aquacorecontrol-logo.png";
 import aquaCoreSymbol from "./assets/aquacore-symbol-web.png";
 
 const highlights = [
@@ -327,19 +328,27 @@ function BrandCubeReveal() {
     let animationFrame = 0;
     let isActive = true;
     const image = new Image();
-    image.src = aquaCoreSymbol;
+    image.src = aquaCoreControlLogo;
 
     const start = () => {
       if (!isActive) {
         return;
       }
 
-      const bounds = canvas.getBoundingClientRect();
-      const width = Math.max(1, Math.round(bounds.width));
-      const height = Math.max(1, Math.round(bounds.height));
       const isCompactViewport = window.matchMedia("(max-width: 720px)").matches;
       const brand = canvas.closest<HTMLElement>(".brand");
+      if (isCompactViewport || !brand) {
+        brand?.classList.add("is-revealed");
+        return;
+      }
+
       brand?.classList.remove("is-revealed");
+      const brandBounds = brand.getBoundingClientRect();
+      const particlePadding = 14;
+      const logoWidth = Math.max(1, Math.round(brandBounds.width));
+      const logoHeight = Math.max(1, Math.round(brandBounds.height));
+      const width = logoWidth + particlePadding * 2;
+      const height = logoHeight + particlePadding * 2;
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = width * pixelRatio;
       canvas.height = height * pixelRatio;
@@ -350,18 +359,11 @@ function BrandCubeReveal() {
       }
 
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      const drawHalo = () => {
-        const glow = context.createRadialGradient(width / 2, height / 2, 8, width / 2, height / 2, width * 0.52);
-        glow.addColorStop(0, "rgba(72, 198, 255, 0.14)");
-        glow.addColorStop(1, "rgba(72, 198, 255, 0)");
-        context.fillStyle = glow;
-        context.beginPath();
-        context.ellipse(width / 2, height / 2, width * 0.49, height * 0.39, 0, 0, Math.PI * 2);
-        context.fill();
-        context.strokeStyle = "rgba(116, 214, 255, 0.24)";
+      const drawOrbit = () => {
+        context.strokeStyle = "rgba(114, 214, 250, 0.3)";
         context.lineWidth = 1;
         context.beginPath();
-        context.ellipse(width / 2, height / 2, width * 0.46, height * 0.33, 0, 0, Math.PI * 2);
+        context.ellipse(width / 2, height / 2, logoWidth * 0.525, logoHeight * 0.51, 0, 0, Math.PI * 2);
         context.stroke();
       };
       const source = document.createElement("canvas");
@@ -372,56 +374,7 @@ function BrandCubeReveal() {
         return;
       }
 
-      // La signature reste entièrement contenue dans le bandeau, y compris
-      // lorsque le navigateur applique une mise à l'échelle importante.
-      // La réserve CSS à droite permet aussi de dessiner le C cerclé sans
-      // qu'il soit coupé par le canvas de l'animation.
-      const contentScale = isCompactViewport ? 0.68 : 1;
-      const markSize = Math.min(height * 0.9, 88) * contentScale;
-      const textSize = Math.min(height * 0.48, 46) * contentScale;
-      sourceContext.font = `400 ${textSize}px Questrial, sans-serif`;
-      sourceContext.lineWidth = Math.max(1.5, textSize * 0.04);
-      sourceContext.strokeStyle = "#2aa8ff";
-      const gap = Math.max(10, width * 0.038) * contentScale;
-      const wordWidth = sourceContext.measureText("AquaCore").width;
-      const markInset = isCompactViewport
-        ? Math.max(2, (width - markSize - gap - wordWidth) / 2)
-        : Math.max(4, height * 0.05);
-      const wordX = markInset + markSize + gap;
-      const wordBaseline = height / 2 + textSize * 0.1;
-      sourceContext.drawImage(image, markInset, (height - markSize) / 2, markSize, markSize);
-      sourceContext.strokeText("AquaCore", wordX, wordBaseline);
-
-      const controlLabel = "CONTROL";
-      const controlSize = Math.max(8, textSize * 0.27);
-      const controlTracking = Math.max(1.2, controlSize * 0.23);
-      sourceContext.font = `600 ${controlSize}px Questrial, Arial, sans-serif`;
-      const controlWidth = Array.from(controlLabel).reduce(
-        (total, letter) => total + sourceContext.measureText(letter).width,
-        0,
-      ) + controlTracking * (controlLabel.length - 1);
-      let controlX = wordX + wordWidth - controlWidth;
-      sourceContext.fillStyle = "#70d6ff";
-      for (const letter of controlLabel) {
-        sourceContext.fillText(letter, controlX, wordBaseline + controlSize * 1.32);
-        controlX += sourceContext.measureText(letter).width + controlTracking;
-      }
-
-      const trademarkRadius = Math.max(4, controlSize * 0.58);
-      const trademarkX = wordX + wordWidth + trademarkRadius * 1.25;
-      const trademarkY = wordBaseline - textSize * 0.56;
-      sourceContext.strokeStyle = "#86ddff";
-      sourceContext.lineWidth = Math.max(0.8, controlSize * 0.08);
-      sourceContext.beginPath();
-      sourceContext.arc(trademarkX, trademarkY, trademarkRadius, 0, Math.PI * 2);
-      sourceContext.stroke();
-      sourceContext.font = `600 ${Math.max(6, controlSize * 0.82)}px Arial, sans-serif`;
-      sourceContext.fillStyle = "#b9ecff";
-      sourceContext.textAlign = "center";
-      sourceContext.textBaseline = "middle";
-      sourceContext.fillText("C", trademarkX, trademarkY + 0.15);
-      sourceContext.textAlign = "start";
-      sourceContext.textBaseline = "alphabetic";
+      sourceContext.drawImage(image, particlePadding, particlePadding, logoWidth, logoHeight);
 
       const data = sourceContext.getImageData(0, 0, width, height).data;
       const candidates: Array<{ x: number; y: number; r: number; g: number; b: number }> = [];
@@ -468,22 +421,20 @@ function BrandCubeReveal() {
         return sprite;
       };
 
-      const count = Math.min(4200, candidates.length);
+      const count = Math.min(5000, candidates.length);
       for (let index = 0; index < count; index += 1) {
         const candidateIndex = Math.floor(Math.random() * candidates.length);
         const target = candidates.splice(candidateIndex, 1)[0];
         const angle = Math.random() * Math.PI * 2;
-        const distance = Math.max(width, height) * (
-          isCompactViewport ? 0.06 + Math.random() * 0.18 : 0.18 + Math.random() * 0.42
-        );
+        const distance = Math.max(width, height) * (0.02 + Math.random() * 0.07);
         cubes.push({
           targetX: target.x,
           targetY: target.y,
-          startX: width / 2 + Math.cos(angle) * distance,
-          startY: height / 2 + Math.sin(angle) * distance * 0.52,
+          startX: target.x + Math.cos(angle) * distance,
+          startY: target.y + Math.sin(angle) * distance * 0.52,
           size: 0.8 + Math.random() * 1.15,
           sprite: getSprite(target),
-          drift: (Math.random() - 0.5) * 18,
+          drift: (Math.random() - 0.5) * 5,
         });
       }
 
@@ -494,10 +445,10 @@ function BrandCubeReveal() {
       const draw = (now: number) => {
         const rawProgress = Math.min(1, Math.max(0, (now - startedAt - delay) / duration));
         const progress = 1 - (1 - rawProgress) ** 4;
-        const particleOpacity = rawProgress < 0.86 ? 1 : 1 - (rawProgress - 0.86) / 0.14;
-        const logoOpacity = rawProgress < 0.78 ? 0 : Math.min(1, (rawProgress - 0.78) / 0.22);
+        const particleOpacity = rawProgress < 0.78 ? 1 : 1 - (rawProgress - 0.78) / 0.22;
+        const logoOpacity = rawProgress < 0.68 ? 0 : Math.min(1, (rawProgress - 0.68) / 0.18);
         context.clearRect(0, 0, width, height);
-        drawHalo();
+        drawOrbit();
 
         if (rawProgress >= 0.72) {
           brand?.classList.add("is-revealed");
@@ -643,19 +594,11 @@ export default function App() {
           onMouseMove={setInteractivePointer}
           onMouseLeave={clearInteractivePointer}
         >
+          <svg className="brand-orbit" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <ellipse cx="50" cy="50" rx="48" ry="42" />
+          </svg>
+          <img className="brand-lockup" src={aquaCoreControlLogo} alt="Logo AquaCoreControl" />
           <BrandCubeReveal />
-          <span className="brand-capsule" aria-hidden="true">
-            <span className="brand-mark-shell">
-              <span className="brand-mark-aura" />
-              <img className="brand-mark" src={aquaCoreSymbol} alt="Logo AquaCoreControl" />
-            </span>
-            <span className="brand-wordmark-stack">
-              <span className="brand-wordmark brand-wordmark-back">AquaCore</span>
-              <span className="brand-wordmark brand-wordmark-front">AquaCore</span>
-              <span className="brand-control">Control</span>
-              <span className="brand-trademark">C</span>
-            </span>
-          </span>
         </a>
 
         <nav className="nav" aria-label="Navigation principale">
