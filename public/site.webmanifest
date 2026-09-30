@@ -1,0 +1,17 @@
+{
+  "name": "AquaCoreControl",
+  "short_name": "AquaCoreControl",
+  "description": "Logiciel de pilotage des piscines et centres aquatiques.",
+  "lang": "fr-FR",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#071a29",
+  "theme_color": "#071a29",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

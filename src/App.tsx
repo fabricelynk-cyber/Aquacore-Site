@@ -718,8 +718,9 @@ export default function App() {
             </h1>
 
             <p className="hero-text">
-              AquaCore réunit occupation, activité, fluides, recettes, ressources humaines, budget et
-              agenda dans un cadre commun — pour un établissement comme pour un réseau de sites.
+              AquaCoreControl est le logiciel de pilotage qui réunit occupation, activité, fluides,
+              recettes, ressources humaines, budget et agenda dans un cadre commun — pour un
+              établissement comme pour un réseau de sites.
             </p>
 
             <div className="hero-actions">
