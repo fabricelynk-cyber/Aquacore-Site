@@ -109,6 +109,11 @@ const modules = [
     title: "Accès & continuité",
     text: "Organisez les droits par établissement, gardez une trace des actions et sécurisez les échanges, sauvegardes et reprises.",
   },
+  {
+    icon: Layers3,
+    title: "Modules à la carte",
+    text: "Activez les modules utiles à chaque collectivité et à chaque établissement. Une évolution dédiée peut aussi être conçue après cadrage de votre besoin.",
+  },
 ];
 
 const capabilities = [
@@ -952,10 +957,11 @@ export default function App() {
         <section className="section section-frame section-reveal" id="modules" data-reveal style={revealStyle(4)}>
           <div className="section-heading">
             <span className="section-kicker">Modules</span>
-            <h2>Les briques qui structurent le pilotage d'un équipement aquatique.</h2>
+            <h2>Un socle métier complété par les modules adaptés à votre organisation.</h2>
             <p>
-              Chaque module répond à un usage d'exploitation concret, du suivi quotidien aux
-              revues mensuelles et aux arbitrages de gestion.
+              Chaque module répond à un usage d'exploitation concret. Les fonctions sont activées
+              selon votre périmètre ; une extension spécifique peut être étudiée lorsqu'un besoin
+              métier ne relève pas du socle existant.
             </p>
           </div>
 
