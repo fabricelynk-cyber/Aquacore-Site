@@ -1767,6 +1767,13 @@ img {
   line-height: 1.7;
 }
 
+.contact-card-info .contact-representative {
+  color: #bdeaff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .contact-email {
   display: inline-flex;
   align-items: center;

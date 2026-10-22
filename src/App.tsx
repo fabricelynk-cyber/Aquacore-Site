@@ -1230,7 +1230,8 @@ export default function App() {
               onMouseMove={setInteractivePointer}
               onMouseLeave={clearInteractivePointer}
             >
-              <p className="metric-label">AquaCore</p>
+              <p className="metric-label">AquaCoreControl</p>
+              <p className="contact-representative">Votre interlocuteur : Fabrice Binther</p>
               <strong>Un premier échange utile, sans parcours commercial inutile.</strong>
               <p>
                 Indiquez votre contexte. Nous préparons un parcours de démonstration cohérent avec
@@ -1410,11 +1411,22 @@ export default function App() {
                   échanges précontractuels qui peuvent en résulter.
                 </p>
                 <p>
-                  La demande est transmise par l'API AquaCore puis envoyée à
-                  <a href="mailto:contact@aquacorecontrol.fr"> contact@aquacorecontrol.fr</a> via
-                  Mailjet. Son contenu n'est pas conservé dans la base AquaCore. Une empreinte
-                  technique pseudonymisée de la connexion est utilisée temporairement pour limiter
-                  les envois automatisés ; elle est supprimée au terme d'une heure.
+                  Les destinataires sont AquaCoreControl, OVHcloud pour l'hébergement et la boîte
+                  professionnelle Zimbra, ainsi que Mailjet pour la transmission et le suivi de la
+                  remise des e-mails. Le contenu de la demande n'est pas conservé dans la base
+                  métier AquaCore.
+                </p>
+                <p>
+                  Les échanges sont conservés pendant trois ans à compter de leur collecte ou du
+                  dernier contact émanant de votre part. À l'échéance, ils sont examinés puis
+                  supprimés manuellement, sauf obligation légale ou nécessité particulière de
+                  preuve.
+                </p>
+                <p>
+                  Pour limiter les envois automatisés, une empreinte HMAC pseudonymisée de la
+                  connexion est utilisée sur une fenêtre d'une heure. Elle ne contient ni le
+                  message ni l'adresse IP et est retirée lors du nettoyage périodique normal ; ce
+                  mécanisme ne garantit pas une suppression exactement à soixante minutes.
                 </p>
                 <p>
                   Vous pouvez demander l'accès, la rectification, l'effacement, la limitation ou
