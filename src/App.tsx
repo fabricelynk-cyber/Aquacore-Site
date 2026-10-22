@@ -9,7 +9,9 @@ import {
   Gauge,
   Layers3,
   LogIn,
+  Mail,
   Menu,
+  Phone,
   ShieldCheck,
   Sparkles,
   Users,
@@ -47,7 +49,7 @@ const premiumBand = [
   },
   {
     label: "Échelle adaptée",
-    text: "Utilisez le même outil pour un site, une régie, un délégataire ou un réseau.",
+    text: "Utilisez le même outil pour un site, une collectivité, une régie, un exploitant privé ou un réseau.",
   },
 ];
 
@@ -69,7 +71,7 @@ const trustPoints = [
   {
     icon: ShieldCheck,
     title: "Accès maîtrisés",
-    text: "Des profils, droits et périmètres organisés par collectivité et établissement.",
+    text: "Des profils, droits et périmètres organisés par organisation cliente et établissement.",
   },
   {
     icon: Layers3,
@@ -112,7 +114,7 @@ const modules = [
   {
     icon: Layers3,
     title: "Modules à la carte",
-    text: "Activez les modules utiles à chaque collectivité et à chaque établissement. Une évolution dédiée peut aussi être conçue après cadrage de votre besoin.",
+    text: "Activez les modules utiles à chaque organisation et à chaque établissement. Une évolution dédiée peut aussi être conçue après cadrage de votre besoin.",
   },
 ];
 
@@ -174,7 +176,7 @@ const benefits = [
 ];
 
 const webAdvantages = [
-  "Accessible depuis un navigateur, sans installation individuelle sur les postes de la collectivité.",
+  "Accessible depuis un navigateur, sans installation individuelle sur les postes de votre organisation.",
   "Une version unique et partagée pour les directions, les services concernés et les réseaux multisites.",
   "Des évolutions déployées de façon centralisée, sans intervention technique sur chaque ordinateur.",
   "Une interface pensée pour l'usage quotidien sur ordinateur comme sur tablette.",
@@ -187,7 +189,7 @@ const audiences = [
     text: "La direction dispose d'un cadre de suivi quotidien pour passer des constats de terrain à des priorités opérationnelles.",
     points: [
       "Repérer les évolutions qui demandent une action.",
-      "Préparer les données nécessaires aux échanges avec la collectivité.",
+      "Préparer les données nécessaires aux échanges avec les parties prenantes de l'organisation.",
       "Suivre les engagements décidés d'une revue à l'autre.",
     ],
   },
@@ -198,7 +200,7 @@ const audiences = [
     points: [
       "Mettre en perspective activité, service rendu et moyens mobilisés.",
       "Éclairer les choix budgétaires, tarifaires et d'investissement.",
-      "Communiquer des éléments cohérents au sein de la collectivité.",
+      "Communiquer des éléments cohérents au sein de l'organisation.",
     ],
   },
 ];
@@ -890,7 +892,7 @@ export default function App() {
                 onMouseLeave={clearInteractivePointer}
               >
                 <CheckCircle2 size={18} />
-                <span>Un cadre personnalisable selon les pratiques de chaque collectivité.</span>
+                <span>Un cadre personnalisable selon les pratiques de chaque organisation.</span>
               </div>
               <div
                 className="origin-point interactive-surface"
@@ -928,7 +930,7 @@ export default function App() {
             <h2>Des informations adaptées à chaque niveau de décision.</h2>
             <p>
               Les mêmes informations servent des usages différents : organiser l'exploitation,
-              préparer les instances et éclairer les choix de la collectivité.
+              préparer les revues et éclairer les choix de votre organisation.
             </p>
           </div>
 
@@ -1066,7 +1068,7 @@ export default function App() {
             <span className="section-kicker">Application web</span>
             <h2>Un outil métier simple à déployer, facile à partager.</h2>
             <p>
-              AquaCore fonctionne dans le navigateur : la collectivité dispose d'un environnement
+              AquaCore fonctionne dans le navigateur : votre organisation dispose d'un environnement
               commun, disponible sans alourdir les postes de travail ni multiplier les versions.
             </p>
           </div>
@@ -1234,9 +1236,22 @@ export default function App() {
                 Indiquez votre contexte. Nous préparons un parcours de démonstration cohérent avec
                 votre organisation, vos établissements et les priorités que vous souhaitez explorer.
               </p>
+              <div className="contact-links" aria-label="Coordonnées AquaCoreControl">
+                <a className="contact-email" href="mailto:contact@aquacorecontrol.fr">
+                  <Mail size={18} />
+                  contact@aquacorecontrol.fr
+                </a>
+                <a className="contact-email" href="tel:+33629613613">
+                  <Phone size={18} />
+                  06 29 61 36 13
+                </a>
+              </div>
               <div className="contact-note">
                 <CheckCircle2 size={18} />
-                <span>Vos informations servent uniquement à organiser votre demande de démonstration.</span>
+                <span>
+                  Vos informations servent uniquement à traiter votre demande de démonstration.
+                  Consultez notre <a href="#confidentialite">politique de confidentialité</a>.
+                </span>
               </div>
             </aside>
 
@@ -1267,7 +1282,7 @@ export default function App() {
 
                   <label className="contact-field">
                     <span>Structure</span>
-                    <input type="text" name="organisation" placeholder="Ville, régie, délégataire..." maxLength={160} />
+                    <input type="text" name="organisation" placeholder="Collectivité, régie, exploitant, association..." maxLength={160} />
                   </label>
 
                   <label className="contact-field">
@@ -1328,11 +1343,103 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        <section className="section section-frame legal-section" id="mentions-legales" aria-labelledby="legal-title">
+          <div className="section-heading">
+            <span className="section-kicker">Informations officielles</span>
+            <h2 id="legal-title">Mentions légales et confidentialité</h2>
+            <p>
+              Les informations ci-dessous s'appliquent à la vitrine AquaCoreControl et à son
+              formulaire de demande de démonstration.
+            </p>
+          </div>
+
+          <div className="legal-grid">
+            <article className="legal-card">
+              <h3>Éditeur du site</h3>
+              <dl className="legal-list">
+                <div>
+                  <dt>Nom commercial</dt>
+                  <dd>AquaCoreControl</dd>
+                </div>
+                <div>
+                  <dt>Éditeur</dt>
+                  <dd>Fabrice Jean Patrick Binther, entrepreneur individuel</dd>
+                </div>
+                <div>
+                  <dt>SIREN / SIRET</dt>
+                  <dd>SIREN 131507378 · SIRET 13150737800019</dd>
+                </div>
+                <div>
+                  <dt>Adresse</dt>
+                  <dd>47 rue Vivienne, 75002 Paris, France</dd>
+                </div>
+                <div>
+                  <dt>Contact</dt>
+                  <dd>
+                    <a href="mailto:contact@aquacorecontrol.fr">contact@aquacorecontrol.fr</a>
+                    <br />
+                    <a href="tel:+33629613613">06 29 61 36 13</a>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Directeur de la publication</dt>
+                  <dd>Fabrice Jean Patrick Binther</dd>
+                </div>
+                <div>
+                  <dt>TVA</dt>
+                  <dd>Franchise en base de TVA - TVA non applicable, article 293 B du CGI</dd>
+                </div>
+                <div>
+                  <dt>Hébergement</dt>
+                  <dd>
+                    OVH SAS, 2 rue Kellermann, 59100 Roubaix, France — RCS Lille Métropole
+                    424 761 419 — telephone 1007 depuis la France.
+                  </dd>
+                </div>
+              </dl>
+            </article>
+
+            <article className="legal-card" id="confidentialite" aria-labelledby="privacy-title">
+              <h3 id="privacy-title">Politique de confidentialité</h3>
+              <div className="legal-copy">
+                <p>
+                  Le responsable du traitement est Fabrice Jean Patrick Binther. Les données du
+                  formulaire — nom, organisation, adresse e-mail ou téléphone, objet et message —
+                  sont utilisées pour répondre à votre demande de démonstration et préparer les
+                  échanges précontractuels qui peuvent en résulter.
+                </p>
+                <p>
+                  La demande est transmise par l'API AquaCore puis envoyée à
+                  <a href="mailto:contact@aquacorecontrol.fr"> contact@aquacorecontrol.fr</a> via
+                  Mailjet. Son contenu n'est pas conservé dans la base AquaCore. Une empreinte
+                  technique pseudonymisée de la connexion est utilisée temporairement pour limiter
+                  les envois automatisés ; elle est supprimée au terme d'une heure.
+                </p>
+                <p>
+                  Vous pouvez demander l'accès, la rectification, l'effacement, la limitation ou
+                  l'opposition au traitement de vos données en écrivant à
+                  <a href="mailto:contact@aquacorecontrol.fr"> contact@aquacorecontrol.fr</a>.
+                  Vous pouvez également introduire une réclamation auprès de la
+                  <a href="https://www.cnil.fr/" target="_blank" rel="noreferrer"> CNIL</a>.
+                </p>
+                <p>
+                  La vitrine n'utilise pas de cookie publicitaire ni d'outil de mesure d'audience.
+                  Mise à jour le 22 octobre 2026.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
       </main>
 
       <footer className="footer">
-        <p>AquaCore, application métier de pilotage pour équipements aquatiques.</p>
-        <p>Une offre, son périmètre et son cadre de sécurité sont présentés avant tout engagement.</p>
+        <p>AquaCoreControl, application métier de pilotage pour équipements aquatiques.</p>
+        <div className="footer-links">
+          <a href="#mentions-legales">Mentions légales</a>
+          <a href="#confidentialite">Confidentialité</a>
+          <a href="mailto:contact@aquacorecontrol.fr">Contact</a>
+        </div>
       </footer>
     </div>
   );
