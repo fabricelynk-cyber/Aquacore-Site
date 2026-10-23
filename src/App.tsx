@@ -11,7 +11,6 @@ import {
   LogIn,
   Mail,
   Menu,
-  Phone,
   ShieldCheck,
   Sparkles,
   Users,
@@ -1242,10 +1241,6 @@ export default function App() {
                   <Mail size={18} />
                   contact@aquacorecontrol.fr
                 </a>
-                <a className="contact-email" href="tel:+33629613613">
-                  <Phone size={18} />
-                  06 29 61 36 13
-                </a>
               </div>
               <div className="contact-note">
                 <CheckCircle2 size={18} />
@@ -1365,7 +1360,7 @@ export default function App() {
                 </div>
                 <div>
                   <dt>Éditeur</dt>
-                  <dd>Fabrice Jean Patrick Binther, entrepreneur individuel</dd>
+                  <dd>Fabrice Binther, entrepreneur individuel</dd>
                 </div>
                 <div>
                   <dt>SIREN / SIRET</dt>
@@ -1379,13 +1374,11 @@ export default function App() {
                   <dt>Contact</dt>
                   <dd>
                     <a href="mailto:contact@aquacorecontrol.fr">contact@aquacorecontrol.fr</a>
-                    <br />
-                    <a href="tel:+33629613613">06 29 61 36 13</a>
                   </dd>
                 </div>
                 <div>
                   <dt>Directeur de la publication</dt>
-                  <dd>Fabrice Jean Patrick Binther</dd>
+                  <dd>Fabrice Binther</dd>
                 </div>
                 <div>
                   <dt>TVA</dt>
@@ -1405,7 +1398,7 @@ export default function App() {
               <h3 id="privacy-title">Politique de confidentialité</h3>
               <div className="legal-copy">
                 <p>
-                  Le responsable du traitement est Fabrice Jean Patrick Binther. Les données du
+                  Le responsable du traitement est Fabrice Binther. Les données du
                   formulaire — nom, organisation, adresse e-mail ou téléphone, objet et message —
                   sont utilisées pour répondre à votre demande de démonstration et préparer les
                   échanges précontractuels qui peuvent en résulter.
