@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   Sparkles,
   Users,
+  X,
 } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type MouseEvent } from "react";
 import aquaCoreSymbol from "./assets/aquacore-symbol-web.png";
@@ -566,6 +567,9 @@ export default function App() {
   const [contactError, setContactError] = useState("");
   const [contactSuccess, setContactSuccess] = useState(false);
   const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [legalPanel, setLegalPanel] = useState<"mentions" | "privacy" | null>(null);
+  const legalDialogRef = useRef<HTMLDivElement | null>(null);
+  const previousFocusedElementRef = useRef<HTMLElement | null>(null);
   const contactFieldDescription = contactError
     ? "contact-channel-hint contact-channel-error"
     : "contact-channel-hint";
@@ -613,6 +617,39 @@ export default function App() {
       setContactSubmitting(false);
     }
   };
+
+  const openLegalPanel = (panel: "mentions" | "privacy") => {
+    previousFocusedElementRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setLegalPanel(panel);
+  };
+
+  const closeLegalPanel = () => {
+    setLegalPanel(null);
+  };
+
+  useEffect(() => {
+    if (!legalPanel || typeof document === "undefined") {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    const focusTimer = window.setTimeout(() => legalDialogRef.current?.focus(), 0);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeLegalPanel();
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previousFocusedElementRef.current?.focus();
+    };
+  }, [legalPanel]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -1246,7 +1283,7 @@ export default function App() {
                 <CheckCircle2 size={18} />
                 <span>
                   Vos informations servent uniquement à traiter votre demande de démonstration.
-                  Consultez notre <a href="#confidentialite">politique de confidentialité</a>.
+                  Les détails de confidentialité sont accessibles depuis le pied de page.
                 </span>
               </div>
             </aside>
@@ -1340,112 +1377,135 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section section-frame legal-section" id="mentions-legales" aria-labelledby="legal-title">
-          <div className="section-heading">
-            <span className="section-kicker">Informations officielles</span>
-            <h2 id="legal-title">Mentions légales et confidentialité</h2>
-            <p>
-              Les informations ci-dessous s'appliquent à la vitrine AquaCoreControl et à son
-              formulaire de demande de démonstration.
-            </p>
-          </div>
-
-          <div className="legal-grid">
-            <article className="legal-card">
-              <h3>Éditeur du site</h3>
-              <dl className="legal-list">
-                <div>
-                  <dt>Nom commercial</dt>
-                  <dd>AquaCoreControl</dd>
-                </div>
-                <div>
-                  <dt>Éditeur</dt>
-                  <dd>Fabrice Binther, entrepreneur individuel</dd>
-                </div>
-                <div>
-                  <dt>SIREN / SIRET</dt>
-                  <dd>SIREN 131507378 · SIRET 13150737800019</dd>
-                </div>
-                <div>
-                  <dt>Adresse</dt>
-                  <dd>47 rue Vivienne, 75002 Paris, France</dd>
-                </div>
-                <div>
-                  <dt>Contact</dt>
-                  <dd>
-                    <a href="mailto:contact@aquacorecontrol.fr">contact@aquacorecontrol.fr</a>
-                  </dd>
-                </div>
-                <div>
-                  <dt>Directeur de la publication</dt>
-                  <dd>Fabrice Binther</dd>
-                </div>
-                <div>
-                  <dt>TVA</dt>
-                  <dd>Franchise en base de TVA - TVA non applicable, article 293 B du CGI</dd>
-                </div>
-                <div>
-                  <dt>Hébergement</dt>
-                  <dd>
-                    OVH SAS, 2 rue Kellermann, 59100 Roubaix, France — RCS Lille Métropole
-                    424 761 419 — telephone 1007 depuis la France.
-                  </dd>
-                </div>
-              </dl>
-            </article>
-
-            <article className="legal-card" id="confidentialite" aria-labelledby="privacy-title">
-              <h3 id="privacy-title">Politique de confidentialité</h3>
-              <div className="legal-copy">
-                <p>
-                  Le responsable du traitement est Fabrice Binther. Les données du
-                  formulaire — nom, organisation, adresse e-mail ou téléphone, objet et message —
-                  sont utilisées pour répondre à votre demande de démonstration et préparer les
-                  échanges précontractuels qui peuvent en résulter.
-                </p>
-                <p>
-                  Les destinataires sont AquaCoreControl, OVHcloud pour l'hébergement et la boîte
-                  professionnelle Zimbra, ainsi que Mailjet pour la transmission et le suivi de la
-                  remise des e-mails. Le contenu de la demande n'est pas conservé dans la base
-                  métier AquaCore.
-                </p>
-                <p>
-                  Les échanges sont conservés pendant trois ans à compter de leur collecte ou du
-                  dernier contact émanant de votre part. À l'échéance, ils sont examinés puis
-                  supprimés manuellement, sauf obligation légale ou nécessité particulière de
-                  preuve.
-                </p>
-                <p>
-                  Pour limiter les envois automatisés, une empreinte HMAC pseudonymisée de la
-                  connexion est utilisée sur une fenêtre d'une heure. Elle ne contient ni le
-                  message ni l'adresse IP et est retirée lors du nettoyage périodique normal ; ce
-                  mécanisme ne garantit pas une suppression exactement à soixante minutes.
-                </p>
-                <p>
-                  Vous pouvez demander l'accès, la rectification, l'effacement, la limitation ou
-                  l'opposition au traitement de vos données en écrivant à
-                  <a href="mailto:contact@aquacorecontrol.fr"> contact@aquacorecontrol.fr</a>.
-                  Vous pouvez également introduire une réclamation auprès de la
-                  <a href="https://www.cnil.fr/" target="_blank" rel="noreferrer"> CNIL</a>.
-                </p>
-                <p>
-                  La vitrine n'utilise pas de cookie publicitaire ni d'outil de mesure d'audience.
-                  Mise à jour le 22 octobre 2026.
-                </p>
-              </div>
-            </article>
-          </div>
-        </section>
       </main>
 
       <footer className="footer">
         <p>AquaCoreControl, application métier de pilotage pour équipements aquatiques.</p>
         <div className="footer-links">
-          <a href="#mentions-legales">Mentions légales</a>
-          <a href="#confidentialite">Confidentialité</a>
+          <button className="footer-legal-trigger" type="button" onClick={() => openLegalPanel("mentions")}>
+            Mentions légales
+          </button>
+          <button className="footer-legal-trigger" type="button" onClick={() => openLegalPanel("privacy")}>
+            Confidentialité
+          </button>
           <a href="mailto:contact@aquacorecontrol.fr">Contact</a>
         </div>
       </footer>
+
+      {legalPanel ? (
+        <div
+          className="legal-modal-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) closeLegalPanel();
+          }}
+        >
+          <section
+            ref={legalDialogRef}
+            className="legal-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="legal-modal-title"
+            tabIndex={-1}
+          >
+            <header className="legal-modal-header">
+              <div>
+                <span className="section-kicker">Informations officielles</span>
+                <h2 id="legal-modal-title">
+                  {legalPanel === "mentions" ? "Mentions légales" : "Politique de confidentialité"}
+                </h2>
+              </div>
+              <button className="legal-modal-close" type="button" onClick={closeLegalPanel} aria-label="Fermer">
+                <X size={20} aria-hidden="true" />
+              </button>
+            </header>
+
+            {legalPanel === "mentions" ? (
+              <article className="legal-card">
+                <h3>Éditeur du site</h3>
+                <dl className="legal-list">
+                  <div>
+                    <dt>Nom commercial</dt>
+                    <dd>AquaCoreControl</dd>
+                  </div>
+                  <div>
+                    <dt>Éditeur</dt>
+                    <dd>Fabrice Binther, entrepreneur individuel</dd>
+                  </div>
+                  <div>
+                    <dt>SIREN / SIRET</dt>
+                    <dd>SIREN 131507378 · SIRET 13150737800019</dd>
+                  </div>
+                  <div>
+                    <dt>Adresse</dt>
+                    <dd>47 rue Vivienne, 75002 Paris, France</dd>
+                  </div>
+                  <div>
+                    <dt>Contact</dt>
+                    <dd>
+                      <a href="mailto:contact@aquacorecontrol.fr">contact@aquacorecontrol.fr</a>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Directeur de la publication</dt>
+                    <dd>Fabrice Binther</dd>
+                  </div>
+                  <div>
+                    <dt>TVA</dt>
+                    <dd>Franchise en base de TVA - TVA non applicable, article 293 B du CGI</dd>
+                  </div>
+                  <div>
+                    <dt>Hébergement</dt>
+                    <dd>
+                      OVH SAS, 2 rue Kellermann, 59100 Roubaix, France — RCS Lille Métropole
+                      424 761 419 — telephone 1007 depuis la France.
+                    </dd>
+                  </div>
+                </dl>
+              </article>
+            ) : (
+              <article className="legal-card" aria-labelledby="privacy-title">
+                <h3 id="privacy-title">Politique de confidentialité</h3>
+                <div className="legal-copy">
+                  <p>
+                    Le responsable du traitement est Fabrice Binther. Les données du formulaire — nom,
+                    organisation, adresse e-mail ou téléphone, objet et message — sont utilisées pour répondre
+                    à votre demande de démonstration et préparer les échanges précontractuels qui peuvent en
+                    résulter.
+                  </p>
+                  <p>
+                    Les destinataires sont AquaCoreControl, OVHcloud pour l'hébergement et la boîte
+                    professionnelle Zimbra, ainsi que Mailjet pour la transmission et le suivi de la remise des
+                    e-mails. Le contenu de la demande n'est pas conservé dans la base métier AquaCore.
+                  </p>
+                  <p>
+                    Les échanges sont conservés pendant trois ans à compter de leur collecte ou du dernier
+                    contact émanant de votre part. À l'échéance, ils sont examinés puis supprimés manuellement,
+                    sauf obligation légale ou nécessité particulière de preuve.
+                  </p>
+                  <p>
+                    Pour limiter les envois automatisés, une empreinte HMAC pseudonymisée de la connexion est
+                    utilisée sur une fenêtre d'une heure. Elle ne contient ni le message ni l'adresse IP et est
+                    retirée lors du nettoyage périodique normal ; ce mécanisme ne garantit pas une suppression
+                    exactement à soixante minutes.
+                  </p>
+                  <p>
+                    Vous pouvez demander l'accès, la rectification, l'effacement, la limitation ou l'opposition
+                    au traitement de vos données en écrivant à
+                    <a href="mailto:contact@aquacorecontrol.fr"> contact@aquacorecontrol.fr</a>. Vous pouvez
+                    également introduire une réclamation auprès de la
+                    <a href="https://www.cnil.fr/" target="_blank" rel="noreferrer"> CNIL</a>.
+                  </p>
+                  <p>
+                    La vitrine n'utilise pas de cookie publicitaire ni d'outil de mesure d'audience. Mise à jour
+                    le 22 octobre 2026.
+                  </p>
+                </div>
+              </article>
+            )}
+          </section>
+        </div>
+      ) : null}
     </div>
   );
 }
