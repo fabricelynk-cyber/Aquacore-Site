@@ -1444,6 +1444,8 @@ export default function App() {
                     <dt>Contact</dt>
                     <dd>
                       <a href="mailto:contact@aquacorecontrol.fr">contact@aquacorecontrol.fr</a>
+                      <br />
+                      <a href="tel:+33629613613">06 29 61 36 13</a>
                     </dd>
                   </div>
                   <div>
@@ -1452,7 +1454,7 @@ export default function App() {
                   </div>
                   <div>
                     <dt>TVA</dt>
-                    <dd>Franchise en base de TVA - TVA non applicable, article 293 B du CGI</dd>
+                    <dd>Franchise en base de TVA - TVA non applicable, art. 293 B du CGI</dd>
                   </div>
                   <div>
                     <dt>Hébergement</dt>
@@ -1468,10 +1470,12 @@ export default function App() {
                 <h3 id="privacy-title">Politique de confidentialité</h3>
                 <div className="legal-copy">
                   <p>
-                    Le responsable du traitement est Fabrice Binther. Les données du formulaire — nom,
-                    organisation, adresse e-mail ou téléphone, objet et message — sont utilisées pour répondre
-                    à votre demande de démonstration et préparer les échanges précontractuels qui peuvent en
-                    résulter.
+                    Le responsable du traitement est Fabrice Binther. Les données que vous transmettez
+                    directement dans le formulaire — nom, organisation, adresse e-mail ou téléphone, objet et
+                    message — sont utilisées pour répondre à votre demande de démonstration et préparer les
+                    échanges précontractuels qui peuvent en résulter. Le fondement est votre demande de mesures
+                    précontractuelles ; la protection du formulaire contre les envois automatisés relève de la
+                    sécurité légitime du service.
                   </p>
                   <p>
                     Les destinataires sont AquaCoreControl, OVHcloud pour l'hébergement et la boîte
@@ -1490,15 +1494,18 @@ export default function App() {
                     exactement à soixante minutes.
                   </p>
                   <p>
-                    Vous pouvez demander l'accès, la rectification, l'effacement, la limitation ou l'opposition
-                    au traitement de vos données en écrivant à
+                    Vous pouvez demander l'accès, la rectification, l'effacement, la limitation, l'opposition ou,
+                    lorsque les conditions sont réunies, la portabilité de vos données en écrivant à
                     <a href="mailto:contact@aquacorecontrol.fr"> contact@aquacorecontrol.fr</a>. Vous pouvez
                     également introduire une réclamation auprès de la
                     <a href="https://www.cnil.fr/" target="_blank" rel="noreferrer"> CNIL</a>.
                   </p>
                   <p>
-                    La vitrine n'utilise pas de cookie publicitaire ni d'outil de mesure d'audience. Mise à jour
-                    le 22 octobre 2026.
+                    Les informations signalées comme obligatoires sont nécessaires pour traiter votre demande ;
+                    leur absence peut empêcher une réponse utile. La vitrine n'utilise pas de cookie publicitaire
+                    ni d'outil de mesure d'audience et ne prend aucune décision automatisée ayant un effet
+                    juridique. Les seuls mécanismes techniques nécessaires à la sécurité et à l'authentification
+                    ne servent pas à vous suivre à des fins commerciales. Mise à jour le 26 octobre 2026.
                   </p>
                 </div>
               </article>
